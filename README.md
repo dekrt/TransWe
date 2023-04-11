@@ -1,4 +1,4 @@
-<img src="./pics/icon.jpg" alt="icon" style="zoom:50%;" />
+<img src="./pics/icon.jpg" alt="icon" style="zoom: 33%;" />
 
 
 
