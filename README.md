@@ -1,4 +1,6 @@
-![icon](D:\Documents\my_documents\folder\study\SoftwareEngineering\Software-Engineering-Curriculum-Design\assets\icon.jpg)
+![icon](./pics/icon.jpg)
+
+
 
 <h1 align = "center">TransWe</h1>
 
