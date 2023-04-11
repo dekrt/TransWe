@@ -1,4 +1,4 @@
-![icon](./pics/icon.jpg)
+<img src="./pics/icon.jpg" alt="icon" style="zoom:50%;" />
 
 
 
