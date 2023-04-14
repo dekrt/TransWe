@@ -10,6 +10,14 @@
 
 2. 用户需求标识：**TransWe-UR-TS**
 
+### 二、集成第三方OCR功能（Optical Character Recognition）
+
+1. 用户需求：
+
+- 用户可以选择使用图片转文字服务（OCR），框选需要翻译的区域，点击翻译按钮后能获取翻译结果。
+
+2. 用户需求标识 ：**TransWe-UR-OCR**
+
 ### 三、集成第三方语音识别(Speech Recognition):
 
 1. 用户需求：
