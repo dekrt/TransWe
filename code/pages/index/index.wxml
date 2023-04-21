@@ -1,0 +1,6 @@
+<!--pages/index/index.wxml-->
+<view>
+  <view style="text-align:center;padding:200rpx">
+    <text>{{initTranslat.text}}</text>
+  </view>
+</view>

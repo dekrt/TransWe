@@ -1,0 +1,49 @@
+/* pages/index/index.wxss */
+
+
+.TransWe_icon{
+  /* icon */
+position: absolute;
+width: 146px;
+height: 61px;
+left: 4px;
+right: 225px;
+top: 23px;
+bottom: 728px;
+background: url();
+}
+
+.Translation_Text_block{
+  /* Translation (Text) */
+  position: relative;
+  width: 375px;
+  height: 812px;
+  background: rgb(248, 248, 249);
+  border-radius: 20px;
+  }
+
+  .TT_Top{
+/* Top */
+position: absolute;
+width: 375px;
+height: 363px;
+left: 0%;
+right: 0%;
+top: -0.25%;
+bottom: 55.54%;
+
+}
+
+.TT_Top_BeforeTranslate
+{
+  /* Before Translate */
+position: absolute;
+width: 327px;
+height: 166px;
+left: 6.13%;
+right: 6.67%;
+top: 53.72%;
+bottom: 0.55%;
+
+}
+
