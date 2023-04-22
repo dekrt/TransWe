@@ -2,5 +2,6 @@
 <view>
   <view style="text-align:center;padding:200rpx">
     <text>{{initTranslat.text}}</text>
+    <van-button type="primary">按钮</van-button>
   </view>
 </view>

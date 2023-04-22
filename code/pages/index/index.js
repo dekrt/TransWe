@@ -10,7 +10,7 @@ Page({
   data: {
     initTranslate:{
       //为空时的卡片内容
-      text:'等待输入',
+      text:"等待输入",
     },
 
     
