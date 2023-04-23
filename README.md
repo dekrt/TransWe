@@ -1,8 +1,14 @@
 <div align="center">
     <img src="./pics/icon.jpg" align="center">
 </div>
+<div align = "center">
+	<h1 align = "center">TransWe</h1>    
+    <h4 align = "center">Translate WeChat Mini Program</h4>
+    简体中文
+	&nbsp;&nbsp;| &nbsp;&nbsp;
+	<a href="https://github.com/dekrt/TransWe/blob/main/README-en.md">English</a>
+</div>
 
-<h1 align = "center">TransWe</h1>
 
 ## 📱 UI界面
 
