@@ -4,6 +4,15 @@
 
 <h1 align = "center">TransWe</h1>
 
+## 📱 UI界面
+
+<div align = "center">
+<img src="./pics/UI_Translation_Text.png" width="22%" />
+<img src="./pics/UI_Choose_Language.png" width="22%" />
+<img src="./pics/UI_Translation_Voice.png" width="22%" />
+<img src="./pics/UI_Translation_History.png" width="22%" />
+</div>
+
 ## 📖 项目介绍
 
 **TransWe**意为`Translation+Wechat`，是一个功能强大的机器翻译微信小程序，它能够通过后台机器翻译服务快速、准确地翻译各种语言。它还支持第三方OCR、语音识别和语音合成集成，为用户提供更便捷、高效的翻译服务。
