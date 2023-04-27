@@ -7,13 +7,13 @@
     简体中文
 	&nbsp;&nbsp;| &nbsp;&nbsp;
 	<a href="https://github.com/dekrt/TransWe/blob/main/README-en.md">English</a>
-</div>
-
-<div align = "center">
+    <br>
+    <br>
     <a href = "https://dekrt.cn/"><img src="https://img.shields.io/badge/Author-dekrt-blue" alt="Author" /></a>
     <a href = "https://github.com/dekrt/TransWe"><img src="https://img.shields.io/github/stars/dekrt/TransWe?style=social" alt="Stars" /></a>
     <a href = "https://github.com/dekrt/TransWe/issues"><img src="https://img.shields.io/github/issues/dekrt/TransWe?color=blue&logoColor=blue" alt="Issues" /></a>
 </div>
+
 
 ## 📱 UI界面
 
