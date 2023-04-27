@@ -26,7 +26,9 @@
 
 主页是小程序的入口，包括小程序的基本信息和主要功能模块。页面包含四个模块，分别是文字翻译，录音按钮、OCR翻译按钮和翻译历史记录。
 
-<img src="../pics/UI_Translation_Text.png" width="22%" />
+<div align = "center">
+    <img src="../pics/UI_Translation_Text.png" width="22%" />
+</div>
 
 #### 交互细节
 
@@ -41,7 +43,9 @@
 
 语言切换页提供用户多种翻译语言。用户可以选择下载小程序支持的语言。小程序会自动保存最近使用过的语言。
 
-<img src="../pics/UI_Choose_Language.png" width="22%" />
+<div align = "center">
+    <img src="../pics/UI_Choose_Language.png" width="22%" />
+</div>
 
 #### 交互细节
 
@@ -81,7 +85,9 @@
 
 翻译历史页面保存用户之前的文字翻译和语音翻译记录。
 
-<img src="../pics/UI_Translation_History.png" width="22%" />
+<div align = "center">
+    <img src="../pics/UI_Translation_History.png" width="22%" />
+</div>
 
 #### 交互细节
 
@@ -96,3 +102,4 @@
 2. 录音和OCR功能应该提供适当弹窗指导，以保证用户可以使用顺利流畅（如按下录音按钮后提醒用户录入语音）。
 
 3. 翻译结果框应该显示清晰、易于阅读的翻译结果，并且应该提供复制和语音播放等操作功能。
+
