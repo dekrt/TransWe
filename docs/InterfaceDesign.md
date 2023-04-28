@@ -19,7 +19,7 @@
        <img src="../pics/UI_Translation_Voice.png" width="18%" />
        <img src="../pics/UI_Translation_History.png" width="18%" />
    </div>
-
+   
    
 
 
