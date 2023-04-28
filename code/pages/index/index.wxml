@@ -1,7 +1,9 @@
-<!--pages/index/index.wxml-->
-<view>
-  <view style="text-align:center;padding:200rpx">
-    <text>{{initTranslat.text}}</text>
-    <van-button type="primary">按钮</van-button>
-  </view>
-</view>
+<van-cell-group>
+  <van-field
+    value="{{ value }}"
+    placeholder="请输入用户名"
+    border="{{ true }}"
+    bind:change="onChange"
+  />
+</van-cell-group>
+
