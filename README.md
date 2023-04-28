@@ -1,5 +1,5 @@
 <div align="center">
-    <img src="./pics/icon.jpg" align="center" width = "25%">
+    <img src="./pics/icon.jpg" align="center" width = "40%">
 </div>
 <div align = "center">
 	<h1 align = "center">TransWe</h1>    
@@ -14,6 +14,7 @@
     <a href = "https://github.com/dekrt/TransWe"><img src="https://img.shields.io/github/stars/dekrt/TransWe?style=social" alt="Stars" /></a>
     <a href = "https://github.com/dekrt/TransWe/issues"><img src="https://img.shields.io/github/issues/dekrt/TransWe?color=blue&logoColor=blue" alt="Issues" /></a>
 </div>
+
 
 
 
