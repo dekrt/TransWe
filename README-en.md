@@ -1,23 +1,29 @@
 <div align="center">
-     <img src="./pics/icon.jpg" align="center">
+     <img src="./pics/icon.jpg" align="center" width = "40%">
 </div>
 <div align="center">
 <h1 align = "center">TransWe</h1>
      <h4 align = "center">Translate WeChat Mini Program</h4>
     <a href = "https://dekrt.cn/"><img src="https://img.shields.io/badge/Author-dekrt-blue" alt="Author" /></a>
+    <img src="https://img.shields.io/badge/Author-cdt-blue" alt="Author" />
     <a href = "https://github.com/dekrt/TransWe"><img src="https://img.shields.io/github/stars/dekrt/TransWe?style=social" alt="Stars" /></a>
     <a href = "https://github.com/dekrt/TransWe/issues"><img src="https://img.shields.io/github/issues/dekrt/TransWe?color=blue&logoColor=blue" alt="Issues" /></a>
 </div>
 
 
+
+
+
 ## 📱 UI interface
 
-<div align="center">
-<img src="./pics/UI_Translation_Text.png" width="22%" />
-<img src="./pics/UI_Choose_Language.png" width="22%" />
-<img src="./pics/UI_Translation_Voice.png" width="22%" />
-<img src="./pics/UI_Translation_History.png" width="22%" />
+<div align = "center">
+    <img src="./pics/UI_Translation_Text.png" width="18%" />
+    <img src="./pics/UI_Choose_Language.png" width="18%" />
+    <img src="./pics/UI_OCR_Translation.png" width="18%" />
+    <img src="./pics/UI_Translation_Voice.png" width="18%" />
+    <img src="./pics/UI_Translation_History.png" width="18%" />
 </div>
+
 
 ## 📖 Project Introduction
 
