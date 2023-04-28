@@ -4,7 +4,11 @@
 <div align="center">
 <h1 align = "center">TransWe</h1>
      <h4 align = "center">Translate WeChat Mini Program</h4>
+    <a href = "https://dekrt.cn/"><img src="https://img.shields.io/badge/Author-dekrt-blue" alt="Author" /></a>
+    <a href = "https://github.com/dekrt/TransWe"><img src="https://img.shields.io/github/stars/dekrt/TransWe?style=social" alt="Stars" /></a>
+    <a href = "https://github.com/dekrt/TransWe/issues"><img src="https://img.shields.io/github/issues/dekrt/TransWe?color=blue&logoColor=blue" alt="Issues" /></a>
 </div>
+
 
 ## 📱 UI interface
 
