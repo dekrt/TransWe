@@ -67,7 +67,12 @@ TransWe由张骁凯和陈德霆共同开发完成。
 
 
 
-## 协议
+## 📃协议
 
+ [![GitHub](https://img.shields.io/github/license/dekrt/TransWe?style=for-the-badge)](https://github.com/dekrt/TransWe/blob/main/LICENSE)
 
+>**警告**
+>
+>除GPLv3许可下的源代码外，其他方均禁止使用TransWe的名义作为下载器应用，TransWe的衍生产品亦同。
+>衍生品包括但不限于分叉和非官方构建。
 

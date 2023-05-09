@@ -60,8 +60,12 @@ TransWe was jointly developed by Zhang Xiaokai and Chen Deting.
 
 
 
-## statement
+## 📃LICENSE
 
+ [![GitHub](https://img.shields.io/github/license/dekrt/TransWe?style=for-the-badge)](https://github.com/dekrt/TransWe/blob/main/LICENSE)
 
+>**Warning**
+>
+>Except for the source code licensed under the GPLv3 license, all other parties are prohibited from using TransWe's name as a downloader app, and the same is true for TransWe's derivatives.
+>Derivatives include but are not limited to forks and unofficial builds.
 
-## agreement
