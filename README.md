@@ -1,4 +1,4 @@
-> **如果借鉴了本仓库的文档，麻烦帮我点一下star（右上角）和follow，感谢！**
+> **如果借鉴了本仓库的文档，麻烦帮我点一下star(右上角)和follow(关注我)，感谢！**
 
 <div align="center">
     <img src="./pics/icon.jpg" align="center" width = "40%">
