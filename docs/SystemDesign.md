@@ -4,7 +4,7 @@
 
 我们的翻译小程序采用分层架构的架构模式，架构示意图如下：
 
-![](../pics/System_Architecture.png)
+![](../pics/system_architecture.png)
 
 ### 1.1 表示层（Presentation Layer）
 

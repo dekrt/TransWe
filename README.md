@@ -1,3 +1,5 @@
+> **如果借鉴了本仓库的文档，麻烦帮我点一下star（右上角）和follow，感谢！**
+
 <div align="center">
     <img src="./pics/icon.jpg" align="center" width = "40%">
 </div>
@@ -14,6 +16,7 @@
     <a href = "https://github.com/dekrt/TransWe"><img src="https://img.shields.io/github/stars/dekrt/TransWe?style=social" alt="Stars" /></a>
     <a href = "https://github.com/dekrt/TransWe/issues"><img src="https://img.shields.io/github/issues/dekrt/TransWe?color=blue&logoColor=blue" alt="Issues" /></a>
 </div>
+
 
 
 
