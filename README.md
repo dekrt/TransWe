@@ -1,5 +1,7 @@
+> **如果借鉴了本仓库的文档，麻烦帮我点一下star(右上角)和follow(关注我)，感谢！**
+
 <div align="center">
-    <img src="./pics/icon.jpg" align="center">
+    <img src="./pics/icon.jpg" align="center" width = "40%">
 </div>
 <div align = "center">
 	<h1 align = "center">TransWe</h1>    
@@ -10,19 +12,25 @@
     <br>
     <br>
     <a href = "https://dekrt.cn/"><img src="https://img.shields.io/badge/Author-dekrt-blue" alt="Author" /></a>
+    <img src="https://img.shields.io/badge/Author-cdt-blue" alt="Author" />
     <a href = "https://github.com/dekrt/TransWe"><img src="https://img.shields.io/github/stars/dekrt/TransWe?style=social" alt="Stars" /></a>
     <a href = "https://github.com/dekrt/TransWe/issues"><img src="https://img.shields.io/github/issues/dekrt/TransWe?color=blue&logoColor=blue" alt="Issues" /></a>
 </div>
 
 
+
+
+
 ## 📱 UI界面
 
 <div align = "center">
-<img src="./pics/UI_Translation_Text.png" width="22%" />
-<img src="./pics/UI_Choose_Language.png" width="22%" />
-<img src="./pics/UI_Translation_Voice.png" width="22%" />
-<img src="./pics/UI_Translation_History.png" width="22%" />
+    <img src="./pics/UI_Translation_Text.png" width="18%" />
+    <img src="./pics/UI_Choose_Language.png" width="18%" />
+    <img src="./pics/UI_OCR_Translation.png" width="18%" />
+    <img src="./pics/UI_Translation_Voice.png" width="18%" />
+    <img src="./pics/UI_Translation_History.png" width="18%" />
 </div>
+
 
 ## 📖 项目介绍
 
@@ -62,7 +70,11 @@ TransWe由张骁凯和陈德霆共同开发完成。
 
 
 
-## 协议
+## 📃协议
 
+ [![GitHub](https://img.shields.io/github/license/dekrt/TransWe?style=for-the-badge)](https://github.com/dekrt/TransWe/blob/main/LICENSE)
 
-
+>**警告**
+>
+>除GPLv3许可下的源代码外，其他方均禁止使用TransWe的名义作为下载器应用，TransWe的衍生产品亦同。
+>衍生品包括但不限于分叉和非官方构建。
