@@ -2,7 +2,8 @@
   "pages": [
     "pages/index/index",
     "pages/logs/logs",
-    "pages/ChooseLanguage/ChooseLanguage"
+    "pages/ChooseLanguage/ChooseLanguage",
+    "pages/AudioLanguage/AudioLanguage"
   ],
   "window": {
     "backgroundTextStyle": "light",

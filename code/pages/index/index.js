@@ -14,7 +14,7 @@ Page({
   // 事件处理函数
   bindViewTap() {
     wx.navigateTo({
-      url: '../ChooseLanguage/ChooseLanguage'
+      url: '../AudioLanguage/AudioLanguage'
     })
   },
   onLoad() {

@@ -2,5 +2,9 @@
   "navigationBarTitleText": "选择语言",
   "navigationBarTextStyle": "black",
   "navigationBarBackgroundColor": "#f8f8f9",
-  "usingComponents": {}
+  "usingComponents": {
+      "van-field": "@vant/weapp/field/index",
+      "van-icon": "@vant/weapp/icon/index"
+ }
+
 }

@@ -2,11 +2,16 @@
 <view class="flex-col page">
   <view class="flex-col flex-auto group_2 space-y-24">
     <view class="flex-row section_3 space-x-8">
-      <image
-        class="self-center image"
-        src="https://codefun-proj-user-res-1256085488.cos.ap-guangzhou.myqcloud.com/644bb0005a7e3f03102917b5/644bb06fb98f5d0011665f39/16826823178293588354.png"
-      />
-      <text class="self-start font_1 text_4">搜索语言...</text>
+      <van-cell-group>
+  <van-field
+    left-icon="language_search_icon"
+    value="{{ message }}"
+    type="textarea"
+    placeholder="请输入..."
+    autosize
+    border="{{ false }}"
+  />
+</van-cell-group>
     </view>
     <view class="flex-col space-y-20">
       <text class="self-start font_2 text_5">最近使用过的语言</text>
