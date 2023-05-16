@@ -10,16 +10,21 @@ async function translate(inputText, sourceLang, targetLang) {
     const appid = '20230428001660105';
     const secretKey = 'cVKXtU5tdGp8YDBPghkX';
     const salt = (new Date()).getTime();
-    const str1 = appid + inputText + salt + secretKey;
+    const text_encode = encodeURIComponent(inputText);
+    const str1 = appid + text_encode + salt + secretKey;
     const sign = md5(str1);
 
     const response = await axios.post('https://fanyi-api.baidu.com/api/trans/vip/translate', {
-        q: encodeURIComponent(inputText),
+        q: text_encode,
         from: sourceLang,
         to: targetLang,
         appid: appid,
         salt: salt,
         sign: sign,
+    }, {
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+        }
     });
 
     if (response.data.error_code) {
