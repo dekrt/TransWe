@@ -1,0 +1,26 @@
+ <!--index.wxml-->
+<view class="container">
+  <view class="change">
+     <!-- navigator导航 -->
+    <navigator url="/pages/change/change" hover-class="navigator-hover">
+      <block>
+        <text>翻译成{{curLang.chs}}</text>
+        <text class="iconfont icon-down"></text>
+      </block> 
+    </navigator>
+
+  </view>
+  <view class="input-area">
+    <text class="iconfont icon-close" hidden="{{hideClearIcon}}" bindtap='onTapClose'></text>
+    <view class="textarea-wrap">
+      <textarea placeholder='请输入要翻译的文本' placeholder-style='color: #8995a1'  bindinput='onInput' bindconfirm='onConfirm' bindblur='onConfirm'  value="{{query}}"></textarea>
+    </view>
+    
+    <view class="text-area">
+      <view class="text-title">译文</view>
+      <view class="text-result" wx:for="{{result}}" wx:key="index">
+        <text selectable="true">{{item.dst}}</text>
+      </view>
+    </view>
+  </view>
+</view>
