@@ -1,0 +1,20 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/edit/edit"
+  ],
+  "window": {
+    "backgroundTextStyle": "dark",
+    "backgroundColor": "#33EA52",
+    "navigationBarBackgroundColor": "#FAFAFA",
+    "navigationBarTitleText": "TransWe",
+    "navigationBarTextStyle": "black"
+  },
+  "plugins": {
+    "WechatSI": {
+      "version": "0.3.3",
+      "provider": "wx069ba97219f66d99"
+    }
+  },
+  "sitemapLocation": "sitemap.json"
+}
