@@ -14,28 +14,34 @@
 ## 2. 测试结果
 
 采用真机测试
-
-![屏幕截图 2023-05-17 215325](..\pics\屏幕截图 2023-05-17 215325.png)
-
-测试中：
-
+<div align = "center">
+    <img src="../pics/屏幕截图 2023-05-17 215325.png" width="80%" />
+</div>
 
 
 测试点1
-
-![QQ图片20230517215940](..\pics\QQ图片20230517215940.png)
+<div align = "center">
+    <img src="../pics/QQ图片20230517215940.png" width="80%" />
+</div>
 
 测试点2
 
-![QQ图片20230517215816](..\pics\QQ图片20230517215816.png)
+<div align = "center">
+    <img src="../pics/QQ图片20230517215816.png" width="80%" />
+</div>
+
 
 测试点3
+<div align = "center">
+    <img src="../pics/QQ图片20230517215855.png" width="80%" />
+</div>
 
-![QQ图片20230517215855](..\pics\QQ图片20230517215855.png)
 
 测试点4
+<div align = "center">
+    <img src="../pics/QQ图片20230517215920.png" width="80%" />
+</div>
 
-![QQ图片20230517215920](..\pics\QQ图片20230517215920.png)
 
 
 
