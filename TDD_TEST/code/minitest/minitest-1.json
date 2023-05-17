@@ -1,0 +1,453 @@
+{
+  "meta": {
+    "caseId": "fd8da89a-7f84-4f45-b4fc-e07e00b5e680",
+    "caseName": "minitest-1",
+    "remarks": "",
+    "version": "0.0.1",
+    "startTime": 1684303834063,
+    "endTime": 1684303851395,
+    "appid": "wx365790a8c04e3a3b",
+    "casePath": "",
+    "caseType": "normal",
+    "commonParams": [
+      {
+        "key": "1684303851406",
+        "name": "",
+        "value": ""
+      }
+    ]
+  },
+  "env": {
+    "wxapplibVersion": "2.31.0",
+    "devtoolsVersion": "1.06.2303220",
+    "openid": "o6zAJs27H5ER__w0SeX1CeVO5eDA",
+    "entry": {
+      "path": "pages/index/index",
+      "query": "",
+      "scene": 1001
+    },
+    "mock": [
+      "none"
+    ],
+    "maxWaitFor": 10000,
+    "ignoreSelectors": [],
+    "mockAPIs": [],
+    "cleanCache": [
+      "none"
+    ],
+    "groupTouch": false,
+    "replaySetting": {
+      "screenshot": "none"
+    },
+    "simulatorType": "wechat",
+    "device": "iPhone 12/13 (Pro)",
+    "recordAPIs": []
+  },
+  "commands": [
+    {
+      "layer": "tool",
+      "commandType": "operate",
+      "command": "startRecord",
+      "waitfor": 0,
+      "timeStamp": 1684303834063,
+      "desc": ""
+    },
+    {
+      "tagName": "",
+      "command": "touchstart",
+      "value": null,
+      "path": "pages/index/index",
+      "eventData": {
+        "detail": {},
+        "changedTouches": [
+          {
+            "clientX": 98.5,
+            "clientY": 532.9500122070312,
+            "force": 1,
+            "pageX": 98.5,
+            "pageY": 532.9500122070312,
+            "radiusX": 11.5,
+            "radiusY": 11.5,
+            "screenX": 828,
+            "screenY": 837.6000366210938
+          }
+        ],
+        "touches": [
+          {
+            "clientX": 98.5,
+            "clientY": 532.9500122070312,
+            "force": 1,
+            "pageX": 98.5,
+            "pageY": 532.9500122070312,
+            "radiusX": 11.5,
+            "radiusY": 11.5,
+            "screenX": 828,
+            "screenY": 837.6000366210938
+          }
+        ]
+      },
+      "targetCandidates": [],
+      "timeStamp": 3087,
+      "waitfor": 3087,
+      "desc": "",
+      "commandType": "operate",
+      "layer": "pageframe"
+    },
+    {
+      "tagName": "",
+      "command": "touchend",
+      "value": null,
+      "path": "pages/index/index",
+      "eventData": {
+        "detail": {},
+        "changedTouches": [
+          {
+            "clientX": 161.59999084472656,
+            "clientY": 603.2000122070312,
+            "pageX": 161.59999084472656,
+            "pageY": 603.2000122070312,
+            "radiusX": 11.5,
+            "radiusY": 11.5,
+            "screenX": 891.2000122070312,
+            "screenY": 908
+          }
+        ],
+        "touches": []
+      },
+      "targetCandidates": [],
+      "timeStamp": 3309,
+      "waitfor": 222,
+      "desc": "",
+      "commandType": "operate",
+      "layer": "pageframe"
+    },
+    {
+      "tagName": "",
+      "command": "touchstart",
+      "value": null,
+      "path": "pages/index/index",
+      "eventData": {
+        "detail": {},
+        "changedTouches": [
+          {
+            "clientX": 170.49998474121094,
+            "clientY": 513.75,
+            "force": 1,
+            "pageX": 170.49998474121094,
+            "pageY": 513.75,
+            "radiusX": 11.5,
+            "radiusY": 11.5,
+            "screenX": 900,
+            "screenY": 818.4000244140625
+          }
+        ],
+        "touches": [
+          {
+            "clientX": 170.49998474121094,
+            "clientY": 513.75,
+            "force": 1,
+            "pageX": 170.49998474121094,
+            "pageY": 513.75,
+            "radiusX": 11.5,
+            "radiusY": 11.5,
+            "screenX": 900,
+            "screenY": 818.4000244140625
+          }
+        ]
+      },
+      "targetCandidates": [],
+      "timeStamp": 3489,
+      "waitfor": 180,
+      "desc": "",
+      "commandType": "operate",
+      "layer": "pageframe"
+    },
+    {
+      "tagName": "",
+      "command": "touchend",
+      "value": null,
+      "path": "pages/index/index",
+      "eventData": {
+        "detail": {},
+        "changedTouches": [
+          {
+            "clientX": 130.40000915527344,
+            "clientY": 548.7999877929688,
+            "pageX": 130.40000915527344,
+            "pageY": 548.7999877929688,
+            "radiusX": 11.5,
+            "radiusY": 11.5,
+            "screenX": 860,
+            "screenY": 853.6000366210938
+          }
+        ],
+        "touches": []
+      },
+      "targetCandidates": [],
+      "timeStamp": 3668,
+      "waitfor": 179,
+      "desc": "",
+      "commandType": "operate",
+      "layer": "pageframe"
+    },
+    {
+      "tagName": "",
+      "command": "touchstart",
+      "value": null,
+      "path": "pages/index/index",
+      "eventData": {
+        "detail": {},
+        "changedTouches": [
+          {
+            "clientX": 208.90000915527344,
+            "clientY": 500.1499938964844,
+            "force": 1,
+            "pageX": 208.90000915527344,
+            "pageY": 500.1499938964844,
+            "radiusX": 11.5,
+            "radiusY": 11.5,
+            "screenX": 938.4000244140625,
+            "screenY": 804.7999877929688
+          }
+        ],
+        "touches": [
+          {
+            "clientX": 208.90000915527344,
+            "clientY": 500.1499938964844,
+            "force": 1,
+            "pageX": 208.90000915527344,
+            "pageY": 500.1499938964844,
+            "radiusX": 11.5,
+            "radiusY": 11.5,
+            "screenX": 938.4000244140625,
+            "screenY": 804.7999877929688
+          }
+        ]
+      },
+      "targetCandidates": [],
+      "timeStamp": 3828,
+      "waitfor": 160,
+      "desc": "",
+      "commandType": "operate",
+      "layer": "pageframe"
+    },
+    {
+      "tagName": "",
+      "command": "touchend",
+      "value": null,
+      "path": "pages/index/index",
+      "eventData": {
+        "detail": {},
+        "changedTouches": [
+          {
+            "clientX": 151.1999969482422,
+            "clientY": 557.6000366210938,
+            "pageX": 151.1999969482422,
+            "pageY": 557.6000366210938,
+            "radiusX": 11.5,
+            "radiusY": 11.5,
+            "screenX": 880.7999877929688,
+            "screenY": 862.4000244140625
+          }
+        ],
+        "touches": []
+      },
+      "targetCandidates": [],
+      "timeStamp": 3979,
+      "waitfor": 151,
+      "desc": "",
+      "commandType": "operate",
+      "layer": "pageframe"
+    },
+    {
+      "tagName": "",
+      "command": "touchstart",
+      "value": null,
+      "path": "pages/index/index",
+      "eventData": {
+        "detail": {},
+        "changedTouches": [
+          {
+            "clientX": 216.90000915527344,
+            "clientY": 521.75,
+            "force": 1,
+            "pageX": 216.90000915527344,
+            "pageY": 521.75,
+            "radiusX": 11.5,
+            "radiusY": 11.5,
+            "screenX": 946.4000244140625,
+            "screenY": 826.4000244140625
+          }
+        ],
+        "touches": [
+          {
+            "clientX": 216.90000915527344,
+            "clientY": 521.75,
+            "force": 1,
+            "pageX": 216.90000915527344,
+            "pageY": 521.75,
+            "radiusX": 11.5,
+            "radiusY": 11.5,
+            "screenX": 946.4000244140625,
+            "screenY": 826.4000244140625
+          }
+        ]
+      },
+      "targetCandidates": [],
+      "timeStamp": 4089,
+      "waitfor": 110,
+      "desc": "",
+      "commandType": "operate",
+      "layer": "pageframe"
+    },
+    {
+      "tagName": "",
+      "command": "touchend",
+      "value": null,
+      "path": "pages/index/index",
+      "eventData": {
+        "detail": {},
+        "changedTouches": [
+          {
+            "clientX": 130.40000915527344,
+            "clientY": 618.4000244140625,
+            "pageX": 130.40000915527344,
+            "pageY": 618.4000244140625,
+            "radiusX": 11.5,
+            "radiusY": 11.5,
+            "screenX": 860,
+            "screenY": 923.2000122070312
+          }
+        ],
+        "touches": []
+      },
+      "targetCandidates": [],
+      "timeStamp": 4220,
+      "waitfor": 131,
+      "desc": "",
+      "commandType": "operate",
+      "layer": "pageframe"
+    },
+    {
+      "tagName": "",
+      "command": "touchstart",
+      "value": null,
+      "path": "pages/index/index",
+      "eventData": {
+        "detail": {},
+        "changedTouches": [
+          {
+            "clientX": 136.90000915527344,
+            "clientY": 584.1500244140625,
+            "force": 1,
+            "pageX": 136.90000915527344,
+            "pageY": 584.1500244140625,
+            "radiusX": 11.5,
+            "radiusY": 11.5,
+            "screenX": 866.4000244140625,
+            "screenY": 888.7999877929688
+          }
+        ],
+        "touches": [
+          {
+            "clientX": 136.90000915527344,
+            "clientY": 584.1500244140625,
+            "force": 1,
+            "pageX": 136.90000915527344,
+            "pageY": 584.1500244140625,
+            "radiusX": 11.5,
+            "radiusY": 11.5,
+            "screenX": 866.4000244140625,
+            "screenY": 888.7999877929688
+          }
+        ]
+      },
+      "targetCandidates": [],
+      "timeStamp": 4326,
+      "waitfor": 106,
+      "desc": "",
+      "commandType": "operate",
+      "layer": "pageframe"
+    },
+    {
+      "tagName": "",
+      "command": "touchend",
+      "value": null,
+      "path": "pages/index/index",
+      "eventData": {
+        "detail": {},
+        "changedTouches": [
+          {
+            "clientX": 143.99998474121094,
+            "clientY": 580,
+            "pageX": 143.99998474121094,
+            "pageY": 580,
+            "radiusX": 11.5,
+            "radiusY": 11.5,
+            "screenX": 873.6000366210938,
+            "screenY": 884.7999877929688
+          }
+        ],
+        "touches": []
+      },
+      "targetCandidates": [],
+      "timeStamp": 4384,
+      "waitfor": 58,
+      "desc": "",
+      "commandType": "operate",
+      "layer": "pageframe"
+    },
+    {
+      "tagName": "",
+      "command": "tap",
+      "value": null,
+      "path": "pages/index/index",
+      "eventData": {
+        "detail": {
+          "x": 143.99998474121094,
+          "y": 580
+        },
+        "changedTouches": [
+          {
+            "clientX": 136.90000915527344,
+            "clientY": 584.1500244140625,
+            "force": 1,
+            "pageX": 136.90000915527344,
+            "pageY": 584.1500244140625,
+            "radiusX": 11.5,
+            "radiusY": 11.5,
+            "screenX": 866.4000244140625,
+            "screenY": 888.7999877929688
+          }
+        ],
+        "touches": [
+          {
+            "clientX": 136.90000915527344,
+            "clientY": 584.1500244140625,
+            "force": 1,
+            "pageX": 136.90000915527344,
+            "pageY": 584.1500244140625,
+            "radiusX": 11.5,
+            "radiusY": 11.5,
+            "screenX": 866.4000244140625,
+            "screenY": 888.7999877929688
+          }
+        ]
+      },
+      "targetCandidates": [],
+      "timeStamp": 4385,
+      "waitfor": 1,
+      "desc": "",
+      "commandType": "operate",
+      "layer": "pageframe"
+    },
+    {
+      "timeStamp": 17332,
+      "waitfor": 10000,
+      "desc": "",
+      "layer": "tool",
+      "commandType": "operate",
+      "command": "stopRecord"
+    }
+  ]
+}
