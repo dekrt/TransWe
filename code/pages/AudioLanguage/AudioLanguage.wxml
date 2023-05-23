@@ -1,6 +1,0 @@
-<!--pages/AudioLanguage/AudioLanguage.wxml-->
-<view class="container">
-  <button class="record-btn" bindlongpress="startRecording" bindtouchend="stopRecording">长按录音</button>
-  <text>{{translateText}}</text>
-</view>
-
