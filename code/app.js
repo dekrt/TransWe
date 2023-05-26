@@ -6,6 +6,8 @@ App({
   },
   globalData: {
     curLang: {},
+    picBase64: "",
+    word: [],
     langList: [
       {
         'chs': '英文',

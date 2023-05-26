@@ -1,29 +1,29 @@
 {
-  "description": "项目配置文件。",
-  "packOptions": {
-    "ignore": [],
-    "include": []
-  },
-  "setting": {
-    "urlCheck": true,
-    "es6": true,
-    "postcss": true,
-    "minified": true,
-    "newFeature": true,
-    "babelSetting": {
-      "ignore": [],
-      "disablePlugins": [],
-      "outputPath": ""
+    "description": "项目配置文件。",
+    "packOptions": {
+        "ignore": [],
+        "include": []
     },
-    "condition": false
-  },
-  "compileType": "miniprogram",
-  "libVersion": "2.32.0",
-  "appid": "wxff574b0f6ca745d5",
-  "projectname": "weixin-test",
-  "condition": {},
-  "editorSetting": {
-    "tabIndent": "insertSpaces",
-    "tabSize": 2
-  }
+    "setting": {
+        "urlCheck": true,
+        "es6": true,
+        "postcss": true,
+        "minified": true,
+        "newFeature": true,
+        "babelSetting": {
+            "ignore": [],
+            "disablePlugins": [],
+            "outputPath": ""
+        },
+        "condition": false
+    },
+    "compileType": "miniprogram",
+    "libVersion": "2.32.0",
+    "appid": "wxff574b0f6ca745d5",
+    "projectname": "TransWe",
+    "condition": {},
+    "editorSetting": {
+        "tabIndent": "insertSpaces",
+        "tabSize": 2
+    }
 }

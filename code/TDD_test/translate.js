@@ -7,8 +7,8 @@ async function translate(inputText, sourceLang, targetLang) {
         throw new Error('Invalid input');
     }
 
-    const appid = '20230428001660105';
-    const secretKey = 'cVKXtU5tdGp8YDBPghkX';
+    const appid = '';
+    const secretKey = '';
     const salt = (new Date()).getTime();
     const text_encode = encodeURIComponent(inputText);
     const str1 = appid + text_encode + salt + secretKey;

@@ -1,34 +1,42 @@
 {
-  "pages": [
-    "pages/index/index",
-    "pages/change/change",
-    "pages/history/history"
-  ],
-  "window": {
-    "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#1493FC",
-    "navigationBarTitleText": "TransWe",
-    "navigationBarTextStyle": "black",
-    "backgroundColor": "#4b3c96"
-  },
-  "tabBar": {   
-    "borderStyle": "white",
-    "position": "bottom",
-    "color": "#bfbfbf",
-    "selectedColor": "#1c1b21",
-    "list": [
-      {
-        "pagePath": "pages/index/index",
-        "text": "翻译",
-        "iconPath": "imgs/icon-1.png",
-        "selectedIconPath": "imgs/sel-icon-1.png"
-      },
-      {
-        "pagePath": "pages/history/history",
-        "text": "历史",
-        "iconPath": "imgs/icon-2.png",
-        "selectedIconPath": "imgs/sel-icon-2.png"
-      }
-    ]
-  }
+    "pages": [
+        "pages/index/index",
+        "pages/change/change",
+        "pages/history/history",
+        "pages/OCR/OCR",
+        "pages/getPic/getPic",
+        "pages/index_test/index_test"
+    ],
+    "window": {
+        "backgroundTextStyle": "light",
+        "navigationBarBackgroundColor": "#1493FC",
+        "navigationBarTitleText": "TransWe",
+        "navigationBarTextStyle": "black",
+        "backgroundColor": "#4b3c96"
+    },
+    "tabBar": {
+        "borderStyle": "white",
+        "position": "bottom",
+        "color": "#bfbfbf",
+        "selectedColor": "#1c1b21",
+        "list": [{
+                "pagePath": "pages/index/index",
+                "text": "翻译",
+                "iconPath": "imgs/icon-1.png",
+                "selectedIconPath": "imgs/sel-icon-1.png"
+            },
+            {
+              "pagePath": "pages/OCR/OCR",
+              "text": "拍照翻译",
+              "iconPath": "imgs/icon-1.png",
+              "selectedIconPath": "imgs/sel-icon-1.png"
+          },
+            {
+                "pagePath": "pages/history/history",
+                "text": "历史",
+                "iconPath": "imgs/icon-2.png",
+                "selectedIconPath": "imgs/sel-icon-2.png"
+            }
+        ]
+    }
 }
