@@ -41,7 +41,6 @@ Page({
     toView: 'fake',  // 滚动位置
     lastId: -1,    // dialogList 最后一个item的 id
     currentTranslateVoice: '', // 当前播放语音路径
-
   },
 
 
@@ -445,3 +444,4 @@ Page({
 },
 
 })
+

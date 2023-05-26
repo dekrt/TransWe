@@ -22,11 +22,6 @@ let buttonBackground = {
     press: '../../image/R1.png',
     disabled: '../../R.png',
   },
-  en_US: {
-    normal: '../../image/button_en.png',
-    press: '../../image/button_en_press.png',
-    disabled: '../../image/button_en_disabled.png',
-  }
 }
 
 Component({

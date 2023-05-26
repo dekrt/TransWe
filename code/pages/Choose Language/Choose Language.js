@@ -2,19 +2,19 @@ Page({
   data: {
     list_aPbtoDn5: [
       {
-        "image":"../../image/中文.png",
+        "image":"https://codefun-proj-user-res-1256085488.cos.ap-guangzhou.myqcloud.com/644bb0005a7e3f03102917b5/644bb06fb98f5d0011665f39/ac7f93cc16a6602c18750922cf92014c.png",
         "text": "中文"
       },
       {
-        "image":"../../image/英语.png",
+        "image":"https://codefun-proj-user-res-1256085488.cos.ap-guangzhou.myqcloud.com/644bb0005a7e3f03102917b5/644bb06fb98f5d0011665f39/1117504288074e5a51c1cc92bf0eeadb.png",
         "text": "英语"
       },
       {
-        "image":"../../image/德语.png",
+        "image":"https://codefun-proj-user-res-1256085488.cos.ap-guangzhou.myqcloud.com/644bb0005a7e3f03102917b5/644bb06fb98f5d0011665f39/16826823185577922182.png",
         "text": "德语"
       },
       {
-        "image":"../../image/韩语.png",
+        "image":"https://codefun-proj-user-res-1256085488.cos.ap-guangzhou.myqcloud.com/644bb0005a7e3f03102917b5/644bb06fb98f5d0011665f39/16826823185920520575.png",
         "text": "韩语"
       }
     ],
