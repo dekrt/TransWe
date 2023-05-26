@@ -21,13 +21,17 @@
   <view class="flex-row items-center self-stretch group_3 space-x-8">
     <image
       class="shrink-0 image_1"
-      src="../../image/五星红旗.png"
+      src="../../image/中文.png"
     />
     <text class="text">中文</text>
-    <image
-  class="image_1 image_2"
-  src="../../image/bx-chevron-down 1.png"
-/>
+    
+ <navigator url="../../pages/Choose Language/Choose Language" open-type="navigate" style="display: inline-block">
+    <image 
+    class="image_1 image_2" 
+    src="../../image/bx-chevron-down 1.png"
+    />
+</navigator>
+
   </view>
 </view>
 
