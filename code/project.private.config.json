@@ -21,6 +21,13 @@
           "query": "",
           "launchMode": "default",
           "scene": null
+        },
+        {
+          "name": "history_test",
+          "pathName": "pages/history_test/history_test",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
         }
       ]
     }

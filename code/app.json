@@ -5,7 +5,9 @@
         "pages/history/history",
         "pages/OCR/OCR",
         "pages/getPic/getPic",
-        "pages/index_test/index_test"
+        "pages/index_test/index_test",
+        "pages/history_test/history_test"
+        
     ],
     "window": {
         "backgroundTextStyle": "light",
