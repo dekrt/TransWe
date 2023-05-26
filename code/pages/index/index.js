@@ -48,10 +48,11 @@ Page({
     if (!this.data.query) return  //空文本的时候不进行翻译
     translate(this.data.query, { from: 'auto', to: this.data.curLang.lang }).then(res => {
       //调用 api.js 里面的 Promise
+      console.log(res.from)
       this.setData({ 'result': res.trans_result })
 
       let history = wx.getStorageSync('history') || []
-      history.unshift({ query: this.data.query, result: res.trans_result[0].dst })
+      history.unshift({ query: this.data.query, result: res.trans_result[0].dst, from: res.from, to: res.to })
       history.length = history.length > 10 ? 10 : history.length
       wx.setStorageSync('history', history)
     })

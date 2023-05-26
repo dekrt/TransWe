@@ -1,5 +1,4 @@
 .page {
-  padding-top: 56rpx;
   background-color: #f8f8f9;
   border-radius: 40rpx;
   height: 100%;
@@ -101,5 +100,5 @@
 .space-y-12 > view:not(:first-child),
 .space-y-12 > text:not(:first-child),
 .space-y-12 > image:not(:first-child) {
-  margin-top: 24rpx;
+  margin-top: 24rpx; 
 }

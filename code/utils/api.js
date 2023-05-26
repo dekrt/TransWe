@@ -1,7 +1,7 @@
 import md5 from './md5.min.js'
 
-const appid = '' //注册百度翻译api
-const key = '' //注册百度翻译api
+const appid = '20230428001660105' //注册百度翻译api
+const key = 'cVKXtU5tdGp8YDBPghkX' //注册百度翻译api
 
 function translate(q, { from = 'auto', to = 'auto' } = { from: 'auto', to: 'auto' }) {
     //表示默认传递参数传递的值
