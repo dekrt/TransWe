@@ -14,7 +14,8 @@
         "navigationBarBackgroundColor": "#1493FC",
         "navigationBarTitleText": "TransWe",
         "navigationBarTextStyle": "black",
-        "backgroundColor": "#4b3c96"
+        "backgroundColor": "#4b3c96",
+        "navigationStyle": "custom"
     },
     "tabBar": {
         "borderStyle": "white",

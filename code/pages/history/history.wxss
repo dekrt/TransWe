@@ -5,6 +5,7 @@
 }
 .header {
   display: flex;
+  margin-top: 100rpx;
 }
 .title {
   flex:1;

@@ -6,7 +6,7 @@ const app = getApp()
 Page({
   data: {
     query: '',   //输入文字
-    hideClearIcon: true,   //close icon显现状态
+    hideClearIcon: false,   //close icon显现状态
     result: [],   //译文结果
     curLang: {}   //当前语言
   },
