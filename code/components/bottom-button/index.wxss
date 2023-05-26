@@ -1,0 +1,79 @@
+.button-wrap {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-justify-content: center;
+  justify-content: center;
+}
+
+.img-big-wrap {
+  width: 100%;
+  display: -webkit-flex;
+  display: flex;
+  background: #1494fc;
+}
+
+.button-container{
+  display: flex;
+  display: -webkit-flex;
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  justify-content: space-between;
+  -webkit-justify-content: space-between;
+  align-items: center;
+  -webkit-align-items:flex-start;
+  justify-content: center;
+  margin-bottom: 20px;
+  padding: 50rpx 0 38rpx 0;
+  z-index: 1;
+}
+.button-item {
+  display: flex;
+  display: -webkit-flex;
+  flex-direction: column;
+  -webkit-flex-direction: column;
+  justify-content: flex-start;
+  -webkit-justify-content: flex-start;
+  align-items: center;
+  -webkit-align-items: center;
+  width: 75px;
+  box-sizing: border-box;
+  z-index: 2;
+}
+.button-label {
+  font-size: 28rpx;
+  color: #9B9B9B;
+  letter-spacing: 0;
+  margin: 15rpx 0 0 0;
+}
+.button-press {
+  position: relative;
+  display: flex;
+  display: -webkit-flex;
+  height: 150rpx;
+  width: 100%;
+  border-radius: 100rpx;
+  justify-content: center;
+  -webkit-justify-content: center;
+  align-items: center;
+  -wekbit-align-items:center;
+}
+.button-background {
+  position: relative;
+  height: 150rpx;
+  width: 100%;
+  /* border-radius: 100rpx; */
+  left: 0;
+  z-index: 3;
+}
+
+.text-in-button {
+  font-weight: bold;
+  font-size: 34rpx;
+  color: #FFFFFF;
+  z-index: 0;
+}
+
+.text-in-button.text-press {
+  opacity: 0.6;
+}

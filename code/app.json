@@ -6,8 +6,10 @@
         "pages/OCR/OCR",
         "pages/getPic/getPic",
         "pages/index_test/index_test",
-        "pages/history_test/history_test"
-        
+        "pages/history_test/history_test",
+        "pages/voice_translation/voice_translation",
+        "pages/edit/edit",
+        "pages/choose_language/choose_language"
     ],
     "window": {
         "backgroundTextStyle": "light",
@@ -17,6 +19,13 @@
         "backgroundColor": "#4b3c96",
         "navigationStyle": "custom"
     },
+    "plugins": {
+        "WechatSI": {
+            "version": "0.3.3",
+            "provider": "wx069ba97219f66d99"
+        }
+    },
+    "sitemapLocation": "sitemap.json",
     "tabBar": {
         "borderStyle": "white",
         "position": "bottom",
@@ -29,8 +38,14 @@
                 "selectedIconPath": "imgs/sel-icon-1.png"
             },
             {
-              "pagePath": "pages/OCR/OCR",
-              "text": "拍照翻译",
+                "pagePath": "pages/OCR/OCR",
+                "text": "拍照翻译",
+                "iconPath": "imgs/icon-1.png",
+                "selectedIconPath": "imgs/sel-icon-1.png"
+            },
+            {
+              "pagePath": "pages/voice_translation/voice_translation",
+              "text": "语音翻译",
               "iconPath": "imgs/icon-1.png",
               "selectedIconPath": "imgs/sel-icon-1.png"
           },
