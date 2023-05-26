@@ -1,0 +1,180 @@
+/* * index.wxss * */
+.container{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    /* height: 100%; */
+    height: 500rpx;
+    /* background: linear-gradient(to bottom, #1493FC 40%, #FFFFFF 60%); */
+    background: #1493FC;
+}
+
+.container .logo{
+  position: fixed;
+  display: flex;
+  margin-top: 20rpx;
+  width: 387rpx;
+  height: 211rpx;
+  left: 20rpx;
+  top: 0rpx;
+}
+
+.container .background{
+  position: fixed;
+  display: flex;
+  width: 312rpx;
+  height: 288rpx;
+  right: 0;
+  top: 60rpx;
+}
+
+.change {
+  color: #8995a1;
+  font-size: 24 rpx;
+  /* padding: 20rpx 40rpx; */
+  display: flex;
+  align-items: center;
+  margin: 30rpx 50rpx 0;
+  margin-top: 220rpx;
+  padding: 32rpx 18rpx;
+  background-color: #1265dd;
+  border-radius: 16rpx;
+}
+.change .icon-right {
+  color: #888;
+}
+.change .icon-down {
+  color: #8995a1;
+  font-size: 20rpx;
+}
+
+.input-area {
+  position: relative;
+}
+.textarea-wrap {
+  background: #fff;
+  margin: 50rpx;
+  border-bottom: 1px solid #c7cee0;
+  padding: 0 32rpx;
+  background-color: #ffffff;
+  border-radius: 16rpx;
+  box-shadow: 0px 0px 2rpx #0000000a, 0px 0px 4rpx #0000000f, 0px 8rpx 16rpx #0000000a;
+  height: 300rpx;
+  left: 6.13%;
+  right: 6.67%;
+  top: 53.72%;
+  bottom: 0.55%;
+}
+.language{
+  font-size: 30rpx;
+  font-family: Poppins;
+  line-height: 26rpx;
+  color: #a8abb0;
+  margin-top: 10rpx;
+  margin-bottom: 10rpx;
+  font-family: Poppins;
+  line-height: 22rpx;
+}
+
+.language_pic{
+  margin-top: 20rpx;
+  width: 40rpx;
+  height: 40rpx;
+  vertical-align: text-bottom;
+}
+.language_from{
+  font-size: 30rpx;
+  font-family: Poppins;
+  line-height: 26rpx;
+  color: #a8abb0;
+  margin-top: 10rpx;
+  margin-bottom: 10rpx;
+  margin-left: 10rpx;
+  font-family: Poppins;
+  line-height: 22rpx;
+}
+
+.input-area textarea {
+  background-color: #fff;
+  padding: 30rpx 0 30rpx 10rpx;
+  /* width: calc(100% - 48rpx); */
+  width: auto;
+  margin: 0;
+  box-sizing: border-box;
+  height: 210rpx;
+  border-bottom: solid 2rpx #e7e7e7;
+  padding-right: 0;
+  
+}
+.input-area .icon-close {
+  position: absolute;
+  right: 12rpx;
+  top: 20rpx;
+  z-index: 100;
+  font-size: 40rpx;
+  color: #888;
+}
+.voice{
+  position: fixed;
+  margin-top: 20rpx;
+  width: 40rpx;
+  height: 40rpx;
+  vertical-align: text-bottom;
+  text-align: end;
+  right: 150rpx;
+}
+
+.copy{
+  position: fixed;
+  margin-top: 20rpx;
+  width: 40rpx;
+  height: 40rpx;
+  vertical-align: text-bottom;
+  right: 100rpx;
+}
+
+.input-area .output-area {
+  display: flex;
+  flex-direction: column;
+  min-height: 150rpx;
+  margin: 50rpx;
+  border-bottom: 1px solid #c7cee0;
+  padding: 0 32rpx;
+  background-color: #1493FC;
+  border-radius: 16rpx;
+  box-shadow: 0px 0px 2rpx #0000000a, 0px 0px 4rpx #0000000f, 0px 8rpx 16rpx #0000000a;
+  height: 300rpx;
+  left: 24px;
+  right: 24px;
+  top: 384px;
+  bottom: 262px;
+}
+
+.output-area .text-result {
+  margin-bottom: 10px; /* 这里的值可以根据你的需求来调整 */
+  min-height: 150rpx;
+  margin-top: 20rpx;
+  padding: 20rpx 0;
+  height: 150rpx;
+  border-bottom: solid 2rpx #e7e7e7;
+  color: #ffffff;
+  line-height: 32rpx;
+  font-size: 36rpx;
+  font-family: Poppins;
+  line-height: 33rpx;
+}
+
+.language_to{
+  font-size: 30rpx;
+  font-family: Poppins;
+  line-height: 26rpx;
+  color: #ffffff;
+  margin-top: 10rpx;
+  margin-bottom: 10rpx;
+  margin-left: 10rpx;
+  font-family: Poppins;
+  line-height: 22rpx;
+}
+
+

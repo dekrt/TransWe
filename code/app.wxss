@@ -1,0 +1,29 @@
+/**app.wxss**/
+
+@import "./assets/iconfont/iconfont.wxss";
+
+.container {
+  padding: 0;
+  background-color:#f7f8f9;
+  height: 100vh;
+  display: flex;
+  flex-direction:column;
+  box-sizing: border-box;
+  font-size: 30rpx;
+  color: #333;
+} 
+
+.copyright {
+  align-self: center;
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: 20rpx;
+  font-size: 28rpx;
+  color:#999;
+}
+
+.view-hover {
+  background-color: #f3f3f3!important;
+}
+

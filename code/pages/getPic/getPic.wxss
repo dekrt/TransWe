@@ -1,0 +1,9 @@
+/* pages/getPic/getPic.wxss */
+.btn {
+  background-color: #1493fc;
+  padding: 15rpx 20rpx;
+  color: #fff;
+  border-radius: 20rpx;
+  margin: 40rpx;
+  text-align: center;
+}

@@ -1,0 +1,43 @@
+ <!--index.wxml-->
+<view class="container">
+  <view class="background">
+    <image class = "logo" src = "../../imgs/logo.png"></image>
+    <image class = "background" src = "../../imgs/background.png"></image>
+  </view>
+  <view class="change">
+     <!-- navigator导航 -->
+    <navigator url="/pages/change/change" hover-class="navigator-hover">
+      <block>
+        <text>翻译成{{curLang.chs}}</text>
+        <text class="iconfont icon-down"></text>
+      </block> 
+    </navigator>
+  </view>
+  <view class="input-area">
+    <text class="iconfont icon-close" hidden="{{hideClearIcon}}" bindtap='onTapClose'></text>
+    <view class="textarea-wrap">
+      <textarea placeholder='请输入要翻译的文本' placeholder-style='color: #8995a1'  bindinput='onInput' bindconfirm='onConfirm' bindblur='onConfirm'  value="{{query}}"></textarea>
+      <view class="language">
+          <image class="language_pic" src="../../imgs/Chinese.png" />
+          <text class="language_from">中文</text>
+          <image class="voice" src="../../imgs/voice.png" mode="widthFix"/>
+          <image class="copy" src="../../imgs/copy.png" mode="widthFix"/>
+      </view>
+    </view>
+    
+    <view class="output-area">
+      <view class="text-result" wx:for="{{result}}" wx:key="index">
+        <text selectable="true" decode = "true">{{item.dst}} </text>
+        
+      </view>
+      <view class="language">
+          <image class="language_pic" src="../../imgs/English.png" />
+          <text class="language_to">英语</text>
+          <image class="voice" src="../../imgs/voice_white.png" mode="widthFix"/>
+          <image class="copy" src="../../imgs/copy_white.png" mode="widthFix"/>
+      </view>
+    </view>
+
+
+  </view>
+</view>
