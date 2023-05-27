@@ -58,7 +58,6 @@ Page({
       wx.setStorageSync('history', history)
     })
   },
- 
   copyTextIN: function(e) {
     wx.setClipboardData({
       data: this.data.query,
@@ -78,5 +77,10 @@ Page({
         });
       }
     });
-  }
+  },
+  onTapItem: function (e) {
+    wx.reLaunch({
+      url: `/pages/history/history`
+    })
+  },
 })

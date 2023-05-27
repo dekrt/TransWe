@@ -15,7 +15,7 @@
   </view>
   <view class="input-area">
     <view class="textarea-wrap">
-      <textarea placeholder='请输入要翻译的文本' placeholder-style='color: #8995a1' bindinput='onInput' bindconfirm='onConfirm' bindblur='onConfirm' value="{{query}}"></textarea>
+      <textarea placeholder='请输入要翻译的文本' placeholder-style=' color: #1e3163;line-height: 34rpx;font-size: 36rpx;font-family: Poppins;' bindinput='onInput' bindconfirm='onConfirm' bindblur='onConfirm' value="{{query}}"></textarea>
       <view class="language_from">
         <image class="language_pic" src="../../imgs/Chinese.png" />
         <text class="language_from_text">中文</text>
@@ -53,21 +53,21 @@
       </view>
       <view class="trans_history_list">
         <view class="item" wx:for="{{history}}" wx:key="index" bindtap='onTapItem' data-query="{{item.query}}" data-langId="{{item.langIndex}}">
-      <view class="query">
-        <view class="language">
-          <image src="../../imgs/Chinese.png" />
-          中文
+          <view class="query">
+            <view class="language">
+              <image src="../../imgs/Chinese.png" />
+              中文
+            </view>
+            {{item.query}}
+          </view>
+          <view class="result">
+            <view class="language">
+              <image src="../../imgs/English.png" />
+              英语
+            </view>
+            {{item.result}}
+          </view>
         </view>
-          {{item.query}}
-      </view>
-      <view class="result">
-        <view class="language">
-          <image src="../../imgs/English.png" />
-          英语
-        </view>
-        {{item.result}}
-      </view>
-    </view>
       </view>
     </view>
   </view>

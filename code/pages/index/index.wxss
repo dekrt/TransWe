@@ -65,6 +65,10 @@
   right: 6.67%;
   top: 53.72%;
   bottom: 0.55%;
+  color: #1e3163;
+  line-height: 34rpx;
+  font-size: 36rpx;
+  font-family: Poppins;
 }
 .language_from{
   bottom: auto;
@@ -155,10 +159,9 @@
 }
 
 .output-area .text-result {
-  margin-bottom: 10px; /* 这里的值可以根据你的需求来调整 */
   min-height: 150rpx;
-  margin-top: 20rpx;
-  padding: 20rpx 0;
+  /* margin-top: 20rpx; */
+  /* padding: 20rpx 0; */
   height: 150rpx;
   /* border-bottom: solid 2rpx #e7e7e7; */
   color: #ffffff;
@@ -205,7 +208,7 @@
 }
 
 .trans_history_area{
-  margin: 50rpx;
+  margin: 55rpx;
 }
 
 .trans_history_area .trans_history_title{
@@ -235,7 +238,7 @@
 
 .item {
   margin-top: 40rpx;
-  padding: 0 32rpx;
+  padding: 0 10rpx;
   background-color: #ffffff;
   border-radius: 16rpx;
   box-shadow: 0px 0px 2rpx #0000000a, 0px 0px 4rpx #0000000f, 0px 8rpx 16rpx #0000000a;
