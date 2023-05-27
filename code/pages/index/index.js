@@ -8,7 +8,8 @@ Page({
     query: '',   //输入文字
     hideClearIcon: false,   //close icon显现状态
     result: [],   //译文结果
-    curLang: {}   //当前语言
+    curLang: {},   //当前语言
+    history: []
   },
   onLoad: function (options) {  //翻译历史页通过 reLaunch 跳转，重新加载
     console.log('onload..')
@@ -19,11 +20,11 @@ Page({
     }
   }, 
   onShow: function () {
+    this.setData({ history: wx.getStorageSync('history') })
     if (this.data.curLang.lang !== app.globalData.curLang.lang) {
       this.setData({ curLang: app.globalData.curLang })
       this.onConfirm()
     }
-
   },
   onInput: function (e) {
     //传递用户输入的数据、close的展示跟隐藏
@@ -70,7 +71,7 @@ Page({
   },
   copyTextOUT: function(e) {
     wx.setClipboardData({
-      data: this.data.result[0].src,
+      data: this.data.result[0].dst,
       success: function(res) {
         wx.showToast({
           title: '复制成功',
