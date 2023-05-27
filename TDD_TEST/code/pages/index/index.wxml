@@ -1,12 +1,6 @@
 <!--index.wxml-->
-<view class="container">
-  <scroll-view id="scroll-content"
-    scroll-top="{{scroll_top}}"
-    scroll-y="true"
-    class="dialog-part"
-    scroll-into-view="translate-{{toView}}"
-    enable-back-to-top="true"
-    scroll-with-animation="true">
+<view class="flex-col justify-start page">
+
     <view class="dialog-wrap" id="translate-empty" wx:if="{{!recording && dialogList.length == 0}}">
       <result-bubble item="{{initTranslate}}" record-status="0"></result-bubble>
     </view>
@@ -18,12 +12,14 @@
         bindtranslate="translateTextAction"
         bindexpired="expiredAction"></result-bubble>
     </view>
+    <image
+  class="self-center image_4"
+  src="https://codefun-proj-user-res-1256085488.cos.ap-guangzhou.myqcloud.com/644bb0005a7e3f03102917b5/644bb06fb98f5d0011665f39/3631dcf41eae8f2bcc4b7679458f30d4.png"
+    />
     <view class="dialog-wrap" id="translate-recording" wx:if="{{recording}}">
       <result-bubble item="{{currentTranslate}}" record-status="{{recordStatus}}"></result-bubble>
     </view>
     <view id="translate-fake"></view>
-
-  </scroll-view>
 
   <view class="foot-group" catchlongpress="catchTapEvent">
     <bottom-button button-disabled="{{bottomButtonDisabled}}"

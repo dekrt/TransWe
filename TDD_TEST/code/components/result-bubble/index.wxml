@@ -6,8 +6,10 @@
       bindmodalleave="modalLeave"></modal>
   </view>
 
-  <view class="create-time">{{item.create}}</view>
   <view class="section-body" data-index="{{index}}" >
+
+
+
     <view class="send-message">
       <view data-id="{{item.id}}"  class="text-content"  data-index="{{index}}" >
         <view class="text-detail  text-detail-{{item.lfrom}}" >{{item.text}}<waiting-icon wx:if="{{recordStatus == 0}}"></waiting-icon></view>
@@ -24,16 +26,24 @@
           <image class="edit-icon-img" src="{{edit_icon_path}}" ></image>
       </navigator>
     </view>
+
+
     <view class="line-between"  wx:if="{{recordStatus > 0}}"></view>
-    <view class="translate-message" >
-      <view class="text-content">
-        <view class="text-detail text-detail-{{item.lto}}">{{item.translateText}}<waiting-icon wx:if="{{recordStatus == 1}}"></waiting-icon>
+
+
+
+    <view class="flex-col section space-y-76" >
+      <view class="text-detail text-detail-{{item.lto}}">{{item.translateText}}<waiting-icon wx:if="{{recordStatus == 1}}"></waiting-icon>
       </view>
-      </view>
-      <view class="play-icon" catchtap="playTranslateVoice" catchtouchstart="playTranslateVoice" wx:if="{{recordStatus == 2}}">
+      <view class="flex-row justify-between items-center group_3">
+        <view class="play-icon" catchtap="playTranslateVoice" catchtouchstart="playTranslateVoice" wx:if="{{recordStatus == 2}}">
         <play-icon play-type="{{playType}}"></play-icon>
       </view>
+      </view>
     </view>
+
+
+
   </view>
 </view>
 

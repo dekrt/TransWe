@@ -1,5 +1,5 @@
 /**app.wxss**/
-.container {
+/* .container {
   height: 100%;
   display: flex;
   display: -webkit-flex;
@@ -12,7 +12,7 @@
   font-family: "PingFang-SC-Regular","SimSun","Microsoft Yahei";
   font-variant-ligatures: none;
   background-color: #FAFAFA;
-}
+} */
 page {
   height: 100%;
   width: 100%;

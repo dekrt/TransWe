@@ -1,14 +1,3 @@
-/*
-Tencent is pleased to support the open source community by making Face-2-Face Translator available.
-
-Copyright (C) 2018 THL A29 Limited, a Tencent company. All rights reserved.
-
-Licensed under the MIT License (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
-http://opensource.org/licenses/MIT
-
-Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
-*/
-
 import { language } from '../../utils/conf.js'
 
 let buttons = []
@@ -27,15 +16,10 @@ language.forEach(item=>{
 // 按钮对应图片
 let buttonBackground = {
   zh_CN: {
-    normal: '../../image/button_zh.png',
-    press: '../../image/button_zh_press.png',
-    disabled: '../../image/button_zh_disabled.png',
+    normal: 'https://codefun-proj-user-res-1256085488.cos.ap-guangzhou.myqcloud.com/644bb0005a7e3f03102917b5/644bb06fb98f5d0011665f39/16843909456953138611.png',
+    press: 'https://codefun-proj-user-res-1256085488.cos.ap-guangzhou.myqcloud.com/644bb0005a7e3f03102917b5/644bb06fb98f5d0011665f39/16843909456953138611.png',
+    disabled: 'https://codefun-proj-user-res-1256085488.cos.ap-guangzhou.myqcloud.com/644bb0005a7e3f03102917b5/644bb06fb98f5d0011665f39/16843909456953138611.png',
   },
-  en_US: {
-    normal: '../../image/Ellipse 4.png',
-    press: '../../image/Ellipse 4.png',
-    disabled: '../../image/Ellipse 4.png',
-  }
 }
 
 Component({

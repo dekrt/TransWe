@@ -4,11 +4,7 @@
     "pages/edit/edit"
   ],
   "window": {
-    "backgroundTextStyle": "dark",
-    "backgroundColor": "#33EA52",
-    "navigationBarBackgroundColor": "#FAFAFA",
-    "navigationBarTitleText": "TransWe",
-    "navigationBarTextStyle": "black"
+    "navigationStyle": "custom"
   },
   "plugins": {
     "WechatSI": {

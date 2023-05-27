@@ -9,7 +9,7 @@
   width: 100%;
   display: -webkit-flex;
   display: flex;
-  background: #FAFAFA;
+  background: #1392fb;
 }
 
 .button-container{
@@ -35,7 +35,7 @@
   -webkit-justify-content: flex-start;
   align-items: center;
   -webkit-align-items: center;
-  width: 240rpx;
+  width: 600rpx;
   box-sizing: border-box;
 }
 .button-label {
@@ -74,4 +74,24 @@
 
 .text-in-button.text-press {
   opacity: 0.6;
+}
+
+
+
+.section_3 {
+  padding: 28rpx 0;
+  background-color: #044ad2;
+  border-radius: 50%;
+  width: 184rpx;
+}
+.image-wrapper {
+  padding: 26rpx 0;
+  background-image: url('https://codefun-proj-user-res-1256085488.cos.ap-guangzhou.myqcloud.com/644bb0005a7e3f03102917b5/644bb06fb98f5d0011665f39/16843909456939590312.png');
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  width: 128rpx;
+}
+.image_6 {
+  width: 76rpx;
+  height: 76rpx;
 }
