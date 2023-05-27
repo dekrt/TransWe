@@ -5,10 +5,12 @@
     "include": []
   },
   "setting": {
-    "urlCheck": true,
+    "urlCheck": false,
     "es6": true,
     "postcss": true,
     "minified": true,
+    "ignoreDevUnusedFiles": false,
+    "ignoreUploadUnusedFiles": false,
     "newFeature": true,
     "babelSetting": {
       "ignore": [],
@@ -19,8 +21,10 @@
   },
   "compileType": "miniprogram",
   "libVersion": "2.32.0",
-  "appid": "wxff574b0f6ca745d5",
+  "appid": "wx365790a8c04e3a3b",
   "projectname": "TransWe",
+  "simulatorType": "wechat",
+  "simulatorPluginLibVersion": {},
   "condition": {},
   "editorSetting": {
     "tabIndent": "insertSpaces",
