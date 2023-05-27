@@ -25,7 +25,7 @@
     />
     <text class="text">中文</text>
     
- <navigator url="../../pages/Choose Language/Choose Language" open-type="navigate" style="display: inline-block">
+ <navigator url="../../pages/choose_language/choose_language" open-type="navigate" style="display: inline-block">
     <image 
     class="image_1 image_2" 
     src="https://codefun-proj-user-res-1256085488.cos.ap-guangzhou.myqcloud.com/644bb0005a7e3f03102917b5/644bb06fb98f5d0011665f39/16826823175947465018.png"

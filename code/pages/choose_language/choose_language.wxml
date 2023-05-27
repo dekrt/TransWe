@@ -1,12 +1,9 @@
 <view class="flex-col page space-y-44">
   <view class="flex-row items-center group space-x-8">
 
-  <navigator url="../../pages/voice_translation/voice_translation" open-type="navigate" style="display: inline-block">
-    <image
-      class="image"
-      src="https://codefun-proj-user-res-1256085488.cos.ap-guangzhou.myqcloud.com/644bb0005a7e3f03102917b5/644bb06fb98f5d0011665f39/16826823178832312884.png"
-    />
-  </navigator>
+    <navigator url="../../pages/index/index" open-type="redirect" style="display: inline-block">
+    <image class="image" src="https://codefun-proj-user-res-1256085488.cos.ap-guangzhou.myqcloud.com/644bb0005a7e3f03102917b5/644bb06fb98f5d0011665f39/16826823178832312884.png" />
+    </navigator>
 
     <text class="text">选择语言</text>
   </view>
@@ -28,10 +25,12 @@
       <view class="flex-col space-y-16">
         <view
           class="flex-row items-center {{selectedIndex1 == i && isClicked1 == false || selectedIndex2 == i && isClicked1 == true ? 'list-item' : 'list-item_2'}} space-x-24"
-          wx:key="*this"
+          wx:for="{{list_aPbtoDn5}}"
+          wx:key="index"
           wx:for-item="item"
           wx:for-index="i"
-          wx:for="{{list_aPbtoDn5}}"
+          data-chs="{{item.chs}}" 
+          data-lang="{{item.lang}}"
           data-index="{{i}}"
           bindtap="handleTap"
         >

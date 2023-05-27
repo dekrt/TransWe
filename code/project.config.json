@@ -9,6 +9,8 @@
     "es6": true,
     "postcss": true,
     "minified": true,
+    "ignoreDevUnusedFiles": false,
+    "ignoreUploadUnusedFiles": false,
     "newFeature": true,
     "babelSetting": {
       "ignore": [],
