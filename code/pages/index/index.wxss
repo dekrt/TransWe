@@ -127,11 +127,13 @@
 
 .copy{
   position: fixed;
-  margin-top: 20rpx;
+  margin-top: -45rpx;
   width: 40rpx;
   height: 40rpx;
-  vertical-align: text-bottom;
   right: 100rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .input-area .output-area {

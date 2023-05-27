@@ -21,7 +21,11 @@
           <image class="language_pic" src="../../imgs/Chinese.png" />
           <text class="language_from">中文</text>
           <image class="voice" src="../../imgs/voice.png" mode="widthFix"/>
-          <image class="copy" src="../../imgs/copy.png" mode="widthFix"/>
+
+          <view  class="copy" bindtap="copyTextIN">
+          <image  src="../../imgs/copy.png" mode="widthFix"/>
+        </view>
+
       </view>
     </view>
     
@@ -34,7 +38,11 @@
           <image class="language_pic" src="../../imgs/English.png" />
           <text class="language_to">英语</text>
           <image class="voice" src="../../imgs/voice_white.png" mode="widthFix"/>
-          <image class="copy" src="../../imgs/copy_white.png" mode="widthFix"/>
+
+          <view  class="copy" bindtap="copyTextOUT">
+          <image src="../../imgs/copy_white.png" mode="widthFix"/>
+        </view>
+        
       </view>
     </view>
 

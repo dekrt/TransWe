@@ -56,5 +56,26 @@ Page({
       history.length = history.length > 10 ? 10 : history.length
       wx.setStorageSync('history', history)
     })
+  },
+ 
+  copyTextIN: function(e) {
+    wx.setClipboardData({
+      data: this.data.query,
+      success: function(res) {
+        wx.showToast({
+          title: '复制成功',
+        });
+      }
+    });
+  },
+  copyTextOUT: function(e) {
+    wx.setClipboardData({
+      data: this.data.result[0].src,
+      success: function(res) {
+        wx.showToast({
+          title: '复制成功',
+        });
+      }
+    });
   }
 })
