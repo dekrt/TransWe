@@ -2,13 +2,15 @@
 //获取应用实例
 import { translate } from '../../utils/api.js'
 const app = getApp()
-
+const plugin = requirePlugin("WechatSI")
 Page({
   data: {
     query: '',   //输入文字
     hideClearIcon: false,   //close icon显现状态
     result: [],   //译文结果
-    curLang: {},   //当前语言
+    curLang: {} , //当前语言
+    currentTranslateVoice: '',  // 当前播放语音路径
+    currentsound:'', //当前语音合成语言
     history: []
   },
   onLoad: function (options) {  //翻译历史页通过 reLaunch 跳转，重新加载
@@ -58,6 +60,7 @@ Page({
       wx.setStorageSync('history', history)
     })
   },
+ 
   copyTextIN: function(e) {
     wx.setClipboardData({
       data: this.data.query,
@@ -78,7 +81,48 @@ Page({
       }
     });
   },
-  onTapItem: function (e) {
+  playTranslateVoice: function(e) {
+    let componentId = e.currentTarget.dataset.id;
+    console.log(componentId);
+    this.setData({
+      currentsound: wx.getStorageSync('currentsound') || 'en_US'
+    })
+    let lto = this.data.currentsound
+    let content = (componentId === 'src') ? this.data.result[0].src : this.data.result[0].dst
+    console.log("content",content)
+    plugin.textToSpeech({
+      lang: lto,
+      content: content,
+      success: resTrans => {
+        if(resTrans.retcode == 0) {
+          this.setData({
+            currentTranslateVoice: resTrans.filename,
+          })
+          let play_path = this.data.currentTranslateVoice
+          if(!play_path) {
+            console.warn("no translate voice path")
+            return
+          }
+          let audio = wx.createInnerAudioContext()
+          audio.src = play_path // 设置音频的源
+          audio.play() // 播放音频
+          audio.onError((res) => {
+            console.log(res.errMsg)
+            console.log(res.errCode)
+        })
+          
+        } else {
+          console.warn("语音合成失败", resTrans)
+        }
+      },
+      fail: function(resTrans) {
+        console.warn("语音合成失败", resTrans)
+      }
+  })
+     
+
+    },
+    onTapItem: function (e) {
     wx.reLaunch({
       url: `/pages/history/history`
     })

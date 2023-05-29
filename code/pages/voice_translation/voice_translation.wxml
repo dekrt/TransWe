@@ -19,18 +19,19 @@
 
     <view class="flex-row justify-between items-center relative group_2">
   <view class="flex-row items-center self-stretch group_3 space-x-8">
-    <image
-      class="shrink-0 image_1"
-      src="https://codefun-proj-user-res-1256085488.cos.ap-guangzhou.myqcloud.com/644bb0005a7e3f03102917b5/644bb06fb98f5d0011665f39/153cd789341a2b9a6a2d1ac163978ba0.png"
-    />
-    <text class="text">中文</text>
+    <image wx:if="{{fromlanguage}}" class="shrink-0 image_1" src="{{image_c}}" />
+    <image wx:else class="shrink-0 image_1" src="{{image_e}}" />
+    <text class="text" wx:if="{{fromlanguage}}">中文</text>
+    <text class="text" wx:else>英文</text>
     
- <navigator url="../../pages/choose_language/choose_language" open-type="navigate" style="display: inline-block">
+ 
+   <view bindtap="changelanguage" style="display: inline-block">
     <image 
     class="image_1 image_2" 
-    src="https://codefun-proj-user-res-1256085488.cos.ap-guangzhou.myqcloud.com/644bb0005a7e3f03102917b5/644bb06fb98f5d0011665f39/16826823175947465018.png"
+    src="../../imgs/Vector.png"
     />
-</navigator>
+   </view>
+
 
   </view>
 </view>
@@ -49,9 +50,11 @@
         bindtranslate="translateTextAction"
         bindexpired="expiredAction"></result-bubble>
     </view>
+    
     <view class="dialog-wrap" id="translate-recording" wx:if="{{recording}}">
       <result-bubble item="{{currentTranslate}}" record-status="{{recordStatus}}"></result-bubble>
     </view>
+
     <view id="translate-fake"></view>
 
 

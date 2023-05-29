@@ -132,14 +132,35 @@
 
 .copy{
   position: fixed;
-  margin-top: -42rpx;
-  width: 40rpx;
-  height: 40rpx;
+  margin-top: -45rpx;
+  width: 50rpx;
+  height: 50rpx;
   right: 100rpx;
   display: flex;
   align-items: center;
   justify-content: center;
 }
+
+
+.play-icon {
+  position: absolute;
+  right: 3rpx;
+  bottom: 7rpx;
+  padding: 0 8rpx;
+  display: flex;
+  align-items: center;
+}
+
+.edit-icon::before
+.play-icon::before {
+  content:"";
+  position:absolete;
+  top:-10rpx;
+  left:-10rpx;
+  bottom:-10rpx;
+  right:-10rpx;
+}
+
 
 .input-area .output-area {
   display: flex;

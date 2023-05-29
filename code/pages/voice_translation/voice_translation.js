@@ -6,8 +6,9 @@ const util = require('../../utils/util.js')
 
 const plugin = requirePlugin("WechatSI")
 
-import { language } from '../../utils/conf.js'
-
+import { language} from '../../utils/conf.js'
+import { en_lan} from '../../utils/conf.js'
+import { ch_lan} from '../../utils/conf.js'
 
 // 获取**全局唯一**的语音识别管理器**recordRecoManager**
 const manager = plugin.getRecordRecognitionManager()
@@ -18,6 +19,7 @@ Page({
     dialogList: [
     //初始为空
     ],
+    fromlanguage:true,
     scroll_top: 10000, // 竖向滚动条位置
 
     bottomButtonDisabled: false, // 底部按钮disabled
@@ -41,6 +43,8 @@ Page({
     toView: 'fake',  // 滚动位置
     lastId: -1,    // dialogList 最后一个item的 id
     currentTranslateVoice: '', // 当前播放语音路径
+    image_c:'https://codefun-proj-user-res-1256085488.cos.ap-guangzhou.myqcloud.com/644bb0005a7e3f03102917b5/644bb06fb98f5d0011665f39/153cd789341a2b9a6a2d1ac163978ba0.png',
+    image_e:'https://codefun-proj-user-res-1256085488.cos.ap-guangzhou.myqcloud.com/644bb0005a7e3f03102917b5/644bb06fb98f5d0011665f39/e9fc70c625980d75443bf2ae1516d24f.png'
   },
 
 
@@ -93,7 +97,13 @@ Page({
     })
   },
 
+  changelanguage:function(){
 
+  this.setData({
+  fromlanguage :!this.data.fromlanguage,
+})
+
+},
 
   /**
    * 翻译
@@ -175,9 +185,6 @@ Page({
     let index = detail.index
 
     this.translateText(item, index)
-
-
-
   },
 
   /**
@@ -342,7 +349,7 @@ Page({
     }
 
     // 语音播放开始事件
-    wx.onBackgroundAudioPlay(res=>{
+    wx.getBackgroundAudioManager (res=>{
 
       const backgroundAudioManager = wx.getBackgroundAudioManager()
       let src = backgroundAudioManager.src

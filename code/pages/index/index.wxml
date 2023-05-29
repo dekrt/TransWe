@@ -35,8 +35,8 @@
         </view>
       </view>
       <view class="language_to">
-        <image class="language_pic" src="../../imgs/English.png" />
-        <text class="language_to_text">英语</text>
+        <image class="language_pic" src="{{curLang.src}}" />
+        <text class="language_to_text">{{curLang.chs}}</text>
         <image class="voice" src="../../imgs/voice_white.png" mode="widthFix" />
 
         <view class="copy" bindtap="copyTextOUT">

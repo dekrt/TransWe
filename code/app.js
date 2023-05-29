@@ -58,12 +58,14 @@ App({
     langList: [{
       'chs': '英文',
       "lang": 'en',
-      "index": 0
+      "index": 0,
+      "src":"https://codefun-proj-user-res-1256085488.cos.ap-guangzhou.myqcloud.com/644bb0005a7e3f03102917b5/644bb06fb98f5d0011665f39/1117504288074e5a51c1cc92bf0eeadb.png"
     },
     {
       'chs': '中文',
       'lang': 'zh',
-      "index": 1
+      "index": 1,
+      "src":"https://codefun-proj-user-res-1256085488.cos.ap-guangzhou.myqcloud.com/644bb0005a7e3f03102917b5/644bb06fb98f5d0011665f39/ac7f93cc16a6602c18750922cf92014c.png"
     },
     {
       'chs': '日语',
@@ -73,7 +75,8 @@ App({
     {
       'chs': '韩语',
       'lang': 'kor',
-      "index": 3
+      "index": 3,
+      "src":"https://codefun-proj-user-res-1256085488.cos.ap-guangzhou.myqcloud.com/644bb0005a7e3f03102917b5/644bb06fb98f5d0011665f39/16826823185920520575.png"
     },
     {
       'chs': '法语',
@@ -83,7 +86,8 @@ App({
     {
       'chs': '德语',
       'lang': 'de',
-      "index": 5
+      "index": 5,
+      "src":"https://codefun-proj-user-res-1256085488.cos.ap-guangzhou.myqcloud.com/644bb0005a7e3f03102917b5/644bb06fb98f5d0011665f39/16826823185577922182.png"
     },
     {
       'chs': '俄语',
