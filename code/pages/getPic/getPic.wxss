@@ -20,4 +20,5 @@
     width: 110rpx;
     height: 110rpx;
     text-align: center;
+    margin-top: 50rpx;
 }
