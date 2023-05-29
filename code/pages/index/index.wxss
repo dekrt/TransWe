@@ -65,8 +65,13 @@
   right: 6.67%;
   top: 53.72%;
   bottom: 0.55%;
+  color: #1e3163;
+  line-height: 34rpx;
+  font-size: 36rpx;
+  font-family: Poppins;
 }
-.language{
+.language_from{
+  bottom: auto;
   font-size: 30rpx;
   font-family: Poppins;
   line-height: 26rpx;
@@ -83,7 +88,7 @@
   height: 40rpx;
   vertical-align: text-bottom;
 }
-.language_from{
+.language_from_text{
   font-size: 30rpx;
   font-family: Poppins;
   line-height: 26rpx;
@@ -117,7 +122,7 @@
 }
 .voice{
   position: fixed;
-  margin-top: -45rpx;
+  margin-top: 20rpx;
   width: 40rpx;
   height: 40rpx;
   vertical-align: text-bottom;
@@ -128,8 +133,8 @@
 .copy{
   position: fixed;
   margin-top: -45rpx;
-  width: 40rpx;
-  height: 40rpx;
+  width: 50rpx;
+  height: 50rpx;
   right: 100rpx;
   display: flex;
   align-items: center;
@@ -175,6 +180,19 @@
 }
 
 .output-area .text-result {
+  min-height: 150rpx;
+  /* margin-top: 20rpx; */
+  /* padding: 20rpx 0; */
+  height: 150rpx;
+  /* border-bottom: solid 2rpx #e7e7e7; */
+  color: #ffffff;
+  line-height: 32rpx;
+  font-size: 36rpx;
+  font-family: Poppins;
+  line-height: 33rpx;
+}
+
+.output-area .result {
   margin-bottom: 10px; /* 这里的值可以根据你的需求来调整 */
   min-height: 150rpx;
   margin-top: 20rpx;
@@ -187,8 +205,18 @@
   font-family: Poppins;
   line-height: 33rpx;
 }
-
 .language_to{
+  /* bottom: auto; */
+  font-size: 30rpx;
+  font-family: Poppins;
+  line-height: 26rpx;
+  color: #a8abb0;
+  /* margin-top: 10rpx; */
+  margin-bottom: 10rpx;
+  font-family: Poppins;
+  line-height: 22rpx;
+}
+.language_to_text{
   font-size: 30rpx;
   font-family: Poppins;
   line-height: 26rpx;
@@ -200,4 +228,79 @@
   line-height: 22rpx;
 }
 
+.trans_history_area{
+  margin: 55rpx;
+}
 
+.trans_history_area .trans_history_title{
+  align-items: center;
+  justify-content: space-between;
+  display: flex;
+  flex-direction: row;
+}
+
+.trans_history_area .trans_history_title .trans_history_title_chi{
+    color: transparent;
+    font-size: 32rpx;
+    font-family: Poppins;
+    font-weight: 700;
+    line-height: 30rpx;
+    background-image: linear-gradient(180deg, #0064e1 0%, #0845c2 100%);
+    -webkit-background-clip: text;
+}
+
+.trans_history_area .trans_history_title .trans_history_title_eng{
+    color: #949494;
+    line-height: 24rpx;
+    font-style: italic;
+    font-family: Poppins;
+    line-height: 22rpx;
+}
+
+.item {
+  margin-top: 40rpx;
+  padding: 0 10rpx;
+  background-color: #ffffff;
+  border-radius: 16rpx;
+  box-shadow: 0px 0px 2rpx #0000000a, 0px 0px 4rpx #0000000f, 0px 8rpx 16rpx #0000000a;
+}
+
+.item .query {
+  padding: 20rpx;
+  border-bottom: solid 2rpx #e7e7e7;
+  font-size: 32rpx;
+  font-family: Poppins;
+  line-height: 50rpx;
+  color: #1e3163;
+}
+.item .query .language{
+    font-size: 28rpx;
+    font-family: Poppins;
+    line-height: 26rpx;
+    color: #a8abb0;
+    margin-top: 10rpx;
+    margin-bottom: 10rpx;
+}
+
+.item .result {
+  margin-top: 16rpx;
+  padding: 20rpx;
+  font-size: 32rpx;
+  font-family: Poppins;
+  line-height: 50rpx;
+  color: #1e3163;
+}
+
+.item .result .language{
+  font-size: 28rpx;
+  font-family: Poppins;
+  line-height: 26rpx;
+  color: #909dbd;
+  margin-bottom: 10rpx;
+}
+
+image{
+  width: 30rpx;
+  height: 30rpx;
+  vertical-align: bottom;
+}

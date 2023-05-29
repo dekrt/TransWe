@@ -1,9 +1,24 @@
 /* pages/getPic/getPic.wxss */
 .btn {
   background-color: #1493fc;
+  width: 200rpx;
   padding: 15rpx 20rpx;
   color: #fff;
   border-radius: 20rpx;
   margin: 40rpx;
   text-align: center;
+}
+.toolbar{
+  display: flex;
+  width: auto;
+  height: 100rpx;
+  justify-content: center;
+  align-items: center;
+}
+
+.shot{
+    width: 110rpx;
+    height: 110rpx;
+    text-align: center;
+    margin-top: 50rpx;
 }

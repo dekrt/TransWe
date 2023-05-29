@@ -32,7 +32,7 @@ Page({
         //提出图片里的文字
         var that = this;
         wx.request({
-            url: '',
+            url: 'https://api.jisuapi.com/generalrecognition/recognize?appkey=993bfd80d8ac15c6',
             data: {
                 pic: this.data.src,
                 type: "cnen"
