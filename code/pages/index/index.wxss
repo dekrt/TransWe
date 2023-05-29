@@ -122,7 +122,7 @@
 }
 .voice{
   position: fixed;
-  margin-top: -45rpx;
+  margin-top: 20rpx;
   width: 40rpx;
   height: 40rpx;
   vertical-align: text-bottom;
@@ -132,9 +132,9 @@
 
 .copy{
   position: fixed;
-  margin-top: -42rpx;
-  width: 40rpx;
-  height: 40rpx;
+  margin-top: -45rpx;
+  width: 50rpx;
+  height: 50rpx;
   right: 100rpx;
   display: flex;
   align-items: center;

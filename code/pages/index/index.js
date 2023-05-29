@@ -11,6 +11,7 @@ Page({
     curLang: {} , //当前语言
     currentTranslateVoice: '',  // 当前播放语音路径
     currentsound:'', //当前语音合成语言
+    history: []
   },
   onLoad: function (options) {  //翻译历史页通过 reLaunch 跳转，重新加载
     console.log('onload..')
@@ -59,6 +60,7 @@ Page({
       wx.setStorageSync('history', history)
     })
   },
+ 
   copyTextIN: function(e) {
     wx.setClipboardData({
       data: this.data.query,
