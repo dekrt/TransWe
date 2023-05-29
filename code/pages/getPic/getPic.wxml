@@ -1,6 +1,6 @@
 <!--pages/getPic/getPic.wxml-->
-<view bindtap = "takeShot" class = "btn">
-  拍照
+<camera style="margin-top:150rpx;width:100%;height:1200rpx"></camera>
+<view class="toolbar">
+    <image class = "shot" src="../../imgs/takeshot.png" bindtap = "takeShot"></image>
 </view>
-<camera style="width:100%;height:300px"></camera>
 

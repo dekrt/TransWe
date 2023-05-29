@@ -38,7 +38,7 @@
                 "selectedIconPath": "imgs/sel-icon-1.png"
             },
             {
-                "pagePath": "pages/OCR/OCR",
+                "pagePath": "pages/getPic/getPic",
                 "text": "拍照翻译",
                 "iconPath": "imgs/icon-1.png",
                 "selectedIconPath": "imgs/sel-icon-1.png"

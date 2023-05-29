@@ -1,51 +1,74 @@
- <!--index.wxml-->
+<!--index.wxml-->
 <view class="container">
   <view class="background">
-    <image class = "logo" src = "../../imgs/logo.png"></image>
-    <image class = "background" src = "../../imgs/background.png"></image>
+    <image class="logo" src="../../imgs/logo.png"></image>
+    <image class="background" src="../../imgs/background.png"></image>
   </view>
   <view class="change">
-     <!-- navigator导航 -->
+    <!-- navigator导航 -->
     <navigator url="/pages/choose_language/choose_language" hover-class="navigator-hover">
       <block>
         <text>翻译成{{curLang.chs}}</text>
         <text class="iconfont icon-down"></text>
-      </block> 
+      </block>
     </navigator>
   </view>
   <view class="input-area">
-    <text class="iconfont icon-close" hidden="{{hideClearIcon}}" bindtap='onTapClose'></text>
     <view class="textarea-wrap">
-      <textarea placeholder='请输入要翻译的文本' placeholder-style='color: #8995a1'  bindinput='onInput' bindconfirm='onConfirm' bindblur='onConfirm'  value="{{query}}"></textarea>
-      <view class="language">
-          <image class="language_pic" src="../../imgs/Chinese.png" />
-          <text class="language_from">中文</text>
-          <image class="voice" src="../../imgs/voice.png" mode="widthFix"/>
+      <textarea placeholder='请输入要翻译的文本' placeholder-style=' color: #1e3163;line-height: 34rpx;font-size: 36rpx;font-family: Poppins;' bindinput='onInput' bindconfirm='onConfirm' bindblur='onConfirm' value="{{query}}"></textarea>
+      <view class="language_from">
+        <image class="language_pic" src="../../imgs/Chinese.png" />
+        <text class="language_from_text">中文</text>
+        <image class="voice" src="../../imgs/voice.png" mode="widthFix" />
 
-          <view  class="copy" bindtap="copyTextIN">
-          <image  src="../../imgs/copy.png" mode="widthFix"/>
+        <view class="copy" bindtap="copyTextIN">
+          <image src="../../imgs/copy.png" mode="widthFix" />
         </view>
 
       </view>
     </view>
-    
+
     <view class="output-area">
-      <view class="text-result" wx:for="{{result}}" wx:key="index">
-        <text selectable="true" decode = "true">{{item.dst}} </text>
-        
-      </view>
-      <view class="language">
-          <image class="language_pic" src="../../imgs/English.png" />
-          <text class="language_to">英语</text>
-          <image class="voice" src="../../imgs/voice_white.png" mode="widthFix"/>
-
-          <view  class="copy" bindtap="copyTextOUT">
-          <image src="../../imgs/copy_white.png" mode="widthFix"/>
+      <view class="result">
+        <view class="text-result" wx:for="{{result}}" wx:key="index">
+          <text selectable="true" decode="true">{{item.dst ? item.dst : " "}}</text>
         </view>
-        
+      </view>
+      <view class="language_to">
+        <image class="language_pic" src="../../imgs/English.png" />
+        <text class="language_to_text">英语</text>
+        <image class="voice" src="../../imgs/voice_white.png" mode="widthFix" />
+
+        <view class="copy" bindtap="copyTextOUT">
+          <image src="../../imgs/copy_white.png" mode="widthFix" />
+        </view>
+
       </view>
     </view>
-
-
+    <!-- 翻译历史模块 -->
+    <view class="trans_history_area">
+      <view class="trans_history_title">
+        <view class="trans_history_title_chi">翻译历史</view>
+        <view class="trans_history_title_eng">Translation History</view>
+      </view>
+      <view class="trans_history_list">
+        <view class="item" wx:for="{{history}}" wx:key="index" bindtap='onTapItem' data-query="{{item.query}}" data-langId="{{item.langIndex}}">
+          <view class="query">
+            <view class="language">
+              <image src="../../imgs/Chinese.png" />
+              中文
+            </view>
+            {{item.query}}
+          </view>
+          <view class="result">
+            <view class="language">
+              <image src="../../imgs/English.png" />
+              英语
+            </view>
+            {{item.result}}
+          </view>
+        </view>
+      </view>
+    </view>
   </view>
 </view>
