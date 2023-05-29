@@ -1,10 +1,10 @@
 <view class = "container">
-    <view bindtap = "uploadImg" class = "btn">
+    <!-- <view bindtap = "uploadImg" class = "btn">
         选择图片上传
-    </view>
-    <image src="data:image/png;base64,{{src}}"></image>
+    </view> -->
+    <image src="data:image/png;base64,{{src}}" style="margin-top:50rpx;width:100%;height:1200rpx"></image>
     <view bindtap = "getOCR" class = "btn">
-        翻译图片
+        翻译图片 
     </view>
     <view class="source">
       <text>{{sourceText}}</text>
@@ -12,11 +12,4 @@
     <view class="result">
       <text>{{resultText}}</text>
     </view>
-    <!-- <view class="result">
-      <view wx:for="{{resultText}}" wx:key="*this">
-        <text>
-          {{item}}
-        </text>
-      </view>
-    </view> -->
 </view>

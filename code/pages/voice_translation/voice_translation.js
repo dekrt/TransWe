@@ -6,8 +6,9 @@ const util = require('../../utils/util.js')
 
 const plugin = requirePlugin("WechatSI")
 
-import { language } from '../../utils/conf.js'
-
+import { language} from '../../utils/conf.js'
+import { en_lan} from '../../utils/conf.js'
+import { ch_lan} from '../../utils/conf.js'
 
 // 获取**全局唯一**的语音识别管理器**recordRecoManager**
 const manager = plugin.getRecordRecognitionManager()
