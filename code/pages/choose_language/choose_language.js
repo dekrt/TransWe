@@ -9,12 +9,14 @@ Page({
         "text": "中文",
         'chs': '中文',
         'lang': 'zh',
+        'sound':'zh_CN'
       },
       {
         "image":"https://codefun-proj-user-res-1256085488.cos.ap-guangzhou.myqcloud.com/644bb0005a7e3f03102917b5/644bb06fb98f5d0011665f39/1117504288074e5a51c1cc92bf0eeadb.png",
         "text": "英语",
         'chs': '英文',
         'lang': 'en',
+        'sound':'en_US'
       },
       {
         "image":"https://codefun-proj-user-res-1256085488.cos.ap-guangzhou.myqcloud.com/644bb0005a7e3f03102917b5/644bb06fb98f5d0011665f39/16826823185577922182.png",
@@ -36,6 +38,7 @@ Page({
     langList: app.globalData.langList,
     curLang: {},  //存储当前语言
     targetLang: {},
+    currentsound:'',
   },
 
   onShareAppMessage() {
@@ -56,7 +59,8 @@ Page({
   handleTap: function(e) {
     let langObj = e.currentTarget.dataset
     var index = langObj.index;
-    console.log("Clicked item index: ", index);
+    var sound =langObj.sound;
+    console.log("Clicked item index and sound : ", index,sound);
     if (!this.data.isClicked1) {
       this.setData({
         selectedIndex1: index
@@ -65,15 +69,16 @@ Page({
       this.setData({
         selectedIndex2: index,
         targetLang: langObj,
+        currentsound:sound
       });
+      wx.setStorageSync('currentsound', this.data.currentsound);
       wx.setStorageSync('language', langObj)
       this.setData({ 'curLang': langObj })
       app.globalData.curLang = langObj
     }
     console.log("Selected item: ", this.data.curLang, this.data.targetLang);
-    
     //逻辑
-   
+    
   },
   
   onShow: function () {

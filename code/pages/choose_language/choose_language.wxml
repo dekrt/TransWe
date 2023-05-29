@@ -32,6 +32,8 @@
           data-chs="{{item.chs}}" 
           data-lang="{{item.lang}}"
           data-index="{{i}}"
+          data-src="{{item.image}}"
+          data-sound="{{item.sound ? item.sound : 'en_US'}}"
           bindtap="handleTap"
         >
           <image

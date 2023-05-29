@@ -130,8 +130,6 @@ Component({
           index: this.data.index,
         })
       }
-
-
     },
 
     /**
