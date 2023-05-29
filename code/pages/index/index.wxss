@@ -122,7 +122,7 @@
 }
 .voice{
   position: fixed;
-  margin-top: 20rpx;
+  margin-top: -40rpx;
   width: 40rpx;
   height: 40rpx;
   vertical-align: text-bottom;

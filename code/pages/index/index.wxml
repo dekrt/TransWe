@@ -19,7 +19,11 @@
       <view class="language_from">
         <image class="language_pic" src="../../imgs/Chinese.png" />
         <text class="language_from_text">中文</text>
-        <image class="voice" src="../../imgs/voice.png" mode="widthFix" />
+          <view  data-id="src"
+          catchtap="playTranslateVoice" 
+          catchtouchstart="playTranslateVoice">
+          <image class="voice" src="../../imgs/voice.png" mode="widthFix"/>
+        </view>
 
         <view class="copy" bindtap="copyTextIN">
           <image src="../../imgs/copy.png" mode="widthFix" />
@@ -37,7 +41,12 @@
       <view class="language_to">
         <image class="language_pic" src="{{curLang.src}}" />
         <text class="language_to_text">{{curLang.chs}}</text>
-        <image class="voice" src="../../imgs/voice_white.png" mode="widthFix" />
+
+        <view  data-id="tar"
+          catchtap="playTranslateVoice" 
+          catchtouchstart="playTranslateVoice">
+            <image class="voice" src="../../imgs/voice_white.png" mode="widthFix"/>
+          </view>
 
         <view class="copy" bindtap="copyTextOUT">
           <image src="../../imgs/copy_white.png" mode="widthFix" />
