@@ -1,0 +1,48 @@
+<view class="flex-col page space-y-44">
+  <view class="flex-row items-center group space-x-8">
+
+    <navigator url="../../pages/index/index" open-type="redirect" style="display: inline-block">
+    <image class="image" src="https://codefun-proj-user-res-1256085488.cos.ap-guangzhou.myqcloud.com/644bb0005a7e3f03102917b5/644bb06fb98f5d0011665f39/16826823178832312884.png" />
+    </navigator>
+
+    <text class="text">选择语言</text>
+  </view>
+  <view class="flex-col group_2 space-y-30">
+  
+    <view class="flex-row space-x-15">
+      <view class="flex-row   {{isClicked1 ? 'text-wrapper_2' : 'text-wrapper'}}" bindtap="handleTap1">
+      <text class="font_1 {{isClicked1 ? 'text_2' : 'text_3'}}">翻译语言</text>
+      </view>
+      <view class="flex-row {{isClicked2 ? 'text-wrapper' : 'text-wrapper_2'}}" bindtap="handleTap2">
+        <text class="font_1 {{isClicked1 ? 'text_3' : 'text_2'}}">目标语言</text>
+      </view>
+    </view>
+
+
+    
+    <view class="flex-col space-y-18">
+      <text class="self-start font_2 text_4">全部语言</text>
+      <view class="flex-col space-y-16">
+        <view
+          class="flex-row items-center {{selectedIndex1 == i && isClicked1 == false || selectedIndex2 == i && isClicked1 == true ? 'list-item' : 'list-item_2'}} space-x-24"
+          wx:for="{{list_aPbtoDn5}}"
+          wx:key="index"
+          wx:for-item="item"
+          wx:for-index="i"
+          data-chs="{{item.chs}}" 
+          data-lang="{{item.lang}}"
+          data-index="{{i}}"
+          data-src="{{item.image}}"
+          data-sound="{{item.sound ? item.sound : 'en_US'}}"
+          bindtap="handleTap"
+        >
+          <image
+            class="image_2"
+            src="{{item.image}}"
+          />
+          <text class="{{selectedIndex1 == i && isClicked1 == false || selectedIndex2 == i && isClicked1 == true ? 'text_5' : 'text_6'}} ">{{item.text}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

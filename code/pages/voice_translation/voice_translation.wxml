@@ -1,0 +1,71 @@
+<!--index.wxml-->
+<view class="page-background">
+  <image class="image self-center"  src="../../imgs/voice_background.png"></image>
+</view>
+
+<view class="container">
+  <scroll-view id="scroll-content"
+    scroll-top="{{scroll_top}}"
+    scroll-y="true"
+    class="dialog-part"
+    scroll-into-view="translate-{{toView}}"
+    enable-back-to-top="true"
+    scroll-with-animation="true">
+
+    <view class="spacer"></view> <!-- 空的框 -->
+    <view id="back-icon" class="back-icon"  bindtap="onBackIconTap" >
+    <image src="../../imgs/arrow-left.png" class="arrow-icon"></image>
+    </view>
+
+    <view class="flex-row justify-between items-center relative group_2">
+  <view class="flex-row items-center self-stretch group_3 space-x-8">
+    <image wx:if="{{fromlanguage}}" class="shrink-0 image_1" src="{{image_c}}" />
+    <image wx:else class="shrink-0 image_1" src="{{image_e}}" />
+    <text class="text" wx:if="{{fromlanguage}}">中文</text>
+    <text class="text" wx:else>英文</text>
+    
+ 
+   <view bindtap="changelanguage" style="display: inline-block">
+    <image 
+    class="image_1 image_2" 
+    src="../../imgs/Vector.png"
+    />
+   </view>
+
+
+  </view>
+</view>
+
+
+
+
+    <view class="dialog-wrap" id="translate-empty" wx:if="{{!recording && dialogList.length == 0}}">
+      <result-bubble item="{{initTranslate}}" record-status="0"></result-bubble>
+    </view>
+    <view wx:for="{{dialogList}}" wx:key="id" class="dialog-wrap" data-index="{{index}}" catchmodaldelete="deleteItem">
+      <result-bubble item="{{item}}"
+        edit-show="{{index==dialogList.length-1}}"
+        index="{{index}}"
+        current-translate-voice="{{currentTranslateVoice}}"
+        bindtranslate="translateTextAction"
+        bindexpired="expiredAction"></result-bubble>
+    </view>
+    
+    <view class="dialog-wrap" id="translate-recording" wx:if="{{recording}}">
+      <result-bubble item="{{currentTranslate}}" record-status="{{recordStatus}}"></result-bubble>
+    </view>
+
+    <view id="translate-fake"></view>
+
+
+
+
+  </scroll-view>
+
+  <view class="foot-group" catchlongpress="catchTapEvent">
+    <bottom-button button-disabled="{{bottomButtonDisabled}}"
+      bindrecordstart="streamRecord"
+      bindrecordend="streamRecordEnd"></bottom-button>
+  </view>
+</view>
+

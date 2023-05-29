@@ -1,0 +1,41 @@
+/* * change.wxss * */
+
+.container {
+  background: #f8f8f8;
+}
+.lang-list {
+  display: flex;
+  flex-direction: column;
+}
+.title {
+  background: #fff;
+  border-bottom: 1px solid #ececec;
+  padding: 20rpx 40rpx;
+  color: #aaa;
+  font-size: 28rpx;
+}
+
+
+.item {
+  padding-left: 40rpx;
+  background-color: #fff;
+}
+.item-inner {
+  display: flex;
+  align-items: center;
+  border-top: 1px solid #ececec;
+  padding:  20rpx 40rpx 20rpx 0;
+  
+}
+
+.item .txt {
+  flex: 1;
+}
+.item .iconfont {
+  margin-left: auto;
+  color: #aaa;
+}
+
+.item:nth-child(2) .item-inner {
+  border-top: none;
+}

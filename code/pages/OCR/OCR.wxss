@@ -1,0 +1,11 @@
+.container {
+    text-align: center;
+}
+
+.btn {
+    background-color: #1493fc;
+    padding: 15rpx 20rpx;
+    color: #fff;
+    border-radius: 20rpx;
+    margin: 40rpx;
+}

@@ -1,68 +1,65 @@
-<!--index.wxml-->
-<view class="page-background">
-  <image class="image self-center"  src="../../image/voice_background.png"></image>
-</view>
-
+ <!--index.wxml-->
 <view class="container">
-  <scroll-view id="scroll-content"
-    scroll-top="{{scroll_top}}"
-    scroll-y="true"
-    class="dialog-part"
-    scroll-into-view="translate-{{toView}}"
-    enable-back-to-top="true"
-    scroll-with-animation="true">
+  <view class="background">
+    <image class = "logo" src = "../../imgs/logo.png"></image>
+    <image class = "background" src = "../../imgs/background.png"></image>
+  </view>
+  <view class="change">
+     <!-- navigator导航 -->
+    <navigator url="/pages/choose_language/choose_language" hover-class="navigator-hover">
+      <block>
+        <text>翻译成{{curLang.chs}}</text>
+        <text class="iconfont icon-down"></text>
+      </block> 
+    </navigator>
+  </view>
+  <view class="input-area">
+    <text class="iconfont icon-close" hidden="{{hideClearIcon}}" bindtap='onTapClose'></text>
+    <view class="textarea-wrap">
+      <textarea placeholder='请输入要翻译的文本' placeholder-style='color: #8995a1'  bindinput='onInput' bindconfirm='onConfirm' bindblur='onConfirm'  value="{{query}}"></textarea>
+      <view class="language">
+          <image class="language_pic" src="../../imgs/Chinese.png" />
+          <text class="language_from">中文</text>
 
-    <view class="spacer"></view> <!-- 空的框 -->
-    <view id="back-icon" class="back-icon"  bindtap="onBackIconTap" >
-    <image src="../../image/arrow-left.png" class="arrow-icon"></image>
+
+          <view  data-id="src"
+          catchtap="playTranslateVoice" 
+          catchtouchstart="playTranslateVoice">
+          <image class="voice" src="../../imgs/voice.png" mode="widthFix"/>
+          </view>
+
+          <view  class="copy" bindtap="copyTextIN">
+          <image  src="../../imgs/copy.png" mode="widthFix"/>
+        </view>
+
+      </view>
     </view>
-
-    <view class="flex-row justify-between items-center relative group_2">
-  <view class="flex-row items-center self-stretch group_3 space-x-8">
-    <image
-      class="shrink-0 image_1"
-      src="https://codefun-proj-user-res-1256085488.cos.ap-guangzhou.myqcloud.com/644bb0005a7e3f03102917b5/644bb06fb98f5d0011665f39/153cd789341a2b9a6a2d1ac163978ba0.png"
-    />
-    <text class="text">中文</text>
     
- <navigator url="../../pages/Choose Language/Choose Language" open-type="navigate" style="display: inline-block">
-    <image 
-    class="image_1 image_2" 
-    src="https://codefun-proj-user-res-1256085488.cos.ap-guangzhou.myqcloud.com/644bb0005a7e3f03102917b5/644bb06fb98f5d0011665f39/16826823175947465018.png"
-    />
-</navigator>
+    <view class="output-area">
+      <view class="text-result" wx:for="{{result}}" wx:key="index">
+        <text selectable="true" decode = "true">{{item.dst}} </text>
+        
+      </view>
+      <view class="language">
+
+          <image class="language_pic" src="{{curLang.src}}" />
+
+          <text class="language_to">{{curLang.chs}}</text>
+
+          <view  data-id="tar"
+          catchtap="playTranslateVoice" 
+          catchtouchstart="playTranslateVoice">
+            <image class="voice" src="../../imgs/voice_white.png" mode="widthFix"/>
+          </view>
+          
+
+          <view  class="copy" bindtap="copyTextOUT">
+          <image src="../../imgs/copy_white.png" mode="widthFix"/>
+        </view>
+        
+      </view>
+    </view>
+
 
   </view>
 </view>
-
-
-
-
-    <view class="dialog-wrap" id="translate-empty" wx:if="{{!recording && dialogList.length == 0}}">
-      <result-bubble item="{{initTranslate}}" record-status="0"></result-bubble>
-    </view>
-    <view wx:for="{{dialogList}}" wx:key="id" class="dialog-wrap" data-index="{{index}}" catchmodaldelete="deleteItem">
-      <result-bubble item="{{item}}"
-        edit-show="{{index==dialogList.length-1}}"
-        index="{{index}}"
-        current-translate-voice="{{currentTranslateVoice}}"
-        bindtranslate="translateTextAction"
-        bindexpired="expiredAction"></result-bubble>
-    </view>
-    <view class="dialog-wrap" id="translate-recording" wx:if="{{recording}}">
-      <result-bubble item="{{currentTranslate}}" record-status="{{recordStatus}}"></result-bubble>
-    </view>
-    <view id="translate-fake"></view>
-
-
-
-
-  </scroll-view>
-
-  <view class="foot-group" catchlongpress="catchTapEvent">
-    <bottom-button button-disabled="{{bottomButtonDisabled}}"
-      bindrecordstart="streamRecord"
-      bindrecordend="streamRecordEnd"></bottom-button>
-  </view>
-</view>
-

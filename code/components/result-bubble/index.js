@@ -73,7 +73,7 @@ Component({
     waiting_animation: {},
     waiting_animation_1: {},
 
-    edit_icon_path: '../../image/edit.png'
+    edit_icon_path: '../../imgs/edit.png'
 
 
   },
@@ -130,8 +130,6 @@ Component({
           index: this.data.index,
         })
       }
-
-
     },
 
     /**

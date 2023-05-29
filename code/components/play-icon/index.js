@@ -1,6 +1,6 @@
 
 
-const loadingIcon = '../../image/loading.gif'
+const loadingIcon = '../../imgs/loading.gif'
 
 Component({
 

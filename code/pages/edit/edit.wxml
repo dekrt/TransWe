@@ -5,7 +5,7 @@
     <view class="tips-wrapper" >
       <text class="edit-tips" >{{tips}}</text>
       <view class="delete-content"  capture-bind:tap="deleteContent" >
-        <image src="../../image/delete_all.png" class="img-delete-all"></image>
+        <image src="../../imgs/delete_all.png" class="img-delete-all"></image>
       </view>
     </view>
   </view>

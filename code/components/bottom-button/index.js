@@ -18,9 +18,9 @@ language.forEach(item=>{
 // 按钮对应图片
 let buttonBackground = {
   zh_CN: {
-    normal: '../../image/R.png',
-    press: '../../image/R1.png',
-    disabled: '../../R.png',
+    normal: '../../imgs/R.png',
+    press: '../../imgs/R1.png',
+    disabled: '../../imgs/R.png',
   },
 }
 

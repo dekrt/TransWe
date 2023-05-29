@@ -1,0 +1,66 @@
+.history-list {
+  display: flex;
+  flex-direction: column;
+  padding: 40rpx;
+}
+.header {
+  display: flex;
+  margin-top: 100rpx;
+}
+.title {
+  flex:1;
+  font-size: 26rpx;
+  color: #8995a1;
+}
+.icon-close {
+  margin-left: auto;
+  color: #aaa;
+  font-size: 26rpx;
+}
+.item {
+  margin-top: 40rpx;
+  padding: 0 32rpx;
+  background-color: #ffffff;
+  border-radius: 16rpx;
+  box-shadow: 0px 0px 2rpx #0000000a, 0px 0px 4rpx #0000000f, 0px 8rpx 16rpx #0000000a;
+}
+
+.item .query {
+  padding: 20rpx;
+  border-bottom: solid 2rpx #e7e7e7;
+  font-size: 32rpx;
+  font-family: Poppins;
+  line-height: 50rpx;
+  color: #1e3163;
+}
+.item .query .language{
+    font-size: 28rpx;
+    font-family: Poppins;
+    line-height: 26rpx;
+    color: #a8abb0;
+    margin-top: 10rpx;
+    margin-bottom: 10rpx;
+}
+
+.item .result {
+  margin-top: 16rpx;
+  padding: 20rpx;
+  font-size: 32rpx;
+  font-family: Poppins;
+  line-height: 50rpx;
+  color: #1e3163;
+}
+
+.item .result .language{
+  font-size: 28rpx;
+  font-family: Poppins;
+  line-height: 26rpx;
+  color: #909dbd;
+  margin-bottom: 10rpx;
+}
+
+image{
+  width: 30rpx;
+  height: 30rpx;
+  vertical-align: bottom;
+}

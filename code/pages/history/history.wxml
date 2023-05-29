@@ -1,0 +1,28 @@
+<!--pages/history/history.wxml-->
+
+<scroll-view scroll-y class="container">
+  <view class="history-list">
+    <view class="header">
+      <text class="title">翻译历史</text>
+      <text bindtap='onClearHistory' class="iconfont icon-close">清除历史记录</text>
+    </view>
+    <view class="item" wx:for="{{history}}" wx:key="index" bindtap='onTapItem' data-query="{{item.query}}" data-langId="{{item.langIndex}}">
+      <view class="query">
+        <view class="language">
+          <image src="../../imgs/Chinese.png" />
+          中文
+        </view>
+          {{item.query}}
+      </view>
+      <view class="result">
+        <view class="language">
+          <image src="../../imgs/English.png" />
+          英语
+        </view>
+        {{item.result}}
+      </view>
+    </view>
+  </view>
+</scroll-view>
+
+

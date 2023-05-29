@@ -1,202 +1,203 @@
-/**index.wxss**/
-
-.flex-column {
-  display: flex;
-  display: -webkit-flex;
-  -webkit-flex-direction: column;
-  flex-direction: column;
-  align-items: center;
-  -webkit-align-items: center;
-  justify-content: space-between;
-  -webkit-justify-content: space-between;
-}
-.spacer {
-  height: 246rpx; /* 设置下移的高度值 */
+/* * index.wxss * */
+.container{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    /* height: 100%; */
+    height: 500rpx;
+    /* background: linear-gradient(to bottom, #1493FC 40%, #FFFFFF 60%); */
+    background: #1493FC;
 }
 
-.page-background {
+.container .logo{
   position: fixed;
-  top: 345px;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-position: center;
-  background-size: cover;
-  z-index: 1;
-}
-
-.image {
-  width: 750rpx;
-  height: 348rpx;
-  /* 其他样式属性 */
-}
-
-.self-center {
-  align-self: center;
-}
-
-.dialog-wrap {
-  position: relative;
-  padding: 20rpx 40rpx 50rpx 40rpx;
-  box-sizing: border-box;
   display: flex;
-  display: -webkit-flex;
-  width: 100%;
-  flex-direction: column;
-  -webkit-flex-direction: column;
+  margin-top: 20rpx;
+  width: 387rpx;
+  height: 211rpx;
+  left: 20rpx;
+  top: 0rpx;
 }
 
-
-.send-message .text-detail {
-  color: #9B9B9B;
-}
-
-.dialog-part {
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 257rpx;
+.container .background{
+  position: fixed;
+  display: flex;
+  width: 312rpx;
+  height: 288rpx;
   right: 0;
-  z-index:1;
+  top: 60rpx;
 }
 
-.user-input {
-  flex: 1;
-  height: 60rpx;
+.change {
+  color: #8995a1;
+  font-size: 24 rpx;
+  /* padding: 20rpx 40rpx; */
+  display: flex;
+  align-items: center;
+  margin: 30rpx 50rpx 0;
+  margin-top: 220rpx;
+  padding: 32rpx 18rpx;
+  background-color: #1265dd;
+  border-radius: 16rpx;
+}
+.change .icon-right {
+  color: #888;
+}
+.change .icon-down {
+  color: #8995a1;
+  font-size: 20rpx;
+}
+
+.input-area {
+  position: relative;
+}
+.textarea-wrap {
+  background: #fff;
+  margin: 50rpx;
+  border-bottom: 1px solid #c7cee0;
+  padding: 0 32rpx;
+  background-color: #ffffff;
+  border-radius: 16rpx;
+  box-shadow: 0px 0px 2rpx #0000000a, 0px 0px 4rpx #0000000f, 0px 8rpx 16rpx #0000000a;
+  height: 300rpx;
+  left: 6.13%;
+  right: 6.67%;
+  top: 53.72%;
+  bottom: 0.55%;
+}
+.language{
+  font-size: 30rpx;
+  font-family: Poppins;
+  line-height: 26rpx;
+  color: #a8abb0;
+  margin-top: 10rpx;
+  margin-bottom: 10rpx;
+  font-family: Poppins;
+  line-height: 22rpx;
+}
+
+.language_pic{
+  margin-top: 20rpx;
+  width: 40rpx;
+  height: 40rpx;
+  vertical-align: text-bottom;
+}
+.language_from{
+  font-size: 30rpx;
+  font-family: Poppins;
+  line-height: 26rpx;
+  color: #a8abb0;
+  margin-top: 10rpx;
+  margin-bottom: 10rpx;
+  margin-left: 10rpx;
+  font-family: Poppins;
+  line-height: 22rpx;
+}
+
+.input-area textarea {
+  background-color: #fff;
+  padding: 30rpx 0 30rpx 10rpx;
+  /* width: calc(100% - 48rpx); */
+  width: auto;
+  margin: 0;
   box-sizing: border-box;
-  margin: 0 10px;
-  border-radius: 10rpx;
+  height: 210rpx;
+  border-bottom: solid 2rpx #e7e7e7;
+  padding-right: 0;
+  
 }
-
-.text-content {
-  margin: 0 48px 0 0;
-  box-sizing: border-box;
-}
-
-
-.edit-icon {
+.input-area .icon-close {
   position: absolute;
-  right: 10rpx;
-  bottom: 0;
-  padding: 0 8rpx;
+  right: 12rpx;
+  top: 20rpx;
+  z-index: 100;
+  font-size: 40rpx;
+  color: #888;
 }
+.voice{
+  position: fixed;
+  margin-top: -45rpx;
+  width: 40rpx;
+  height: 40rpx;
+  vertical-align: text-bottom;
+  text-align: end;
+  right: 150rpx;
+}
+
+.copy{
+  position: fixed;
+  margin-top: -45rpx;
+  width: 40rpx;
+  height: 40rpx;
+  right: 100rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 
 .play-icon {
   position: absolute;
-  right: 10rpx;
-  bottom: 14rpx;
+  right: 3rpx;
+  bottom: 7rpx;
   padding: 0 8rpx;
   display: flex;
   align-items: center;
 }
 
-.play-loud-icon {
-  position: absolute;
-  right: 0;
-  bottom: 14rpx;
-  padding: 0 8rpx;
+.edit-icon::before
+.play-icon::before {
+  content:"";
+  position:absolete;
+  top:-10rpx;
+  left:-10rpx;
+  bottom:-10rpx;
+  right:-10rpx;
+}
+
+
+.input-area .output-area {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  min-height: 150rpx;
+  margin: 50rpx;
+  border-bottom: 1px solid #c7cee0;
+  padding: 0 32rpx;
+  background-color: #1493FC;
+  border-radius: 16rpx;
+  box-shadow: 0px 0px 2rpx #0000000a, 0px 0px 4rpx #0000000f, 0px 8rpx 16rpx #0000000a;
+  height: 300rpx;
+  left: 24px;
+  right: 24px;
+  top: 384px;
+  bottom: 262px;
 }
 
-
-.text-detail {
-  font-size: 18px;
-  line-height: 24px;
-  /*margin-right: 25px;*/
-  box-sizing: border-box;
-  font-family: "PingFang-SC-Regular", "SimSun", "Microsoft Yahei";
-  font-variant-ligatures: none;
-}
-
-.back-icon {
-  position: absolute;
-  top: 50px;
-  left: 20px;
-  z-index:1;
-}
-
-.arrow-icon {
-  width: 30px;
-  height: 30px;
-}
-
-.translate-message {
-  position: relative;
-}
-
-
-.send-message {
-  position: relative;
-}
-
-.create-time {
-  font-size: 14px;
-  color: #B2B2B2;
-  margin-bottom: 5px;
-  display: flex;
-  display: -webkit-flex;
-  justify-content: center;
-  -webkit-justify-content: center;
-}
-
-.filter-blur {
-  -webkit-filter: blur(5px);
-  filter: blur(5px);
-}
-
-.empty-tip {
-  position: absolute;
-  margin: auto;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  height: 24px;
-  width: 100px;
-  font-size: 24px;
-  color: #000000;
-  opacity: 0.1
-}
-
-.translate-fake {
-  width:100%;
-  height:1px
-}
-
-.foot-group {
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  z-index: 40;
-  width: 100%;
-}
-
-
-.group_2 {
-  margin-top: -76rpx;
-}
-.group_3 {
-  margin-left: 220rpx;
-}
-.space-x-8 > view:not(:first-child),
-.space-x-8 > text:not(:first-child),
-.space-x-8 > image:not(:first-child) {
-  margin-left: 16rpx;
-}
-.image_1 {
-  width: 32rpx;
-  height: 32rpx;
-
-}
-.text {
+.output-area .text-result {
+  margin-bottom: 10px; /* 这里的值可以根据你的需求来调整 */
+  min-height: 150rpx;
+  margin-top: 20rpx;
+  padding: 20rpx 0;
+  height: 150rpx;
+  border-bottom: solid 2rpx #e7e7e7;
   color: #ffffff;
-  font-size: 32rpx;
+  line-height: 32rpx;
+  font-size: 36rpx;
   font-family: Poppins;
-  line-height: 29rpx;
-  margin-right: 50rpx;
+  line-height: 33rpx;
 }
-.image_2 {
-  margin-right: 230rpx;
 
+.language_to{
+  font-size: 30rpx;
+  font-family: Poppins;
+  line-height: 26rpx;
+  color: #ffffff;
+  margin-top: 10rpx;
+  margin-bottom: 10rpx;
+  margin-left: 10rpx;
+  font-family: Poppins;
+  line-height: 22rpx;
 }
+
+

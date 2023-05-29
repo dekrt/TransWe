@@ -1,25 +1,29 @@
 /**app.wxss**/
+
+@import "./assets/iconfont/iconfont.wxss";
+
 .container {
-  height: 100%;
+  padding: 0;
+  background-color:#f7f8f9;
+  height: 100vh;
   display: flex;
-  display: -webkit-flex;
-  flex-direction: column;
-  -webkit-flex-direction: column;
-  justify-content: space-between;
-  -webkit-justify-content: space-between;
+  flex-direction:column;
   box-sizing: border-box;
-  position:relative;
-  font-family: "PingFang-SC-Regular","SimSun","Microsoft Yahei";
-  font-variant-ligatures: none;
-  background-color: #1494fc;
-  
-}
-page {
-  height: 100%;
-  width: 100%;
-  background: #FAFAFA;
+  font-size: 30rpx;
+  color: #333;
+} 
+
+.copyright {
+  align-self: center;
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+  padding-bottom: 20rpx;
+  font-size: 28rpx;
+  color:#999;
 }
 
-input {
-  font-family: "PingFang-SC-Regular","SimSun","Microsoft Yahei";
+.view-hover {
+  background-color: #f3f3f3!important;
 }
+
