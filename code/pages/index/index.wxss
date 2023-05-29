@@ -24,6 +24,7 @@
   position: fixed;
   display: flex;
   width: 312rpx;
+  
   height: 288rpx;
   right: 0;
   top: 60rpx;
