@@ -7,10 +7,21 @@
   <view class="change">
     <!-- navigator导航 -->
     <navigator url="/pages/choose_language/choose_language" hover-class="navigator-hover">
-      <block>
+      <!-- <block>
         <text>翻译成{{curLang.chs}}</text>
         <text class="iconfont icon-down"></text>
-      </block>
+      </block> -->
+      <view class="switch_language_from">
+        <image class="switch_language_pic" src="{{curLang.src}}" />
+        <text class="switch_language_from_text" decode="true">&nbsp;&nbsp;{{curLang.chs}}</text>
+        <text class="iconfont icon-down"></text>
+      </view>
+      <image class="switch" src="../../imgs/switch.png"></image>
+      <view class="switch_language_to">
+        <image class="switch_language_pic" src="{{curLang.src}}" />
+        <text class="switch_language_to_text" decode="true">&nbsp;&nbsp;{{curLang.chs}}</text>
+        <text class="iconfont icon-down"></text>
+      </view>
     </navigator>
   </view>
   <view class="input-area">
@@ -35,7 +46,7 @@
     <view class="output-area">
       <view class="result">
         <view class="text-result" wx:for="{{result}}" wx:key="index">
-          <text selectable="true" decode="true">{{item.dst ? item.dst : " "}}</text>
+          <text selectable="true" decode="true">{{item.dst}}</text>
         </view>
       </view>
       <view class="language_to">
