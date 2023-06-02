@@ -333,7 +333,7 @@ TransWe是一款完全免费的小程序，我们的目标是为用户提供最�
 
 我们的翻译小程序采用分层架构的架构模式，架构示意图如下：
 
-![](./../../../../../pics/system_architecture.png)
+![](../pics/system_architecture.png)
 
 ### 1 表示层（Presentation Layer）
 
@@ -581,4 +581,3 @@ OCR拍照翻译页面是用户能够通过拍照进行翻译的地方。
 <div align = "center">
     <img src="../pics/Sequence_Get_Translation_History.png" />
 </div>
-
