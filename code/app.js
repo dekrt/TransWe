@@ -53,6 +53,7 @@ App({
   globalData: {
     history: [],
     curLang: {},
+    buttons:[],
     picBase64: "",
     word: [],
     langList: [{

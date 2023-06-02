@@ -1,5 +1,17 @@
 <!--pages/getPic/getPic.wxml-->
-<camera style="margin-top:150rpx;width:100%;height:1200rpx"></camera>
+<view class="head"> 
+  <!-- <view id="back-icon" class="back-icon"  bindtap="onBackIconTap" >
+    <image src="../../imgs/arrow-left.png" class="arrow-icon"></image>
+  </view> -->
+  <view class="language" bindtap="onTap" >
+    <image bindtap="onTap" class = "language_pic" src="../../imgs/Chinese.png" />
+    <text bindtap="onTap" class="language_text" decode>&nbsp;中文</text>
+    <image bindtap="onTap" class="switch" src="../../imgs/switch.png"></image>
+    <image bindtap="onTap" class = "language_pic" src="../../imgs/English.png" />
+    <text bindtap="onTap" class="language_text" decode>&nbsp;英语</text>
+  </view>
+</view>
+<camera style="margin-top:0rpx;width:100%;height:1100rpx"></camera>
 <view class="toolbar">
     <image class = "shot" src="../../imgs/takeshot.png" bindtap = "takeShot"></image>
 </view>
