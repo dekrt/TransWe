@@ -19,12 +19,11 @@
 
     <view class="flex-row justify-between items-center relative group_2">
   <view class="flex-row items-center self-stretch group_3 space-x-8">
-    <image wx:if="{{fromlanguage}}" class="shrink-0 image_1" src="{{image_c}}" />
+    <image wx:if="{{lan_type}}" class="shrink-0 image_1" src="{{image_c}}" />
     <image wx:else class="shrink-0 image_1" src="{{image_e}}" />
-    <text class="text" wx:if="{{fromlanguage}}">中文</text>
+    <text class="text" wx:if="{{lan_type}}">中文</text>
     <text class="text" wx:else>英文</text>
     
- 
    <view bindtap="changelanguage" style="display: inline-block">
     <image 
     class="image_1 image_2" 

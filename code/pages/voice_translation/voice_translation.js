@@ -7,8 +7,6 @@ const util = require('../../utils/util.js')
 const plugin = requirePlugin("WechatSI")
 
 import { language} from '../../utils/conf.js'
-import { en_lan} from '../../utils/conf.js'
-import { ch_lan} from '../../utils/conf.js'
 
 // 获取**全局唯一**的语音识别管理器**recordRecoManager**
 const manager = plugin.getRecordRecognitionManager()
@@ -19,7 +17,7 @@ Page({
     dialogList: [
     //初始为空
     ],
-    fromlanguage:true,
+    lan_type:true,
     scroll_top: 10000, // 竖向滚动条位置
 
     bottomButtonDisabled: false, // 底部按钮disabled
@@ -58,16 +56,16 @@ Page({
     manager.start({
       lang: buttonItem.lang,
     })
-
+    let lan_type=this.data.lan_type
     this.setData({
       recordStatus: 0,
       recording: true,
       currentTranslate: {
         // 当前语音输入内容
         create: util.recordTime(new Date()),
-        text: '正在聆听中',
-        lfrom: buttonItem.lang,
-        lto: buttonItem.lto,
+        text:  lan_type ?'正在聆听中':'listening',
+        lfrom: lan_type ?buttonItem.lang:buttonItem.lto,
+        lto: lan_type ?buttonItem.lto:buttonItem.lang,
       },
     })
     this.scrollToNew();
@@ -97,12 +95,27 @@ Page({
     })
   },
 
+  //语言切换
   changelanguage:function(){
-
   this.setData({
-  fromlanguage :!this.data.fromlanguage,
+  lan_type:!this.data.lan_type,
 })
-
+ if(this.data.lan_type)
+  {
+    this.setData({
+      initTranslate: {
+        create: util.recordTime(new Date()),
+        text:  '等待说话',
+      },
+    })
+  }else{
+    this.setData({
+      initTranslate: {
+        create: util.recordTime(new Date()),
+        text:  'Please Speaking',
+      },
+    })
+  }
 },
 
   /**
