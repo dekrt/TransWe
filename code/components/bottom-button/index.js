@@ -1,13 +1,13 @@
 
 
 import { language } from '../../utils/conf.js'
-
-let buttons = []
+let app = getApp();
+let buttons = app.globalData.buttons;
 
 // 按钮配置
 language.forEach(item=>{
   buttons.push({
-    buttonText: item.lang_name,
+    buttonText : item.lang_name,
     lang: item.lang_content,
     lto: item.lang_to[0],
     msg: item.hold_talk,
@@ -22,6 +22,11 @@ let buttonBackground = {
     press: '../../imgs/R1.png',
     disabled: '../../imgs/R.png',
   },
+  en_US: {
+    normal: '../../imgs/R.png',
+    press: '../../imgs/R1.png',
+    disabled: '../../imgs/R.png',
+  }
 }
 
 Component({
