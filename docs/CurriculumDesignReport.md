@@ -46,13 +46,12 @@ TransWe使用简单，功能强大，只需选择需要翻译的语言，输入�
 
 ## 🤝 项目成员
 
-<p>
+<div>
     <a href="https://github.com/dekrt"><img src="../pics/dekrt.jpg" width="70px" alt="dekrt" border-radius: "50%"/></a>
     <a href="https://github.com/chendeting88"><img src="../pics/chendeting88.jpg" width="70px" alt="chendeting88" radius: "50%"/></a>
-</p>
+</div>
 
-
-TransWe由张骁凯和陈德霆共同开发完成。
+`TransWe`由**张骁凯**和**陈德霆**共同开发完成。
 
 ## 🚀 功能特性
 
@@ -574,10 +573,38 @@ OCR拍照翻译页面是用户能够通过拍照进行翻译的地方。
 <div align = "center">
     <img src="../pics/Sequence_Speech_Synthesis.png" />
 </div>
-
+​           
 
 #### 5 查看翻译历史时序图
 
 <div align = "center">
     <img src="../pics/Sequence_Get_Translation_History.png" />
 </div>
+# 4. 系统实现和测试
+
+## 4.1 系统实现
+
+> 开发语言：Html(Wxml) + Css(Wxss) + javascript；
+>
+> 开发框架：微信原生框架 + Less
+>
+> 开发环境：微信开发者工具 + Vscode
+
+### 4.1.1 assets/
+
+### 4.1.2 components/
+
+### 4.1.3 imgs/
+
+### 4.1.4 pages/
+
+### 4.1.5 TDD_test_cdt/
+
+### 4.1.6 TDD_test_zxk/
+
+### 4.1.7 utils/
+
+### 4.1.8 ./
+
+## 4.2 系统测试
+
