@@ -60,4 +60,9 @@ Page({
             }
         })
     },
+    onBackIconTap: function() {
+      wx.navigateBack({
+        delta: 1, // 返回的页面层数
+      });
+    }
 })

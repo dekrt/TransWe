@@ -18,5 +18,11 @@ Page({
         })
       }
     })
+  },
+  onTap: function(){
+    wx.showToast({
+      title: '只支持中译英',
+      icon: "error"
+    })
   }
 })
