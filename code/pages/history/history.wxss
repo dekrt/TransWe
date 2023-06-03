@@ -1,22 +1,31 @@
+/* 历史记录列表样式 */
 .history-list {
   display: flex;
   flex-direction: column;
   padding: 40rpx;
 }
+
+/* 头部视图样式 */
 .header {
   display: flex;
   margin-top: 100rpx;
 }
+
+/* 标题文本样式 */
 .title {
-  flex:1;
+  flex: 1;
   font-size: 26rpx;
   color: #8995a1;
 }
+
+/* 清除历史记录图标样式 */
 .icon-close {
   margin-left: auto;
   color: #aaa;
   font-size: 26rpx;
 }
+
+/* 历史记录项样式 */
 .item {
   margin-top: 40rpx;
   padding: 0 32rpx;
@@ -25,6 +34,7 @@
   box-shadow: 0px 0px 2rpx #0000000a, 0px 0px 4rpx #0000000f, 0px 8rpx 16rpx #0000000a;
 }
 
+/* 查询视图样式 */
 .item .query {
   padding: 20rpx;
   border-bottom: solid 2rpx #e7e7e7;
@@ -33,15 +43,18 @@
   line-height: 50rpx;
   color: #1e3163;
 }
-.item .query .language{
-    font-size: 28rpx;
-    font-family: Poppins;
-    line-height: 26rpx;
-    color: #a8abb0;
-    margin-top: 10rpx;
-    margin-bottom: 10rpx;
+
+/* 查询语言样式 */
+.item .query .language {
+  font-size: 28rpx;
+  font-family: Poppins;
+  line-height: 26rpx;
+  color: #a8abb0;
+  margin-top: 10rpx;
+  margin-bottom: 10rpx;
 }
 
+/* 结果视图样式 */
 .item .result {
   margin-top: 16rpx;
   padding: 20rpx;
@@ -51,7 +64,8 @@
   color: #1e3163;
 }
 
-.item .result .language{
+/* 结果语言样式 */
+.item .result .language {
   font-size: 28rpx;
   font-family: Poppins;
   line-height: 26rpx;
@@ -59,7 +73,8 @@
   margin-bottom: 10rpx;
 }
 
-image{
+/* 图片样式 */
+image {
   width: 30rpx;
   height: 30rpx;
   vertical-align: bottom;

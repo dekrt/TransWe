@@ -1,12 +1,9 @@
 {
     "pages": [
         "pages/index/index",
-        "pages/change/change",
         "pages/history/history",
         "pages/OCR/OCR",
         "pages/getPic/getPic",
-        "pages/index_test/index_test",
-        "pages/history_test/history_test",
         "pages/voice_translation/voice_translation",
         "pages/edit/edit",
         "pages/choose_language/choose_language"

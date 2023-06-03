@@ -1,4 +1,5 @@
-.head{
+/* 头部视图样式 */
+.head {
   position: relative;
   top: 0;
   left: 0;
@@ -7,6 +8,7 @@
   background-color: #1493FC;
 }
 
+/* 按钮样式 */
 .btn {
   background-color: #1493fc;
   width: 200rpx;
@@ -16,7 +18,9 @@
   margin: 40rpx;
   text-align: center;
 }
-.toolbar{
+
+/* 工具栏样式 */
+.toolbar {
   display: flex;
   width: auto;
   height: 100rpx;
@@ -24,19 +28,23 @@
   align-items: center;
 }
 
-.shot{
-    width: 110rpx;
-    height: 110rpx;
-    text-align: center;
-    margin-top: 50rpx;
+/* 拍照图标样式 */
+.shot {
+  width: 110rpx;
+  height: 110rpx;
+  text-align: center;
+  margin-top: 50rpx;
 }
-image{
+
+/* 图片样式 */
+image {
   width: 30rpx;
   height: 30rpx;
   vertical-align: bottom;
 }
 
-.language{
+/* 语言切换视图样式 */
+.language {
   display: flex;
   padding-top: 100rpx;
   width: 300rpx;
@@ -44,12 +52,14 @@ image{
   vertical-align: bottom;
 }
 
-.language_pic{
+/* 语言图标样式 */
+.language_pic {
   padding-top: 25rpx;
   vertical-align: text-bottom;
 }
 
-.language_text{
+/* 语言文字样式 */
+.language_text {
   padding-top: 20rpx;
   font-size: 30rpx;
   font-family: Poppins;
@@ -61,7 +71,9 @@ image{
   font-family: Poppins;
   line-height: 22rpx;
 }
-.switch{
+
+/* 切换图标样式 */
+.switch {
   display: flex;
   align-items: center;
   justify-content: flex-start;

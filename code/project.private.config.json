@@ -5,31 +5,5 @@
     "compileHotReLoad": true,
     "urlCheck": false
   },
-  "condition": {
-    "miniprogram": {
-      "list": [
-        {
-          "name": "OCR",
-          "pathName": "pages/OCR/OCR",
-          "query": "",
-          "launchMode": "default",
-          "scene": null
-        },
-        {
-          "name": "index_test",
-          "pathName": "pages/index_test/index_test",
-          "query": "",
-          "launchMode": "default",
-          "scene": null
-        },
-        {
-          "name": "history_test",
-          "pathName": "pages/history_test/history_test",
-          "query": "",
-          "launchMode": "default",
-          "scene": null
-        }
-      ]
-    }
-  }
+  "condition": {}
 }

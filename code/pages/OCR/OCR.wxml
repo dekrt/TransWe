@@ -1,33 +1,44 @@
+<!-- 头部视图 -->
 <view class="head"> 
+  <!-- 返回图标视图，点击时触发onBackIconTap事件 -->
   <view id="back-icon" class="back-icon"  bindtap="onBackIconTap" >
+    <!-- 返回箭头图标 -->
     <image src="../../imgs/arrow-left.png" class="arrow-icon"></image>
   </view>
 </view>
+
+<!-- 容器视图 -->
 <view class="container">
+  <!-- 图片视图，图片源为base64编码的数据，宽度为100%，高度为1000rpx -->
   <image src="data:image/png;base64,{{src}}" style="width:100%;height:1000rpx"></image>
+  
+  <!-- 翻译图片按钮，点击时触发getOCR事件 -->
   <view bindtap="getOCR" class="btn">
     翻译图片
   </view>
+  
+  <!-- 项目视图 -->
   <view class="item">
+    <!-- 查询视图 -->
     <view class="query">
+      <!-- 语言视图，包含一个图标和文本“中文” -->
       <view class="language">
         <image src="../../imgs/Chinese.png" />
         中文
       </view>
+      <!-- 显示源文本 -->
       <text>{{sourceText}}</text>
     </view>
+    
+    <!-- 结果视图 -->
     <view class="result">
+      <!-- 语言视图，包含一个图标和文本“英语” -->
       <view class="language">
         <image src="../../imgs/English.png" />
         英语
       </view>
+      <!-- 显示翻译结果文本 -->
       <text>{{resultText}}</text>
     </view>
   </view>
-  <!-- <view class="source">
-    <text>{{sourceText}}</text>
-  </view>
-  <view class="result">
-    <text>{{resultText}}</text>
-  </view> -->
 </view>

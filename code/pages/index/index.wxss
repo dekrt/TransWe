@@ -1,16 +1,16 @@
 /* * index.wxss * */
-.container{
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    /* height: 100%; */
-    height: 500rpx;
-    /* background: linear-gradient(to bottom, #1493FC 40%, #FFFFFF 60%); */
-    background: #1493FC;
+.container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  /* height: 100%; */
+  height: 500rpx;
+  /* background: linear-gradient(to bottom, #1493FC 40%, #FFFFFF 60%); */
+  background: #1493FC;
 }
 
-.container .logo{
+.container .logo {
   position: fixed;
   display: flex;
   margin-top: 20rpx;
@@ -20,11 +20,11 @@
   top: 0rpx;
 }
 
-.container .background{
+.container .background {
   position: fixed;
   display: flex;
   width: 312rpx;
-  
+
   height: 288rpx;
   right: 0;
   top: 60rpx;
@@ -43,14 +43,17 @@
   background-color: #1265dd;
   border-radius: 16rpx;
 }
+
 .change .icon-right {
   color: #888;
 }
+
 .change .icon-down {
   color: #8995a1;
   font-size: 20rpx;
 }
-.change .switch_language_from{
+
+.change .switch_language_from {
   position: fixed;
   display: flex;
   flex-direction: row;
@@ -61,7 +64,7 @@
   justify-content: center;
 }
 
-.change .switch{
+.change .switch {
   /* display: flex; */
   display: flex;
   align-items: center;
@@ -73,7 +76,7 @@
   margin: auto;
 }
 
-.change .switch_language_to{
+.change .switch_language_to {
   position: fixed;
   display: flex;
   flex-direction: row;
@@ -88,6 +91,7 @@
 .input-area {
   position: relative;
 }
+
 .textarea-wrap {
   background: #fff;
   margin: 50rpx;
@@ -106,7 +110,8 @@
   font-size: 36rpx;
   font-family: Poppins;
 }
-.language_from{
+
+.language_from {
   bottom: auto;
   font-size: 30rpx;
   font-family: Poppins;
@@ -118,13 +123,14 @@
   line-height: 22rpx;
 }
 
-.language_pic{
+.language_pic {
   margin-top: 20rpx;
   width: 40rpx;
   height: 40rpx;
   vertical-align: text-bottom;
 }
-.language_from_text{
+
+.language_from_text {
   font-size: 30rpx;
   font-family: Poppins;
   line-height: 26rpx;
@@ -146,8 +152,9 @@
   height: 210rpx;
   border-bottom: solid 2rpx #e7e7e7;
   padding-right: 0;
-  
+
 }
+
 .input-area .icon-close {
   position: absolute;
   right: 12rpx;
@@ -156,7 +163,8 @@
   font-size: 40rpx;
   color: #888;
 }
-.voice{
+
+.voice {
   position: fixed;
   margin-top: -40rpx;
   width: 40rpx;
@@ -166,7 +174,7 @@
   right: 150rpx;
 }
 
-.copy{
+.copy {
   position: fixed;
   margin-top: -45rpx;
   width: 50rpx;
@@ -187,14 +195,13 @@
   align-items: center;
 }
 
-.edit-icon::before
-.play-icon::before {
-  content:"";
-  position:absolete;
-  top:-10rpx;
-  left:-10rpx;
-  bottom:-10rpx;
-  right:-10rpx;
+.edit-icon::before .play-icon::before {
+  content: "";
+  position: absolete;
+  top: -10rpx;
+  left: -10rpx;
+  bottom: -10rpx;
+  right: -10rpx;
 }
 
 
@@ -229,7 +236,8 @@
 }
 
 .output-area .result {
-  margin-bottom: 10px; /* 这里的值可以根据你的需求来调整 */
+  margin-bottom: 10px;
+  /* 这里的值可以根据你的需求来调整 */
   min-height: 150rpx;
   margin-top: 20rpx;
   padding: 20rpx 0;
@@ -241,7 +249,8 @@
   font-family: Poppins;
   line-height: 33rpx;
 }
-.language_to{
+
+.language_to {
   /* bottom: auto; */
   font-size: 30rpx;
   font-family: Poppins;
@@ -252,7 +261,8 @@
   font-family: Poppins;
   line-height: 22rpx;
 }
-.language_to_text{
+
+.language_to_text {
   font-size: 30rpx;
   font-family: Poppins;
   line-height: 26rpx;
@@ -264,33 +274,33 @@
   line-height: 22rpx;
 }
 
-.trans_history_area{
+.trans_history_area {
   margin: 55rpx;
 }
 
-.trans_history_area .trans_history_title{
+.trans_history_area .trans_history_title {
   align-items: center;
   justify-content: space-between;
   display: flex;
   flex-direction: row;
 }
 
-.trans_history_area .trans_history_title .trans_history_title_chi{
-    color: transparent;
-    font-size: 32rpx;
-    font-family: Poppins;
-    font-weight: 700;
-    line-height: 30rpx;
-    background-image: linear-gradient(180deg, #0064e1 0%, #0845c2 100%);
-    -webkit-background-clip: text;
+.trans_history_area .trans_history_title .trans_history_title_chi {
+  color: transparent;
+  font-size: 32rpx;
+  font-family: Poppins;
+  font-weight: 700;
+  line-height: 30rpx;
+  background-image: linear-gradient(180deg, #0064e1 0%, #0845c2 100%);
+  -webkit-background-clip: text;
 }
 
-.trans_history_area .trans_history_title .trans_history_title_eng{
-    color: #949494;
-    line-height: 24rpx;
-    font-style: italic;
-    font-family: Poppins;
-    line-height: 22rpx;
+.trans_history_area .trans_history_title .trans_history_title_eng {
+  color: #949494;
+  line-height: 24rpx;
+  font-style: italic;
+  font-family: Poppins;
+  line-height: 22rpx;
 }
 
 .item {
@@ -309,13 +319,14 @@
   line-height: 50rpx;
   color: #1e3163;
 }
-.item .query .language{
-    font-size: 28rpx;
-    font-family: Poppins;
-    line-height: 26rpx;
-    color: #a8abb0;
-    margin-top: 10rpx;
-    margin-bottom: 10rpx;
+
+.item .query .language {
+  font-size: 28rpx;
+  font-family: Poppins;
+  line-height: 26rpx;
+  color: #a8abb0;
+  margin-top: 10rpx;
+  margin-bottom: 10rpx;
 }
 
 .item .result {
@@ -327,7 +338,7 @@
   color: #1e3163;
 }
 
-.item .result .language{
+.item .result .language {
   font-size: 28rpx;
   font-family: Poppins;
   line-height: 26rpx;
@@ -335,7 +346,7 @@
   margin-bottom: 10rpx;
 }
 
-image{
+image {
   width: 30rpx;
   height: 30rpx;
   vertical-align: bottom;

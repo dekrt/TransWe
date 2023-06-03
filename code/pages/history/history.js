@@ -1,68 +1,37 @@
-// pages/history/history.js
+// 引入全局的app实例
 const app = getApp()
 
+// 定义一个页面
 Page({
-
-  /**
-   * 页面的初始数据
-   */
+  // 页面的初始数据
   data: {
-    history: []
+    history: [] // 历史记录数组
   },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-
-  },
-
+  // 页面显示时的回调函数
   onShow: function () {
-    this.setData({ history: wx.getStorageSync('history') })
+    // 从本地存储中获取历史记录，并设置到页面数据中
+    this.setData({
+      history: wx.getStorageSync('history')
+    })
   },
 
+  // 点击历史记录项时的回调函数
   onTapItem: function (e) {
+    // 重新加载首页，并传递点击的历史记录项的查询参数
     wx.reLaunch({
       url: `/pages/index/index?query=${e.currentTarget.dataset.query}`
     })
   },
 
-  onClearHistory: function(){
-    this.setData({history: []})  //将显示变为空
-    wx.clearStorage('history')   //并清除Storage历史记录
+  // 清除历史记录的回调函数
+  onClearHistory: function () {
+    // 将页面数据中的历史记录数组设置为空
+    this.setData({
+      history: []
+    })
+
+    // 清除本地存储中的历史记录
+    wx.clearStorage('history')
   },
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
 })

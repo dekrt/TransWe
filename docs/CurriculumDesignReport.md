@@ -596,7 +596,1470 @@ OCR拍照翻译页面是用户能够通过拍照进行翻译的地方。
 
 ### 4.1.3 imgs/
 
+包含微信小程序内部需要用到的静态图片。
+
 ### 4.1.4 pages/
+
+#### 4.1.4.3 pages/getPic
+
+##### 1 getPic.js
+
+这段代码的主要功能是：
+
+1. 拍照：用户可以点击按钮触发`takeShot`方法，调用微信的摄像头接口进行拍照，拍照成功后，会将图片转换为base64格式，并保存到全局变量中，然后跳转到OCR页面。
+2. 提示：用户可以点击按钮触发`onTap`方法，显示一个“只支持中译英”的提示。
+
+```javascript
+// 引入api模块，该模块可能包含了一些工具函数
+var api = require("../../utils/api.js");
+
+// 获取全局的app实例
+const app = getApp();
+
+// 定义一个页面
+Page({
+  // 页面的初始数据
+  data: {
+
+  },
+
+  // 定义一个方法，用于拍照
+  takeShot: function () {
+    // 创建一个摄像头的上下文
+    const ctx = wx.createCameraContext()
+
+    // 使用上下文来拍照
+    ctx.takePhoto({
+      // 设置图片质量为高
+      quality: 'high', // 上传图片进行文字提取时，图片转换为base64后，大小不能超过300k，所以只能选择高画质
+
+      // 拍照成功后的回调函数
+      success: (res) => {
+        // 打印图片的临时地址
+        console.log("图片的临时地址为：" + res.tempImagePath);
+
+        // 调用api模块的getPicBase64函数，将图片转换为base64格式
+        api.getPicBase64(res.tempImagePath).then(function (res) {
+          // 将转换后的base64图片保存到全局数据中
+          app.globalData.picBase64 = res.data;
+
+          // 导航到OCR页面
+          wx.navigateTo({
+            url: '../OCR/OCR',
+          })
+        })
+      }
+    })
+  },
+
+  // 定义一个方法，用于显示提示
+  onTap: function () {
+    // 显示一个只支持中译英的提示
+    wx.showToast({
+      title: '只支持中译英',
+      icon: "error"
+    })
+  }
+})
+```
+
+##### 2 getPic.json
+
+缺省代码。
+
+```json
+{
+  "usingComponents": {}
+}
+```
+
+##### 3 getPic.wxml
+
+这段代码的主要功能是：
+
+1. 头部视图：包含了一个语言切换视图，用户可以点击中文或英文图标和文字来切换语言。
+2. 摄像头视图：显示一个摄像头，用户可以通过这个摄像头来拍照。
+3. 工具栏视图：包含了一个拍照图标，用户可以点击这个图标来拍照。
+
+```html
+<!-- 头部视图 -->
+<view class="head">
+  <!-- 语言切换视图，点击时触发onTap事件 -->
+  <view class="language" bindtap="onTap">
+    <!-- 中文图标，点击时触发onTap事件 -->
+    <image bindtap="onTap" class="language_pic" src="../../imgs/Chinese.png" />
+    <!-- 中文文字，点击时触发onTap事件 -->
+    <text bindtap="onTap" class="language_text" decode>&nbsp;中文</text>
+    <!-- 切换图标，点击时触发onTap事件 -->
+    <image bindtap="onTap" class="switch" src="../../imgs/switch.png"></image>
+    <!-- 英文图标，点击时触发onTap事件 -->
+    <image bindtap="onTap" class="language_pic" src="../../imgs/English.png" />
+    <!-- 英文文字，点击时触发onTap事件 -->
+    <text bindtap="onTap" class="language_text" decode>&nbsp;英语</text>
+  </view>
+</view>
+
+<!-- 摄像头视图 -->
+<camera style="margin-top:0rpx;width:100%;height:1100rpx"></camera>
+
+<!-- 工具栏视图 -->
+<view class="toolbar">
+  <!-- 拍照图标，点击时触发takeShot事件 -->
+  <image class="shot" src="../../imgs/takeshot.png" bindtap="takeShot"></image>
+</view>
+
+```
+
+##### 4 getPic.wxss
+
+这段CSS样式表的主要功能是：
+
+1. `.head`：设置头部视图的样式，包括位置、大小和背景颜色。
+2. `.btn`：设置按钮的样式，包括背景颜色、大小、内边距、颜色、边框圆角、外边距和文本对齐方式。
+3. `.toolbar`：设置工具栏的样式，使用Flex布局，设置宽度、高度、主轴对齐方式和交叉轴对齐方式。
+4. `.shot`：设置拍照图标的样式，包括大小、文本对齐方式和上外边距。
+5. `image`：设置图片的样式，包括大小和垂直对齐方式。
+6. `.language`：设置语言切换视图的样式，使用Flex布局，设置上内边距、宽度、左内边距和垂直对齐方式。
+7. `.language_pic`：设置语言图标的样式，包括上内边距和垂直对齐方式。
+8. `.language_text`：设置语言文字的样式，包括上内边距、字体大小、字体家族、行高、颜色、上下左外边距、字体家族和行高。
+9. `.switch`：设置切换图标的样式，使用Flex布局，设置对齐方式、方向、边框圆角、大小和自动外边距。
+
+这些样式主要用于设置微信小程序中的元素样式，使得元素在页面上的布局和外观符合设计要求。
+
+```css
+/* 头部视图样式 */
+.head {
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 200rpx;
+  background-color: #1493FC;
+}
+
+/* 按钮样式 */
+.btn {
+  background-color: #1493fc;
+  width: 200rpx;
+  padding: 15rpx 20rpx;
+  color: #fff;
+  border-radius: 20rpx;
+  margin: 40rpx;
+  text-align: center;
+}
+
+/* 工具栏样式 */
+.toolbar {
+  display: flex;
+  width: auto;
+  height: 100rpx;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 拍照图标样式 */
+.shot {
+  width: 110rpx;
+  height: 110rpx;
+  text-align: center;
+  margin-top: 50rpx;
+}
+
+/* 图片样式 */
+image {
+  width: 30rpx;
+  height: 30rpx;
+  vertical-align: bottom;
+}
+
+/* 语言切换视图样式 */
+.language {
+  display: flex;
+  padding-top: 100rpx;
+  width: 300rpx;
+  padding-left: 80rpx;
+  vertical-align: bottom;
+}
+
+/* 语言图标样式 */
+.language_pic {
+  padding-top: 25rpx;
+  vertical-align: text-bottom;
+}
+
+/* 语言文字样式 */
+.language_text {
+  padding-top: 20rpx;
+  font-size: 30rpx;
+  font-family: Poppins;
+  line-height: 26rpx;
+  color: #ffffff;
+  margin-top: 10rpx;
+  margin-bottom: 10rpx;
+  margin-left: 10rpx;
+  font-family: Poppins;
+  line-height: 22rpx;
+}
+
+/* 切换图标样式 */
+.switch {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+  border-radius: 16rpx;
+  width: 72rpx;
+  height: 72rpx;
+  margin: auto;
+}
+
+```
+
+#### 4.1.4.4 pages/history
+
+##### 1 history.js
+
+这段代码的主要功能是：
+
+1. 显示历史记录：当页面显示时，会从本地存储中获取历史记录，并显示到页面上。
+2. 点击历史记录项：用户可以点击历史记录项，页面会重新加载首页，并将点击的历史记录项的查询参数传递给首页。
+3. 清除历史记录：用户可以点击按钮触发`onClearHistory`方法，清除页面数据中的历史记录数组，并清除本地存储中的历史记录。
+
+```javascript
+// 引入全局的app实例
+const app = getApp()
+
+// 定义一个页面
+Page({
+  // 页面的初始数据
+  data: {
+    history: [] // 历史记录数组
+  },
+
+  // 页面显示时的回调函数
+  onShow: function () {
+    // 从本地存储中获取历史记录，并设置到页面数据中
+    this.setData({
+      history: wx.getStorageSync('history')
+    })
+  },
+
+  // 点击历史记录项时的回调函数
+  onTapItem: function (e) {
+    // 重新加载首页，并传递点击的历史记录项的查询参数
+    wx.reLaunch({
+      url: `/pages/index/index?query=${e.currentTarget.dataset.query}`
+    })
+  },
+
+  // 清除历史记录的回调函数
+  onClearHistory: function () {
+    // 将页面数据中的历史记录数组设置为空
+    this.setData({
+      history: []
+    })
+
+    // 清除本地存储中的历史记录
+    wx.clearStorage('history')
+  },
+})
+
+```
+
+##### 2 history.json
+
+缺省代码。
+
+```json
+{
+  "navigationBarTitleText": ""
+}
+```
+
+##### 3 history.wxml
+
+这段代码的主要功能是：
+
+1. 显示翻译历史：页面上有一个滚动视图，里面包含了一个历史记录列表视图，列表中的每一项都是一个历史记录项，显示了查询的语言、查询的文本、结果的语言和结果的文本。
+2. 清除历史记录：用户可以点击“清除历史记录”文本，触发`onClearHistory`事件，清除历史记录。
+3. 查看历史记录：用户可以点击历史记录项，触发`onTapItem`事件，查看历史记录的详细信息。
+
+```html
+<!-- 可滚动视图，设置为纵向滚动 -->
+<scroll-view scroll-y class="container">
+  <!-- 历史记录列表视图 -->
+  <view class="history-list">
+    <!-- 头部视图 -->
+    <view class="header">
+      <!-- 标题文本 -->
+      <text class="title">翻译历史</text>
+      <!-- 清除历史记录文本，点击时触发onClearHistory事件 -->
+      <text bindtap='onClearHistory' class="iconfont icon-close">清除历史记录</text>
+    </view>
+    <!-- 历史记录项视图，遍历历史记录数组，点击时触发onTapItem事件，传递查询参数和语言索引 -->
+    <view class="item" wx:for="{{history}}" wx:key="index" bindtap='onTapItem' data-query="{{item.query}}" data-langId="{{item.langIndex}}">
+      <!-- 查询视图 -->
+      <view class="query">
+        <!-- 语言视图 -->
+        <view class="language">
+          <!-- 语言图标 -->
+          <image src="../../imgs/Chinese.png" />
+          <!-- 语言文本 -->
+          中文
+        </view>
+        <!-- 查询文本 -->
+        {{item.query}}
+      </view>
+      <!-- 结果视图 -->
+      <view class="result">
+        <!-- 语言视图 -->
+        <view class="language">
+          <!-- 语言图标 -->
+          <image src="../../imgs/English.png" />
+          <!-- 语言文本 -->
+          英语
+        </view>
+        <!-- 结果文本 -->
+        {{item.result}}
+      </view>
+    </view>
+  </view>
+</scroll-view>
+
+```
+
+##### 4 history.wxss
+
+这些样式主要用于设置微信小程序中的元素样式，使得元素在页面上的布局和外观符合设计要求。具体包括：
+
+1. `.history-list`：设置历史记录列表的样式，使用Flex布局，设置为列方向，设置内边距。
+2. `.header`：设置头部视图的样式，使用Flex布局，设置上外边距。
+3. `.title`：设置标题文本的样式，设置字体大小和颜色。
+4. `.icon-close`：设置清除历史记录图标的样式，设置左外边距为自动，设置字体大小和颜色。
+5. `.item`：设置历史记录项的样式，包括上外边距、内边距、背景颜色、边框圆角和阴影。
+6. `.item .query`：设置查询视图的样式，包括内边距、底部边框、字体大小、字体家族、行高和颜色。
+7. `.item .query .language`：设置查询语言的样式，包括字体大小、字体家族、行高、颜色、上下外边距。
+8. `.item .result`：设置结果视图的样式，包括上外边距、内边距、字体大小、字体家族、行高和颜色。
+9. `.item .result .language`：设置结果语言的样式，包括字体大小、字体家族、行高、颜色和下外边距。
+10. `image`：设置图片的样式，包括宽度、高度和垂直对齐方式。
+
+这些样式主要用于设置微信小程序中的元素样式，使得元素在页面上的布局和外观符合设计要求。
+
+```css
+/* 历史记录列表样式 */
+.history-list {
+  display: flex;
+  flex-direction: column;
+  padding: 40rpx;
+}
+
+/* 头部视图样式 */
+.header {
+  display: flex;
+  margin-top: 100rpx;
+}
+
+/* 标题文本样式 */
+.title {
+  flex: 1;
+  font-size: 26rpx;
+  color: #8995a1;
+}
+
+/* 清除历史记录图标样式 */
+.icon-close {
+  margin-left: auto;
+  color: #aaa;
+  font-size: 26rpx;
+}
+
+/* 历史记录项样式 */
+.item {
+  margin-top: 40rpx;
+  padding: 0 32rpx;
+  background-color: #ffffff;
+  border-radius: 16rpx;
+  box-shadow: 0px 0px 2rpx #0000000a, 0px 0px 4rpx #0000000f, 0px 8rpx 16rpx #0000000a;
+}
+
+/* 查询视图样式 */
+.item .query {
+  padding: 20rpx;
+  border-bottom: solid 2rpx #e7e7e7;
+  font-size: 32rpx;
+  font-family: Poppins;
+  line-height: 50rpx;
+  color: #1e3163;
+}
+
+/* 查询语言样式 */
+.item .query .language {
+  font-size: 28rpx;
+  font-family: Poppins;
+  line-height: 26rpx;
+  color: #a8abb0;
+  margin-top: 10rpx;
+  margin-bottom: 10rpx;
+}
+
+/* 结果视图样式 */
+.item .result {
+  margin-top: 16rpx;
+  padding: 20rpx;
+  font-size: 32rpx;
+  font-family: Poppins;
+  line-height: 50rpx;
+  color: #1e3163;
+}
+
+/* 结果语言样式 */
+.item .result .language {
+  font-size: 28rpx;
+  font-family: Poppins;
+  line-height: 26rpx;
+  color: #909dbd;
+  margin-bottom: 10rpx;
+}
+
+/* 图片样式 */
+image {
+  width: 30rpx;
+  height: 30rpx;
+  vertical-align: bottom;
+}
+```
+
+#### 4.1.4.5 pages/index
+
+##### 1 index.js
+
+这段代码的主要功能包括：
+
+1. 用户输入文本进行翻译，翻译结果会保存在历史记录中。
+2. 用户可以点击清除图标清除输入的文本和翻译结果。
+3. 用户可以复制输入的文本和翻译结果。
+4. 用户可以播放翻译的语音。
+5. 用户可以查看翻译的历史记录。
+
+以下是代码的流程图：
+
+```mermaid
+classDiagram
+  Page --|> data : contains
+  Page --|> onLoad : function
+  Page --|> onShow : function
+  Page --|> onInput : function
+  Page --|> onTapClose : function
+  Page --|> onConfirm : function
+  Page --|> copyTextIN : function
+  Page --|> copyTextOUT : function
+  Page --|> playTranslateVoice : function
+  Page --|> onTapItem : function
+  data : query
+  data : hideClearIcon
+  data : result
+  data : curLang
+  data : currentTranslateVoice
+  data : currentsound
+  data : history
+```
+
+```javascript
+// 引入翻译工具和全局应用实例
+import { translate } from '../../utils/api.js'
+const app = getApp()
+const plugin = requirePlugin("WechatSI")
+
+Page({
+  data: {
+    query: '', // 用户输入的查询文本
+    hideClearIcon: false, // 控制清除图标的显示与隐藏
+    result: [], // 翻译结果
+    curLang: {}, // 当前选择的语言
+    currentTranslateVoice: '', // 当前播放的语音路径
+    currentsound: '', // 当前语音合成语言
+    history: [] // 翻译历史记录
+  },
+
+  // 页面加载时的处理函数
+  onLoad: function (options) {
+    if (options.query) {
+      this.setData({
+        query: options.query,
+        'hideClearIcon': false // 显示清除图标
+      })
+    }
+  },
+
+  // 页面显示时的处理函数
+  onShow: function () {
+    this.setData({
+      history: wx.getStorageSync('history') // 从本地存储获取历史记录
+    })
+    if (this.data.curLang.lang !== app.globalData.curLang.lang) {
+      this.setData({
+        curLang: app.globalData.curLang
+      })
+      this.onConfirm() // 执行翻译
+    }
+  },
+
+  // 处理用户输入的函数
+  onInput: function (e) {
+    this.setData({
+      'query': e.detail.value,
+      'hideClearIcon': this.data.query.length > 0 ? false : true // 根据输入内容是否为空来决定是否显示清除图标
+    })
+  },
+
+  // 处理用户点击清除图标的函数
+  onTapClose: function () {
+    this.setData({
+      query: '',
+      hideClearIcon: true,
+      result: '' // 清除翻译结果
+    })
+  },
+
+  // 执行翻译的函数
+  onConfirm: function () {
+    if (!this.data.query) return // 如果查询文本为空，则不执行翻译
+    translate(this.data.query, {
+      from: 'auto',
+      to: this.data.curLang.lang
+    }).then(res => {
+      this.setData({
+        'result': res.trans_result
+      })
+
+      // 更新历史记录
+      let history = wx.getStorageSync('history') || []
+      history.unshift({
+        query: this.data.query,
+        result: res.trans_result[0].dst,
+        from: res.from,
+        to: res.to
+      })
+      history.length = history.length > 10 ? 10 : history.length
+      wx.setStorageSync('history', history)
+    })
+  },
+
+  // 复制输入文本的函数
+  copyTextIN: function (e) {
+    wx.setClipboardData({
+      data: this.data.query,
+      success: function (res) {
+        wx.showToast({
+          title: '复制成功',
+        });
+      }
+    });
+  },
+
+  // 复制翻译结果的函数
+  copyTextOUT: function (e) {
+    wx.setClipboardData({
+      data: this.data.result[0].dst,
+      success: function (res) {
+        wx.showToast({
+          title: '复制成功',
+        });
+      }
+     });
+  },
+
+  // 播放翻译语音的函数
+  playTranslateVoice: function (e) {
+    let componentId = e.currentTarget.dataset.id;
+    this.setData({
+      currentsound: wx.getStorageSync('currentsound') || 'en_US'
+    })
+    let lto = this.data.currentsound
+    let content = (componentId === 'src') ? this.data.result[0].src : this.data.result[0].dst
+    plugin.textToSpeech({
+      lang: lto,
+      content: content,
+      success: resTrans => {
+        if (resTrans.retcode == 0) {
+          this.setData({
+            currentTranslateVoice: resTrans.filename,
+          })
+          let play_path = this.data.currentTranslateVoice
+          if (!play_path) {
+            console.warn("no translate voice path")
+            return
+          }
+          let audio = wx.createInnerAudioContext()
+          audio.src = play_path // 设置音频的源
+          audio.play() // 播放音频
+          audio.onError((res) => {
+            console.log(res.errMsg)
+            console.log(res.errCode)
+          })
+
+        } else {
+          console.warn("语音合成失败", resTrans)
+        }
+      },
+      fail: function (resTrans) {
+        console.warn("语音合成失败", resTrans)
+      }
+    })
+  },
+
+  // 跳转到历史记录页面的函数
+  onTapItem: function (e) {
+    wx.reLaunch({
+      url: `/pages/history/history`
+    })
+  },
+})
+```
+
+##### 2 index.json
+
+缺省代码。
+
+```json
+{}
+```
+
+##### 3 index.wxml
+
+这段代码是微信小程序的WXML模板，用于构建用户界面。主要包括以下部分：
+
+1. **container**：这是页面的主容器。
+2. **background**：包含logo和背景图片。
+3. **change**：这部分包含语言切换部分，用户可以在这里选择翻译的源语言和目标语言。
+4. **input-area**：这是用户输入要翻译的文本的地方。输入区域包含一个文本框和一个语音按钮，用户可以通过输入或语音输入文本。
+5. **output-area**：这是显示翻译结果的地方。输出区域包含一个文本结果区域和一个语音按钮，用户可以听到翻译的结果。
+6. **trans_history_area**：这部分显示用户的翻译历史。用户可以看到他们过去翻译的文本和结果。
+
+这是该代码的框架图：
+
+```mermaid
+graph TB
+  A["container"]
+  A --> B1["background"]
+  B1 --> C1["logo"]
+  B1 --> C2["background image"]
+  A --> B2["change"]
+  B2 --> C3["switch_language_from"]
+  B2 --> C4["switch"]
+  B2 --> C5["switch_language_to"]
+  A --> B3["input-area"]
+  B3 --> C6["textarea-wrap"]
+  C6 --> D1["textarea"]
+  C6 --> D2["language_from"]
+  D2 --> E1["voice"]
+  D2 --> E2["copy"]
+  B3 --> C7["output-area"]
+  C7 --> D3["result"]
+  D3 --> E3["text-result"]
+  C7 --> D4["language_to"]
+  D4 --> E4["voice"]
+  D4 --> E5["copy"]
+  A --> B4["trans_history_area"]
+  B4 --> C8["trans_history_title"]
+  B4 --> C9["trans_history_list"]
+  C9 --> D5["item"]
+  D5 --> E6["query"]
+  D5 --> E7["result"]
+  linkStyle 0 stroke:#2ecd71,stroke-width:2px;
+  linkStyle 1 stroke:#2ecd71,stroke-width:2px;
+  linkStyle 2 stroke:#2ecd71,stroke-width:2px;
+  linkStyle 3 stroke:#2ecd71,stroke-width:2px;
+  linkStyle 4 stroke:#2ecd71,stroke-width:2px;
+  linkStyle 5 stroke:#2ecd71,stroke-width:2px;
+  linkStyle 6 stroke:#2ecd71,stroke-width:2px;
+  linkStyle 7 stroke:#2ecd71,stroke-width:2px;
+  linkStyle 8 stroke:#2ecd71,stroke-width:2px;
+  linkStyle 9 stroke:#2ecd71,stroke-width:2px;
+  linkStyle 10 stroke:#2ecd71,stroke-width:2px;
+  linkStyle 11 stroke:#2ecd71,stroke-width:2px;
+  linkStyle 12 stroke:#2ecd71,stroke-width:2px;
+  linkStyle 13 stroke:#2ecd71,stroke-width:2px;
+  linkStyle 14 stroke:#2ecd71,stroke-width:2px;
+  linkStyle 15 stroke:#2ecd71,stroke-width:2px;
+  linkStyle 16 stroke:#2ecd71,stroke-width:2px;
+  linkStyle 17 stroke:#2ecd71,stroke-width:2px;
+  linkStyle 18 stroke:#2ecd71,stroke-width:2px;
+  linkStyle 19 stroke:#2ecd71,stroke-width:2px;
+  linkStyle 20 stroke:#2ecd71,stroke-width:2px;
+  linkStyle 21 stroke:#2ecd71,stroke-width:2px;
+  linkStyle 22 stroke:#2ecd71,stroke-width:2px;
+  linkStyle 23 stroke:#2ecd71,stroke-width:2px;
+  linkStyle 24 stroke:#2ecd71,stroke-width:2px;
+
+```
+
+```html
+<!--index.wxml-->
+<view class="container">
+  <!-- 背景图片和logo -->
+  <view class="background">
+    <image class="logo" src="../../imgs/logo.png"></image>
+    <image class="background" src="../../imgs/background.png"></image>
+  </view>
+
+  <!-- 语言切换部分 -->
+  <view class="change">
+    <navigator url="/pages/choose_language/choose_language" hover-class="navigator-hover">
+      <view class="switch_language_from">
+        <image class="switch_language_pic" src="{{curLang.src}}" />
+        <text class="switch_language_from_text" decode="true">&nbsp;&nbsp;{{curLang.chs}}</text>
+        <text class="iconfont icon-down"></text>
+      </view>
+      <image class="switch" src="../../imgs/switch.png"></image>
+      <view class="switch_language_to">
+        <image class="switch_language_pic" src="{{curLang.src}}" />
+        <text class="switch_language_to_text" decode="true">&nbsp;&nbsp;{{curLang.chs}}</text>
+        <text class="iconfont icon-down"></text>
+      </view>
+    </navigator>
+  </view>
+
+  <!-- 输入区域 -->
+  <view class="input-area">
+    <view class="textarea-wrap">
+      <textarea placeholder='请输入要翻译的文本' placeholder-style=' color: #1e3163;line-height: 34rpx;font-size: 36rpx;font-family: Poppins;' bindinput='onInput' bindconfirm='onConfirm' bindblur='onConfirm' value="{{query}}"></textarea>
+      <view class="language_from">
+        <image class="language_pic" src="../../imgs/Chinese.png" />
+        <text class="language_from_text">中文</text>
+        <view data-id="src" catchtap="playTranslateVoice" catchtouchstart="playTranslateVoice">
+          <image class="voice" src="../../imgs/voice.png" mode="widthFix" />
+        </view>
+        <view class="copy" bindtap="copyTextIN">
+          <image src="../../imgs/copy.png" mode="widthFix" />
+        </view>
+      </view>
+    </view>
+
+    <!-- 输出区域 -->
+    <view class="output-area">
+      <view class="result">
+        <view class="text-result" wx:for="{{result}}" wx:key="index">
+          <text selectable="true" decode="true">{{item.dst}}</text>
+        </view>
+      </view>
+      <view class="language_to">
+        <image class="language_pic" src="{{curLang.src}}" />
+        <text class="language_to_text">{{curLang.chs}}</text>
+        <view data-id="tar" catchtap="playTranslateVoice" catchtouchstart="playTranslateVoice">
+          <image class="voice" src="../../imgs/voice_white.png" mode="widthFix" />
+        </view>
+        <view class="copy" bindtap="copyTextOUT">
+          <image src="../../imgs/copy_white.png" mode="widthFix" />
+        </view>
+      </view>
+    </view>
+
+        <!-- 翻译历史模块 -->
+    <view class="trans_history_area">
+      <view class="trans_history_title">
+        <view class="trans_history_title_chi">翻译历史</view>
+        <view class="trans_history_title_eng">Translation History</view>
+      </view>
+      <view class="trans_history_list">
+        <view class="item" wx:for="{{history}}" wx:key="index" bindtap='onTapItem' data-query="{{item.query}}" data-langId="{{item.langIndex}}">
+          <view class="query">
+            <view class="language">
+              <image src="../../imgs/Chinese.png" />
+              中文
+            </view>
+            {{item.query}}
+          </view>
+          <view class="result">
+            <view class="language">
+              <image src="../../imgs/English.png" />
+              英语
+            </view>
+            {{item.result}}
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+
+```
+
+##### 4 index.wxss
+
+这段代码是微信小程序的WXSS样式表，用于设置页面的样式。主要包括以下部分：
+
+1. **container**：设置页面的主容器的位置、大小和背景颜色。
+2. **logo和background**：设置logo和背景图片的位置、大小和显示方式。
+3. **change**：设置语言切换部分的样式，包括颜色、字体大小、内外边距、显示方式、对齐方式等。
+4. **input-area和textarea-wrap**：设置用户输入要翻译的文本的区域的样式，包括位置、背景颜色、边距、边框、阴影等。
+5. **output-area**：设置显示翻译结果的区域的样式，包括显示方式、最小高度、边距、边框、背景颜色、阴影等。
+6. **trans_history_area**：设置显示用户的翻译历史的区域的样式，包括边距、标题的样式、列表项的样式等。
+
+```css
+.container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  /* height: 100%; */
+  height: 500rpx;
+  /* background: linear-gradient(to bottom, #1493FC 40%, #FFFFFF 60%); */
+  background: #1493FC;
+}
+
+.container .logo {
+  position: fixed;
+  display: flex;
+  margin-top: 20rpx;
+  width: 387rpx;
+  height: 211rpx;
+  left: 20rpx;
+  top: 0rpx;
+}
+
+.container .background {
+  position: fixed;
+  display: flex;
+  width: 312rpx;
+
+  height: 288rpx;
+  right: 0;
+  top: 60rpx;
+}
+
+.change {
+  color: #8995a1;
+  font-size: 24 rpx;
+  /* padding: 20rpx 40rpx; */
+  display: block;
+  align-items: center;
+  justify-content: space-between;
+  margin: 30rpx 50rpx 0;
+  margin-top: 220rpx;
+  padding: 32rpx 18rpx;
+  background-color: #1265dd;
+  border-radius: 16rpx;
+}
+
+.change .icon-right {
+  color: #888;
+}
+
+.change .icon-down {
+  color: #8995a1;
+  font-size: 20rpx;
+}
+
+.change .switch_language_from {
+  position: fixed;
+  display: flex;
+  flex-direction: row;
+  margin-left: 6rpx;
+  top: 265rpx;
+  left: 100rpx;
+  align-items: center;
+  justify-content: center;
+}
+
+.change .switch {
+  /* display: flex; */
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+  border-radius: 16rpx;
+  width: 72rpx;
+  height: 72rpx;
+  margin: auto;
+}
+
+.change .switch_language_to {
+  position: fixed;
+  display: flex;
+  flex-direction: row;
+  top: 265rpx;
+  right: 100rpx;
+  align-items: center;
+  justify-content: center;
+  vertical-align: text-bottom;
+}
+
+
+.input-area {
+  position: relative;
+}
+
+.textarea-wrap {
+  background: #fff;
+  margin: 50rpx;
+  border-bottom: 1px solid #c7cee0;
+  padding: 0 32rpx;
+  background-color: #ffffff;
+  border-radius: 16rpx;
+  box-shadow: 0px 0px 2rpx #0000000a, 0px 0px 4rpx #0000000f, 0px 8rpx 16rpx #0000000a;
+  height: 300rpx;
+  left: 6.13%;
+  right: 6.67%;
+  top: 53.72%;
+  bottom: 0.55%;
+  color: #1e3163;
+  line-height: 34rpx;
+  font-size: 36rpx;
+  font-family: Poppins;
+}
+
+.language_from {
+  bottom: auto;
+  font-size: 30rpx;
+  font-family: Poppins;
+  line-height: 26rpx;
+  color: #a8abb0;
+  margin-top: 10rpx;
+  margin-bottom: 10rpx;
+  font-family: Poppins;
+  line-height: 22rpx;
+}
+
+.language_pic {
+  margin-top: 20rpx;
+  width: 40rpx;
+  height: 40rpx;
+  vertical-align: text-bottom;
+}
+
+.language_from_text {
+  font-size: 30rpx;
+  font-family: Poppins;
+  line-height: 26rpx;
+  color: #a8abb0;
+  margin-top: 10rpx;
+  margin-bottom: 10rpx;
+  margin-left: 10rpx;
+  font-family: Poppins;
+  line-height: 22rpx;
+}
+
+.input-area textarea {
+  background-color: #fff;
+  padding: 30rpx 0 30rpx 10rpx;
+  /* width: calc(100% - 48rpx); */
+  width: auto;
+  margin: 0;
+  box-sizing: border-box;
+  height: 210rpx;
+  border-bottom: solid 2rpx #e7e7e7;
+  padding-right: 0;
+
+}
+
+.input-area .icon-close {
+  position: absolute;
+  right: 12rpx;
+  top: 20rpx;
+  z-index: 100;
+  font-size: 40rpx;
+  color: #888;
+}
+
+.voice {
+  position: fixed;
+  margin-top: -40rpx;
+  width: 40rpx;
+  height: 40rpx;
+  vertical-align: text-bottom;
+  text-align: end;
+  right: 150rpx;
+}
+
+.copy {
+  position: fixed;
+  margin-top: -45rpx;
+  width: 50rpx;
+  height: 50rpx;
+  right: 100rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.play-icon {
+  position: absolute;
+  right: 3rpx;
+  bottom: 7rpx;
+  padding: 0 8rpx;
+  display: flex;
+  align-items: center;
+}
+
+.edit-icon::before .play-icon::before {
+  content: "";
+  position: absolete;
+  top: -10rpx;
+  left: -10rpx;
+  bottom: -10rpx;
+  right: -10rpx;
+}
+
+
+.input-area .output-area {
+  display: flex;
+  flex-direction: column;
+  min-height: 150rpx;
+  margin: 50rpx;
+  border-bottom: 1px solid #c7cee0;
+  padding: 0 32rpx;
+  background-color: #1493FC;
+  border-radius: 16rpx;
+  box-shadow: 0px 0px 2rpx #0000000a, 0px 0px 4rpx #0000000f, 0px 8rpx 16rpx #0000000a;
+  height: 300rpx;
+  left: 24px;
+  right: 24px;
+  top: 384px;
+  bottom: 262px;
+}
+
+.output-area .text-result {
+  min-height: 150rpx;
+  /* margin-top: 20rpx; */
+  /* padding: 20rpx 0; */
+  height: 150rpx;
+  /* border-bottom: solid 2rpx #e7e7e7; */
+  color: #ffffff;
+  line-height: 32rpx;
+  font-size: 36rpx;
+  font-family: Poppins;
+  line-height: 33rpx;
+}
+
+.output-area .result {
+  margin-bottom: 10px;
+  /* 这里的值可以根据你的需求来调整 */
+  min-height: 150rpx;
+  margin-top: 20rpx;
+  padding: 20rpx 0;
+  height: 150rpx;
+  border-bottom: solid 2rpx #e7e7e7;
+  color: #ffffff;
+  line-height: 32rpx;
+  font-size: 36rpx;
+  font-family: Poppins;
+  line-height: 33rpx;
+}
+
+.language_to {
+  /* bottom: auto; */
+  font-size: 30rpx;
+  font-family: Poppins;
+  line-height: 26rpx;
+  color: #a8abb0;
+  /* margin-top: 10rpx; */
+  margin-bottom: 10rpx;
+  font-family: Poppins;
+  line-height: 22rpx;
+}
+
+.language_to_text {
+  font-size: 30rpx;
+  font-family: Poppins;
+  line-height: 26rpx;
+  color: #ffffff;
+  margin-top: 10rpx;
+  margin-bottom: 10rpx;
+  margin-left: 10rpx;
+  font-family: Poppins;
+  line-height: 22rpx;
+}
+
+.trans_history_area {
+  margin: 55rpx;
+}
+
+.trans_history_area .trans_history_title {
+  align-items: center;
+  justify-content: space-between;
+  display: flex;
+  flex-direction: row;
+}
+
+.trans_history_area .trans_history_title .trans_history_title_chi {
+  color: transparent;
+  font-size: 32rpx;
+  font-family: Poppins;
+  font-weight: 700;
+  line-height: 30rpx;
+  background-image: linear-gradient(180deg, #0064e1 0%, #0845c2 100%);
+  -webkit-background-clip: text;
+}
+
+.trans_history_area .trans_history_title .trans_history_title_eng {
+  color: #949494;
+  line-height: 24rpx;
+  font-style: italic;
+  font-family: Poppins;
+  line-height: 22rpx;
+}
+
+.item {
+  margin-top: 40rpx;
+  padding: 0 10rpx;
+  background-color: #ffffff;
+  border-radius: 16rpx;
+  box-shadow: 0px 0px 2rpx #0000000a, 0px 0px 4rpx #0000000f, 0px 8rpx 16rpx #0000000a;
+}
+
+.item .query {
+  padding: 20rpx;
+  border-bottom: solid 2rpx #e7e7e7;
+  font-size: 32rpx;
+  font-family: Poppins;
+  line-height: 50rpx;
+  color: #1e3163;
+}
+
+.item .query .language {
+  font-size: 28rpx;
+  font-family: Poppins;
+  line-height: 26rpx;
+  color: #a8abb0;
+  margin-top: 10rpx;
+  margin-bottom: 10rpx;
+}
+
+.item .result {
+  margin-top: 16rpx;
+  padding: 20rpx;
+  font-size: 32rpx;
+  font-family: Poppins;
+  line-height: 50rpx;
+  color: #1e3163;
+}
+
+.item .result .language {
+  font-size: 28rpx;
+  font-family: Poppins;
+  line-height: 26rpx;
+  color: #909dbd;
+  margin-bottom: 10rpx;
+}
+
+image {
+  width: 30rpx;
+  height: 30rpx;
+  vertical-align: bottom;
+}
+```
+
+#### 4.1.4.6 pages/OCR
+
+##### 1 OCR.js
+
+这段代码的主要功能是：
+
+1. 上传图片：用户可以通过点击按钮上传图片，然后跳转到另一个页面进行图片的选择和处理。
+2. 获取OCR：通过调用API，将上传的图片进行OCR识别，提取出图片中的文字，并将识别结果进行翻译。
+3. 返回按钮：用户可以通过点击返回按钮返回到上一个页面。
+
+```javascript
+// 导入翻译工具
+import { translate } from '../../utils/api.js'
+
+// 获取全局应用程序实例对象
+const app = getApp();
+
+// 定义页面
+Page({
+  /**
+   * 页面的初始数据
+   */
+  data: {
+    src: "",  // 图片源
+    sourceText: [],  // 原始文本
+    resultText: '',  // 翻译结果
+    imgList: [],  // 图片列表
+    filePath: '',  // 文件路径
+    picBase64: '',  // 图片的base64编码
+    textSrc: '',  // 原文本
+    textDst: ''  // 目标文本
+  },
+
+  // 页面显示时的回调函数
+  onShow: function () {
+    // 如果全局变量中的图片base64编码不为空
+    if (app.globalData.picBase64 != "") {
+      // 更新数据
+      this.setData({
+        src: app.globalData.picBase64,
+      })
+    }
+  },
+
+  // 上传图片的函数
+  uploadImg: function () {
+    // 导航到获取图片的页面
+    wx.navigateTo({
+      url: '../getPic/getPic',
+    })
+  },
+
+  // 获取OCR的函数
+  getOCR: function () {
+    // 提取图片里的文字
+    var that = this;
+    wx.request({
+      url: 'https://api.jisuapi.com/generalrecognition/recognize?appkey=993bfd80d8ac15c6',
+      data: {
+        pic: this.data.src,
+        type: "cnen"
+      },
+      method: 'post',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded' // 默认值
+      },
+      success: function (res) {
+        console.log(res);
+        that.setData({
+          sourceText: res.data.result
+        })
+        let str = that.data.sourceText.join()
+        console.log(str)
+        translate(str, {
+          from: 'zh',
+          to: 'en'
+        }).then(res => {
+          console.log(res)
+          that.setData({
+            resultText: res.trans_result[0].dst
+          })
+        })
+      },
+      fail: function (res) {
+        console.log(res);
+      }
+    })
+  },
+
+  // 返回按钮的点击事件处理函数
+  onBackIconTap: function () {
+    // 导航回上一页
+    wx.navigateBack({
+      delta: 1, // 返回的页面层数
+    });
+  }
+})
+
+```
+
+##### 2 OCR.json
+
+缺省代码。
+
+```json
+{
+  "usingComponents": {}
+}
+```
+
+##### 3 OCR.wxml
+
+这段代码的主要功能是：
+
+1. 显示一个返回按钮，用户可以通过点击返回按钮返回到上一个页面。
+2. 显示一个图片，图片的源数据是base64编码的。
+3. 提供一个按钮，用户可以通过点击按钮触发OCR识别和翻译的功能。
+4. 显示OCR识别和翻译的结果，包括源语言（中文）的文本和目标语言（英语）的文本。
+
+```html
+<!-- 头部视图 -->
+<view class="head"> 
+  <!-- 返回图标视图，点击时触发onBackIconTap事件 -->
+  <view id="back-icon" class="back-icon"  bindtap="onBackIconTap" >
+    <!-- 返回箭头图标 -->
+    <image src="../../imgs/arrow-left.png" class="arrow-icon"></image>
+  </view>
+</view>
+
+<!-- 容器视图 -->
+<view class="container">
+  <!-- 图片视图，图片源为base64编码的数据，宽度为100%，高度为1000rpx -->
+  <image src="data:image/png;base64,{{src}}" style="width:100%;height:1000rpx"></image>
+  
+  <!-- 翻译图片按钮，点击时触发getOCR事件 -->
+  <view bindtap="getOCR" class="btn">
+    翻译图片
+  </view>
+  
+  <!-- 项目视图 -->
+  <view class="item">
+    <!-- 查询视图 -->
+    <view class="query">
+      <!-- 语言视图，包含一个图标和文本“中文” -->
+      <view class="language">
+        <image src="../../imgs/Chinese.png" />
+        中文
+      </view>
+      <!-- 显示源文本 -->
+      <text>{{sourceText}}</text>
+    </view>
+    
+    <!-- 结果视图 -->
+    <view class="result">
+      <!-- 语言视图，包含一个图标和文本“英语” -->
+      <view class="language">
+        <image src="../../imgs/English.png" />
+        英语
+      </view>
+      <!-- 显示翻译结果文本 -->
+      <text>{{resultText}}</text>
+    </view>
+  </view>
+</view>
+```
+
+##### 4 OCR.wxss
+
+这段代码定义了一些样式规则，用于美化小程序中的各个元素的外观和布局。
+
+其中包括头部视图、返回图标、箭头图标、按钮、项目视图、查询视图、查询语言、结果视图、结果语言和图片的样式。
+
+通过设置不同的样式属性，如位置、大小、颜色等，可以使页面元素呈现出不同的效果，增强用户体验。
+
+```css
+/* 容器样式 */
+.container {
+  /* 居中对齐 */
+  text-align: center;
+}
+
+/* 头部样式 */
+.head {
+  /* 相对定位 */
+  position: relative;
+  /* 顶部和左侧边距为0，宽度为100%，高度为200rpx */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 200rpx;
+  /* 背景颜色为#1493FC */
+  background-color: #1493FC;
+}
+
+/* 返回图标样式 */
+.back-icon {
+  /* 绝对定位，位于头部视图的左上角 */
+  position: absolute;
+  top: 50px;
+  left: 20px;
+  /* z-index用于控制元素的层叠顺序 */
+  z-index: 1;
+  /* 背景颜色为#1493FC */
+  background-color: #1493fc;
+}
+
+/* 箭头图标样式 */
+.arrow-icon {
+  width: 30px;
+  height: 30px;
+}
+
+/* 按钮样式 */
+.btn {
+  /* 背景颜色为#1493FC */
+  background-color: #1493fc;
+  /* 上下内边距为15rpx，左右内边距为20rpx */
+  padding: 15rpx 20rpx;
+  /* 文本颜色为白色 */
+  color: #fff;
+  /* 圆角半径为20rpx */
+  border-radius: 20rpx;
+  /* 外边距为40rpx */
+  margin: 40rpx;
+}
+
+/* 项目样式 */
+.item {
+  /* 上外边距为40rpx，左右内边距为10rpx */
+  margin-top: 40rpx;
+  padding: 0 10rpx;
+  /* 背景颜色为白色 */
+  background-color: #ffffff;
+  /* 圆角半径为16rpx */
+  border-radius: 16rpx;
+  /* 阴影效果 */
+  box-shadow: 0px 0px 2rpx #0000000a, 0px 0px 4rpx #0000000f, 0px 8rpx 16rpx #0000000a;
+}
+
+/* 查询样式 */
+.item .query {
+  /* 内边距为20rpx */
+  padding: 20rpx;
+  /* 底部边框为实线，宽度为2rpx，颜色为#e7e7e7 */
+  border-bottom: solid 2rpx #e7e7e7;
+  /* 字体大小为32rpx */
+  font-size: 32rpx;
+  /* 字体家族为Poppins */
+  font-family: Poppins;
+  /* 行高为50rpx */
+  line-height: 50rpx;
+  /* 字体颜色为#1e3163 */
+  color: #1e3163;
+}
+
+/* 查询语言样式 */
+.item .query .language {
+  /* 字体大小为28rpx */
+  font-size: 28rpx;
+  /* 字体家族为Poppins */
+  font-family: Poppins;
+  /* 行高为26rpx */
+  line-height: 26rpx;
+  /* 字体颜色为#a8abb0 */
+  color: #a8abb0;
+  /* 上外边距为10rpx，下外边距为10rpx */
+  margin-top: 10rpx;
+  margin-bottom: 10rpx;
+}
+
+/* 结果样式 */
+.item .result {
+  /* 上外边距为16rpx */
+  margin-top: 16rpx;
+  /* 内边距为20rpx */
+  padding: 20rpx;
+  /* 字体大小为32rpx */
+  font-size: 32rpx;
+  /* 字体家族为Poppins */
+  font-family: Poppins;
+  /* 行高为50rpx */
+  line-height: 50rpx;
+  /* 字体颜色为#1e3163 */
+  color: #1e3163;
+}
+
+/* 结果语言样式 */
+.item .result .language {
+  /* 字体大小为28rpx */
+  font-size: 28rpx;
+  /* 字体家族为Poppins */
+  font-family: Poppins;
+  /* 行高为26rpx */
+  line-height: 26rpx;
+  /* 字体颜色为#909dbd */
+  color: #909dbd;
+  /* 下外边距为10rpx */
+  margin-bottom: 10rpx;
+}
+
+/* 图片样式 */
+image {
+  width: 30rpx;
+  height: 30rpx;
+  /* 垂直对齐方式为底部对齐 */
+  vertical-align: bottom;
+}
+
+```
 
 ### 4.1.5 TDD_test_cdt/
 
