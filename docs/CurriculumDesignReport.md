@@ -80,8 +80,7 @@ TransWe是一款完全免费的小程序，我们的目标是为用户提供最�
 │  │  ├─result-bubble				//翻译气泡
 │  │  └─waiting-icon				//等待图标
 │  ├─imgs						    //小程序内部图片文件夹
-│  ├─pages							//所有页面
-│  │  ├─change					    //切换语言
+│  ├─pages							//所有页面					    
 │  │  ├─choose_language			    //选择语言
 │  │  ├─edit					    //文本编辑页面
 │  │  ├─getPic					    //获取图片
@@ -594,12 +593,1780 @@ OCR拍照翻译页面是用户能够通过拍照进行翻译的地方。
 
 ### 4.1.2 components/
 
+翻译组件介绍
+
+#### 4.1.2.1 components/bottom-button
+录音按钮组件
+以下代码主要功能是：
+
+1. 根据语言配置生成对应的录音按钮。
+2. 当按下按钮时，开始录音，并将按钮样式改为按下状态。
+3. 当松开按钮时，结束录音，并将按钮样式改回正常状态。
+4. 当按钮被禁用时，修改按钮样式为禁用状态。
+
+- **bottom-button.js**
+
+```javascript
+// 引入语言配置文件
+import { language } from '../../utils/conf.js'
+
+// 获取全局应用实例
+let app = getApp();
+
+// 获取全局按钮配置
+let buttons = app.globalData.buttons;
+
+// 根据语言配置生成按钮配置
+language.forEach(item => {
+  buttons.push({
+    buttonText: item.lang_name, // 按钮文本
+    lang: item.lang_content, // 按钮对应的语言
+    lto: item.lang_to[0], // 目标语言
+    msg: item.hold_talk, // 提示信息
+    buttonType: 'normal', // 按钮类型
+  })
+})
+
+// 按钮对应的背景图片
+let buttonBackground = {
+  zh_CN: {
+    normal: '../../imgs/R.png',
+    press: '../../imgs/R1.png',
+    disabled: '../../imgs/R.png',
+  },
+  en_US: {
+    normal: '../../imgs/R.png',
+    press: '../../imgs/R1.png',
+    disabled: '../../imgs/R.png',
+  }
+}
+
+// 组件定义
+Component({
+  // 组件的属性列表
+  properties: {
+    // 按钮是否禁用
+    buttonDisabled: {
+      type: Boolean,
+      value: false,
+      observer: function (newVal, oldVal) {
+        let buttonType = newVal ? 'disabled' : 'normal'
+        this.changeButtonType(buttonType)
+      }
+    },
+  },
+
+  // 组件的初始数据
+  data: {
+    buttons: buttons, // 按钮配置
+    buttonBackground: buttonBackground, // 按钮背景图片
+    currentButtonType: 'normal', // 当前按钮类型
+  },
+
+  // 组件的方法列表
+  methods: {
+    // 按下按钮开始录音
+    streamRecord(e) {
+      if (this.data.buttonDisabled) {
+        return
+      }
+      // 先清空背景音
+      wx.stopBackgroundAudio()
+
+      let currentButtonConf = e.currentTarget.dataset.conf
+
+      this.changeButtonType('press', currentButtonConf.lang)
+
+      this.triggerEvent('recordstart', {
+        buttonItem: currentButtonConf
+      })
+    },
+
+    // 松开按钮结束录音
+    endStreamRecord(e) {
+      let currentButtonConf = e.currentTarget.dataset.conf
+
+      this.triggerEvent('recordend', {
+        buttonItem: currentButtonConf
+      })
+    },
+
+    // 修改按钮样式
+    changeButtonType(buttonType, buttonLang) {
+      let tmpButtons = this.data.buttons.slice(0)
+
+      tmpButtons.forEach(button => {
+        if (!buttonLang || buttonLang == button.lang) {
+          button.buttonType = buttonType
+        }
+      })
+
+      this.setData({
+        buttons: tmpButtons
+      })
+    },
+  }
+});
+
+```
+- **bottom-button.json**
+```javascript
+{
+  "component": true
+}
+```
+- **bottom-button.wxml**
+```css
+<!-- 按钮组容器，当hidden为true时隐藏 -->
+<view class="button-wrap" hidden="{{hidden}}">
+  <!-- 图片大容器 -->
+  <view class="img-big-wrap">
+    <!-- 按钮容器 -->
+    <view class="button-container">
+      <!-- 使用wx:for指令遍历buttons数组，生成对应的按钮 -->
+      <view wx:for="{{buttons}}" wx:for-item="button" wx:key="lang" class="button-item">
+        <view catchtouchstart="streamRecord"
+               catchtouchend="endStreamRecord"
+               data-conf="{{button}}"
+               class="button-press">
+          <image class="button-background" src="{{buttonBackground[button.lang][button.buttonType]}}"></image>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+```
+- **bottom-button.wxss**
+```css
+/* 按钮组容器样式，使用flex布局，内容居中 */
+.button-wrap {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-justify-content: center;
+  justify-content: center;
+}
+
+/* 图片大容器样式，宽度100%，使用flex布局，背景色为#1494fc */
+.img-big-wrap {
+  width: 100%;
+  display: -webkit-flex;
+  display: flex;
+  background: #1494fc;
+}
+
+/* 按钮容器样式，使用flex布局，高度100%，宽度100%，内容居中，底部外边距20px */
+.button-container{
+  display: flex;
+  display: -webkit-flex;
+  height: 100%;
+  width: 100%;
+  box-sizing: border-box;
+  justify-content: space-between;
+  -webkit-justify-content: space-between;
+  align-items: center;
+  -webkit-align-items:flex-start;
+  justify-content: center;
+  margin-bottom: 20px;
+  padding: 50rpx 0 38rpx 0;
+  z-index: 1;
+}
+
+/* 按钮项样式，使用flex布局，方向为列，内容从上开始，居中对齐，宽度75px */
+.button-item {
+  display: flex;
+  display: -webkit-flex;
+  flex-direction: column;
+  -webkit-flex-direction: column;
+  justify-content: flex-start;
+  -webkit-justify-content: flex-start;
+  align-items: center;
+  -webkit-align-items: center;
+  width: 75px;
+  box-sizing: border-box;
+  z-index: 2;
+}
+
+/* 按钮标签样式，字体大小28rpx，颜色#9B9B9B，字母间距0，上外边距15rpx */
+.button-label {
+  font-size: 28rpx;
+  color: #9B9B9B;
+  letter-spacing: 0;
+  margin: 15rpx 0 0 0;
+}
+
+/* 按钮按下样式，位置相对，使用flex布局，高度150rpx，宽度100%，圆角100rpx，内容居中对齐 */
+.button-press {
+  position: relative;
+  display: flex;
+  display: -webkit-flex;
+  height: 150rpx;
+  width: 100%;
+  border-radius: 100rpx;
+  justify-content: center;
+  -webkit-justify-content: center;
+  align-items: center;
+  -wekbit-align-items:center;
+}
+
+/* 按钮背景样式，位置相对，高度150rpx，宽度100%，左边距0，z-index为3 */
+.button-background {
+  position: relative;
+  height: 150rpx;
+  width: 100%;
+  /* border-radius: 100rpx; */
+  left: 0;
+  z-index: 3;
+}
+```
+
+#### 4.1.2.2 components/modal
+
+工具组件
+
+以下代码主要功能是：
+
+1. 三个操作项：复制源文本、复制目标文本和删除条目。
+2. 当点击复制源文本或复制目标文本时，会调用`setClip`
+
+- **modal.js**
+```javascript
+// 导入语言配置
+import { language } from '../../utils/conf.js'
+
+// 获取第一种语言配置
+const tips_language = language[0]
+
+// 定义模态框中的操作项
+let modalItems = [
+    {
+      type: 'copySource', // 复制源文本
+      text: tips_language.copy_source_text
+    },
+    {
+      type: 'delete', // 删除条目
+      text: tips_language.delete_item
+    },
+    {
+      type: 'copyTarget', // 复制目标文本
+      text: tips_language.copy_target_text
+    },
+]
+
+// 定义组件
+Component({
+  // 组件的属性列表
+  properties: {
+    // 条目数据
+    item: {
+      type: Object,
+      value: {},
+    },
+    // 是否显示模态框
+    modalShow: {
+      type: Boolean,
+      value: true,
+    },
+    // 条目索引
+    index: {
+      type: Number,
+    },
+  },
+
+  // 组件的初始数据
+  data: {
+    modalItems: modalItems, // 模态框操作项
+  },
+
+  // 组件的方法列表
+  methods: {
+    // 删除条目并关闭模态框
+    deleteBubbleModal: function() {
+      this.triggerEvent('modaldelete', {
+        item: this.data.item,
+        index: this.data.index,
+      },{ bubbles: true, composed: true })
+      this.leaveBubbleModal()
+    },
+
+    // 点击操作项
+    itemTap: function(e) {
+      let itemType = e.currentTarget.dataset.type
+      let item = this.data.item
+
+      switch(itemType) {
+        case 'copySource': // 复制源文本
+          this.setClip(item.text)
+          break;
+        case 'copyTarget': // 复制目标文本
+          this.setClip(item.translateText)
+          break
+        case 'delete': // 删除条目
+          this.deleteBubbleModal()
+          break
+        default:
+          break
+      }
+    },
+
+    // 复制到剪贴板
+    setClip: function(text) {
+      wx.setClipboardData({
+        data: text,
+        success:  (res) => {
+          this.leaveBubbleModal()
+          wx.showToast({
+            title: "已复制到剪切板",
+            icon: "success",
+            duration: 1000,
+            success: function (res) {
+              console.log("show succ");
+            },
+            fail: function (res) {
+              console.log(res);
+            }
+          });
+        }
+      })
+    },
+
+    // 关闭模态框
+    leaveBubbleModal: function() {
+      this.triggerEvent('modalleave', {
+        modalShow: this.data.modalShow
+      })
+    },
+  }
+});
+
+```
+- **modal.json**
+```javascript
+{
+  "component": true
+}
+```
+- **modal.wxml**
+```css
+<!-- 如果modalShow为true，则显示模态框 -->
+<view wx:if="{{modalShow}}" style="height:100%;width:100%">
+  <view class="modal-wrapper">
+    <!-- 模态框的三角形部分 -->
+    <view class="modal-triangle"></view>
+    <!-- 模态框的主体部分，包含一些可点击的选项 -->
+    <view class="menu-modal">
+      <!-- 遍历modalItems数组，为每个选项创建一个视图元素 -->
+      <view wx:for="{{modalItems}}" wx:key="type" class="menu-modal-item" data-type="{{item.type}}" bindtap="itemTap">{{item.text}}</view>
+    </view>
+  </view>
+</view>
+<!-- 如果modalShow为true，则显示一个透明的遮罩层，点击遮罩层可以关闭模态框 -->
+<view wx:if="{{modalShow}}" class="modal-hidden" 	bindtouchstart="leaveBubbleModal"></view>
+```
+- **modal.wxss**
+```css
+/* 模态框容器样式 */
+.modal-wrapper {
+  position: relative;
+  color: #FFFFFF;
+  height: 70rpx;
+  width: 80%;
+  margin: 0 auto;
+  z-index: 70;
+  opacity: 0.9;
+}
+
+/* 模态框中三角形的样式 */
+.modal-triangle {
+  position: relative;
+  margin: 0 auto;
+  top: 28px;
+  height: 0;
+  width: 0;
+  border: 5px solid #000000;
+  transform: rotate(45deg);
+}
+
+/* 模态框隐藏状态的样式 */
+.modal-hidden {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #FFFFFF;
+  opacity: 0;
+  z-index: 69;
+}
+
+/* 模态菜单的样式 */
+.menu-modal {
+  height: 70rpx;
+  font-size: 14px;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  display: flex;
+  display: -webkit-flex;
+  -webkit-align-items: center;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+/* 模态菜单项的样式 */
+.menu-modal-item {
+  color: #FFFFFF;
+  position: relative;
+  width: 35%;
+  height: 100%;
+  display: flex;
+  display: -webkit-flex;
+  align-items: center;
+  -webkit-align-items: center;
+  justify-content: center;
+  -webkit-justify-content: center;
+  background-clip: content-box;
+  background-color: #000000;
+}
+
+/* 第一个模态菜单项的样式，添加左上和左下的圆角 */
+.menu-modal-item:first-child {
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+}
+
+/* 最后一个模态菜单项的样式，添加右上和右下的圆角 */
+.menu-modal-item:last-child {
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+/* 模态菜单项之间的分隔线样式 */
+.menu-modal-item + .menu-modal-item {
+  border-left: 1rpx solid #FFFFFF;
+}
+
+/* 模态菜单项被按下时的样式 */
+.menu-modal-item:active {
+  background-color: #9e9e9e;
+}
+
+```
+#### 4.1.2.3 components/play-icon
+
+播放加载组件
+
+以下代码主要功能是：
+
+1. 监听播放状态的变化，当播放状态从'loading'变为'playing'时，根据加载动画的播放次数和剩余的播放时间，决定是立即将播放状态设置为'playing'，还是等待剩余的播放时间后再将播放状态设置为'playing'。
+2. 当播放状态变为'loading'时，记录加载开始的时间。
+
+- **play-icon.js**
+```javascript
+// 加载图标的路径
+const loadingIcon = '../../imgs/loading.gif'
+
+Component({
+  properties: {
+    // 播放状态，可能的值有'wait'、'loading'和'playing'
+    playType: {
+      type: String,
+      value: 'wait',
+      // 当playType的值发生变化时，会触发这个函数
+      observer: function(newVal, oldVal){
+        // 当播放状态从'loading'变为'playing'时
+        if(oldVal == 'loading' && newVal == 'playing') {
+          // 加载动画的周期为1240ms
+          let loadingTransitionTime = 1240;
+          // 获取当前时间
+          let nowTime = + new Date()
+          // 获取加载开始的时间
+          let loadingStartTime = this.data.loadingStartTime
+          // 计算加载的时间
+          let loadingTime = nowTime - loadingStartTime
+          // 计算加载动画播放的完整次数
+          let loadingCount = parseInt(loadingTime / loadingTransitionTime);
+          // 计算加载动画剩余的播放时间
+          let timeLeft = loadingTransitionTime - loadingTime % loadingTransitionTime;
+
+          // 如果加载动画播放了至少一次，并且剩余的播放时间大于1秒
+          if(loadingCount > 0 && timeLeft > 1000) {
+            // 直接将播放状态设置为'playing'，并清空加载图标
+            this.setData({
+              realPlayType: newVal,
+              loadingImg: '',
+            })
+          } else {
+            // 否则，等待剩余的播放时间后，再将播放状态设置为'playing'
+            setTimeout( ()=>{
+              this.setData({
+                realPlayType: newVal,
+              })
+            }, timeLeft)
+          }
+        } else if (newVal == 'loading'){
+          // 当播放状态变为'loading'时，记录加载开始的时间，并将播放状态设置为'loading'
+          this.setData({
+            loadingStartTime: + new Date(),
+            realPlayType: newVal,
+          })
+        } else {
+          // 对于其他的播放状态，直接更新播放状态
+          this.setData({
+            realPlayType: newVal,
+          })
+        }
+      },
+    }
+  },
+
+  data: {
+    // 实际在wxml中使用的播放状态
+    realPlayType: 'wait',
+    // 加载开始的时间
+    loadingStartTime: 0,
+  },
+
+  ready: function () {
+    // 组件准备就绪时执行的函数
+  },
+
+  detached: function() {
+    // 组件被移除时执行的函数
+  },
+
+  methods: {
+    // 组件的方法列表
+  }
+});
+```
+- **play-icon.json**
+```javascript
+{
+  "component": true,
+  "usingComponents": {
+  }
+}
+```
+- **play-icon.wxml**
+```css
+<!-- 主视图，包含音乐播放图标 -->
+<view class="play-loud-icon">
+  <!-- 根据播放状态显示或隐藏的主播放图标 -->
+  <image src="../../imgs/play_loud.png" class="play-loud-img play-icon-main {{realPlayType == 'loading' ? 'is-hide' : ''}}" ></image>
+
+  <!-- 当播放状态不是'loading'时，以下内容生效 -->
+  <block wx:if="{{realPlayType != 'loading'}}">
+
+    <!-- 当播放状态是'playing'时，显示动画效果 -->
+    <block wx:if="{{realPlayType=='playing'}}">
+        <image src="../../imgs/play_loud_1.png" class="play-loud-img play-animation" ></image>
+        <image src="../../imgs/play_loud_2.png" class="play-loud-img play-animation1"></image>
+    </block>
+
+    <!-- 当播放状态不是'playing'时，显示静态图标 -->
+    <block wx:else>
+        <image src="../../imgs/play_loud_1.png" class="play-loud-img"></image>
+    </block>
+  </block>
+
+  <!-- 当播放状态是'loading'时，显示过渡效果 -->
+  <block wx:else="{{realPlayType != 'loading'}}">
+    <view class="play-transition"></view>
+  </block>
+</view>
+```
+- **play-icon.wxss**
+```css
+/* 容器的样式 */
+.play-loud-icon {
+  position: relative;
+  height: 40rpx;
+  width: 40rpx;
+}
+
+/* 音乐播放图标的样式 */
+.play-loud-img {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 40rpx;
+  width: 40rpx;
+}
+
+/* 主播放图标的过渡效果 */
+.play-icon-main {
+  transition: all .2s ease-out;
+}
+
+/* 加载状态的图标样式 */
+.play-loading-img {
+  position: absolute;
+  height: 40rpx;
+  width: 40rpx;
+  left: -1rpx;
+  top: 0rpx;
+}
+
+/* 隐藏元素的样式 */
+.is-hide {
+  opacity: 0;
+}
+
+/* 过渡效果的样式，采用背景图base64实现 */
+.play-transition {
+  position: absolute;
+  height: 40rpx;
+  width: 40rpx;
+  background: transparent url(...) no-repeat;
+  background-size: 40rpx 40rpx;
+  left: -1rpx;
+  top: 0rpx;
+}
+
+/* 音乐播放动画的共享样式 */
+.play-animation,
+.play-animation1 {
+  -webkit-animation-delay: 200ms;
+  animation-delay: 200ms;
+  -webkit-animation: tranOpacity 1200ms ease-in-out infinite;
+  animation: tranOpacity 1200ms ease-in-out infinite;
+}
+
+/* 音乐播放动画1的样式 */
+.play-animation {
+  -webkit-animation-name: tranOpacity;
+  animation-name: tranOpacity;
+}
+
+/* 音乐播放动画2的样式 */
+.play-animation1 {
+  -webkit-animation-name: tranOpacity1;
+  animation-name: tranOpacity1;
+}
+
+/* 动画1的关键帧定义 */
+@-webkit-keyframes tranOpacity {
+  0% {
+    opacity: 0;
+  }
+  35% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes tranOpacity {
+  0% {
+    opacity: 0;
+  }
+  35% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* 动画2的关键帧定义 */
+@-webkit-keyframes tranOpacity1 {
+  0% {
+    opacity: 0;
+  }
+  35% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes tranOpacity1 {
+  0% {
+    opacity: 0;
+  }
+  35% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+```
+#### 4.1.2.4 components/result-bubble
+
+翻译框组件
+
+以下代码主要功能是：
+1. 接收一个对象item作为输入，该对象包含文本信息以及音频路径等数据。
+2. 根据item对象中的数据，触发文字的翻译，并且播放翻译后的音频。
+3. 提供了一些界面操作，例如弹出和关闭模态框，以及触发播放和停止音频的操作。
+
+- **result-bubble.js**
+```javascript
+// 引入语言配置
+import { language } from '../../utils/conf.js'
+
+// 定义一个组件
+Component({
+  // 定义组件的属性
+  properties: {
+    // 属性:item，类型:Object，观察函数进行数据监听
+    item: {
+      type: Object,
+      value: {},
+      observer: function(newVal, oldVal) {
+        // 当记录状态为2（翻译完成），且文本有变化，触发重新翻译事件
+        if(this.data.recordStatus == 2 && oldVal.text && oldVal.text != '' && newVal.text != oldVal.text) {
+          this.triggerEvent('translate', {
+            item: this.data.item,
+            index: this.data.index,
+          })
+        }
+        // 翻译内容改变触发音频播放，或者结束播放动画
+        if(newVal.autoPlay && newVal.translateVoicePath != oldVal.translateVoicePath){
+          this.autoPlayTranslateVoice()
+        } else if(newVal.translateVoicePath == "") {
+          this.playAnimationEnd()
+        }
+      }
+    },
+    // 编辑界面展示标志
+    editShow: {
+      type: Boolean,
+      value: false,
+    },
+    // 项目索引
+    index: {
+      type: Number,
+    },
+    // 当前翻译的音频路径
+    currentTranslateVoice: {
+      type: String,
+      observer: function(newVal, oldVal){
+        if(newVal != '' && newVal != this.data.item.translateVoicePath) {
+          this.playAnimationEnd()
+        }
+      },
+    },
+    // 记录状态：0-正在识别，1-正在翻译，2-翻译完成
+    recordStatus: {
+      type: Number,
+      value: 2, 
+    },
+  },
+
+  // 定义组件的内部数据
+  data: {
+    // 语言类型
+    tips_language: language[0], 
+
+    // 是否显示模态框
+    modalShow: false,
+
+    // 语音播放状态
+    playType: 'wait',
+
+    // 待定义动画
+    waiting_animation: {},
+    waiting_animation_1: {},
+
+    // 编辑图标路径
+    edit_icon_path: '../../imgs/edit.png'
+  },
+
+  // 组件生命周期函数-在组件布局完成后执行
+  ready: function () {
+    if(this.data.item.autoPlay) {
+      this.autoPlayTranslateVoice()
+    }
+  },
+
+  // 组件生命周期函数-在组件实例被从页面节点树移除时执行
+  detached: function() {
+    // console.log("detach")
+  },
+
+  // 定义方法
+  methods: {
+    // 显示模态框
+    showModal: function() {
+      this.setData({modalShow: true})
+    },
+
+    // 离开模态框
+    modalLeave: function() {
+      this.setData({modalShow: false})
+    },
+
+    // 点击播放图标，根据播放状态和音频过期时间，来决定播放，停止还是触发过期事件
+    playTranslateVoice: function() {
+      let nowTime = parseInt(+ new Date() / 1000)
+      let voiceExpiredTime = this.data.item.translateVoiceExpiredTime || 0
+
+      if(this.data.playType == 'playing') {
+        wx.stopBackgroundAudio()
+        this.playAnimationEnd()
+      } else if(nowTime < voiceExpiredTime) {
+        this.autoPlayTranslateVoice()
+      } else {
+        this.setData({
+          playType: 'loading',
+        })
+        this.triggerEvent('expired', {
+          item: this.data.item,
+          index: this.data.index,
+        })
+      }
+    },
+
+    // 自动播放翻译后的音频，音频播放结束后，会结束播放动画
+    autoPlayTranslateVoice: function (path,index) {
+      let play_path = this.data.item.translateVoicePath
+
+      if(!play_path) {
+        console.warn("no translate voice path")
+        return
+      }
+
+      wx.onBackgroundAudioStop(res => {
+        console.log("play voice end",res)
+        this.playAnimationEnd()
+      })
+
+      this.playAnimationStart()
+
+      wx.playBackgroundAudio({
+        dataUrl: play_path,
+        title: '',
+        success: (res) => {
+          this.playAnimationStart()
+        },
+        fail: (res) => {
+            console.log("failed played", play_path);
+            this.playAnimationEnd()
+        },
+        complete: function (res) {
+            console.log("complete played");
+        }
+      })
+    },
+
+    // 开始播放动画
+    playAnimationStart: function() {
+      this.setData({
+        playType: 'playing',
+      })
+    },
+
+    // 结束播放动画
+    playAnimationEnd: function() {
+        this.setData({
+          playType: 'wait',
+        })
+    },
+  }
+});
+
+```
+- **result-bubble.json**
+```javascript
+{
+  "component": true,
+  "usingComponents": {
+    "modal": "/components/modal/index",
+    "waiting-icon": "/components/waiting-icon/index",
+    "play-icon": "/components/play-icon/index"
+  }
+}
+```
+- **result-bubble.wxml**
+```css
+<!-- 消息气泡容器，长按显示模态框 -->
+<view class="bubble-wrap" bindlongpress="showModal" >
+  <!-- 模态框容器，当状态为2（翻译完成）时显示 -->
+  <view class="modal-wrap" wx:if="{{recordStatus == 2}}">
+    <!-- 模态框组件 -->
+    <modal 
+      modal-show="{{modalShow}}"   <!-- 控制模态框显示隐藏 -->
+      index="{{index}}"             <!-- 项目索引 -->
+      item="{{item}}"               <!-- 当前项目 -->
+      bindmodalleave="modalLeave">  <!-- 模态框离开事件处理函数 -->
+    </modal>
+  </view>
+  
+  <!-- 创建时间显示 -->
+  <view class="create-time">{{item.create}}</view>
+  
+  <!-- 消息内容区域 -->
+  <view class="section-body" data-index="{{index}}" >
+    <!-- 发送消息区域 -->
+    <view class="send-message">
+      <!-- 消息文本内容 -->
+      <view data-id="{{item.id}}"  class="text-content"  data-index="{{index}}" >
+        <!-- 消息详情 -->
+        <view class="text-detail  text-detail-{{item.lfrom}}" >
+          <!-- 消息文本 -->
+          {{item.text}}
+          <!-- 若正在识别（状态为0），则显示等待图标 -->
+          <waiting-icon wx:if="{{recordStatus == 0}}"></waiting-icon>
+        </view>
+      </view>
+      
+      <!-- 编辑图标，点击进入编辑页面 -->
+      <navigator
+        hover-class="navigator-hover"
+        data-text="{{item.text}}"
+        data-id="{{item.id}}"
+        data-index="{{index}}"
+        class="edit-icon"
+        wx:if="{{editShow}}"
+        data-item="{{item}}"
+        url="{{'/pages/edit/edit?content='+item.text+'&index='+index}}">
+          <!-- 编辑图标图片 -->
+          <image class="edit-icon-img" src="{{edit_icon_path}}" ></image>
+      </navigator>
+    </view>
+    
+    <!-- 若正在翻译（状态大于0），显示分割线 -->
+    <view class="line-between"  wx:if="{{recordStatus > 0}}"></view>
+    
+    <!-- 翻译后的消息区域 -->
+    <view class="translate-message" >
+      <!-- 消息文本内容 -->
+      <view class="text-content">
+        <!-- 消息详情 -->
+        <view class="text-detail text-detail-{{item.lto}}">
+          <!-- 翻译后的文本 -->
+          {{item.translateText}}
+          <!-- 若正在翻译（状态为1），则显示等待图标 -->
+          <waiting-icon wx:if="{{recordStatus == 1}}"></waiting-icon>
+        </view>
+      </view>
+      
+      <!-- 若翻译完成（状态为2），显示播放图标，点击播放翻译音频 -->
+      <view class="play-icon" catchtap="playTranslateVoice" catchtouchstart="playTranslateVoice" wx:if="{{recordStatus == 2
+
+```
+- **result-bubble.wxss**
+```css
+/* 消息气泡容器 */
+.bubble-wrap {
+  position: relative;
+}
+
+/* 等待点样式 */
+.wait-point {
+  display:inline-block;
+  width:6px;
+  height:6px;
+  border-radius:3px;
+  background-color: #ddd;
+  margin: 0 2px;
+}
+
+/* 加载状态样式 */
+.loading {
+  position: relative;
+}
+
+/* 分割线样式 */
+.line-between {
+  height: 1px;
+  width: 100%;
+  background: #F1F1F1;
+  overflow: hidden;
+  margin: 30rpx 0;
+}
+
+/* 创建时间文本样式 */
+.create-time {
+  font-size:28rpx;
+  color: #B2B2B2;
+  margin-bottom:10px;
+  display: flex;
+  justify-content: center;
+}
+
+/* 消息内容区域样式 */
+.section-body{
+  word-wrap: break-word;
+  border-radius: 10px;
+  position: relative;
+  width:100%;
+  background: #FFFFFF;
+  box-shadow: 0 2px 16px 2px rgba(0,0,0,0.03);
+  padding:50rpx 60rpx;
+  box-sizing: border-box;
+  min-height: 260rpx;
+}
+
+/* 消息详情文本样式 */
+.text-detail {
+  font-size: 36rpx;
+  line-height: 1.231;
+  vertical-align: text-bottom;
+  box-sizing: border-box;
+  font-family: "PingFang-SC-Regular","SimSun","Microsoft Yahei";
+}
+
+/* 英文和中文消息详情样式 */
+.text-detail-en_US {
+  line-height: 1.231;
+}
+.text-detail-zh_CN {
+  line-height: 1.41;
+}
+
+/* 发送和翻译消息样式 */
+.translate-message,
+.send-message {
+  position: relative;
+  padding: 0 2px;
+}
+.send-message .text-detail {
+  color: #9B9B9B;
+}
+
+/* 编辑图标样式 */
+.edit-icon {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  right: 8rpx;
+  bottom: 7rpx;
+  padding: 0 8rpx;
+}
+.edit-icon-img {
+  width:40rpx;
+  height:40rpx;
+}
+
+/* 播放图标样式 */
+.play-icon {
+  position: absolute;
+  right: 3rpx;
+  bottom: 7rpx;
+  padding: 0 8rpx;
+  display: flex;
+  align-items: center;
+}
+
+/* 编辑和播放图标点击范围扩大 */
+.edit-icon::before,
+.play-icon::before {
+  content:"";
+  position:absolute;
+  top:-10rpx;
+  left:-10rpx;
+  bottom:-10rpx;
+  right:-10rpx;
+}
+
+/* 消息文本内容样式 */
+.text-content {
+  margin: 0 48px 0 0;
+  box-sizing: border-box;
+}
+
+/* 模态框容器样式 */
+.modal-wrap {
+  position: absolute;
+  width: 100%;
+  box-sizing:border-box;
+}
+
+/* 重置navigator样式 */
+.navigator-hover {
+  background-color: #fff;
+}
+```
+#### 4.1.2.5 components/waiting-icon
+
+等待加载组件
+
+以下代码主要功能是：
+
+1. 控制等待动画的开始，停止
+2. 设置等待动画的间隔
+
+- **waiting-icon.js**
+```javascript
+// 定义小程序组件
+Component({
+  properties: {
+    // 这里定义了组件的属性
+  },
+
+  // 组件的初始数据
+  data: {
+    waiting_animation: {},     // 定义等待动画对象
+    waiting_animation_1: {},   // 定义另一个等待动画对象
+  },
+
+  // 组件的生命周期函数，在组件布局完成后执行
+  ready: function () {
+    console.log("ready waitting")
+
+    // 创建两个等待动画，一个持续600毫秒，一个持续400毫秒
+    this.waiting_animation = wx.createAnimation({
+      duration: 600
+    })
+    this.waiting_animation_1 = wx.createAnimation({
+      duration: 400
+    })
+
+    // 设置动画循环
+    this.setWaitInterval()
+  },
+
+  // 组件生命周期函数，在组件实例被从页面节点树移除时执行
+  detached: function() {
+    // 当组件被移除时，清除动画
+    this.clearAnimation()
+  },
+
+  methods: {
+    // 清除动画的函数
+    clearAnimation: function() {
+      this.endWaitAnimation()
+    },
+
+    // 结束动画的函数，将清除循环，并重置动画对象
+    endWaitAnimation: function() {
+      clearInterval(this.data.waiting_interval)
+      this.setData({ waiting_animation : {}})
+      this.setData({ waiting_animation_1: {} })
+    },
+
+    // 开始动画的函数，设置动画的参数并启动动画
+    startWaitAnimation: function () {
+      this.waiting_animation.opacity(0).scale(1.2, 1.2).step()
+      this.waiting_animation.opacity(1).scale(1, 1).step()
+      this.setData({ waiting_animation: this.waiting_animation.export() })
+
+      this.waiting_animation_1.opacity(0).scale(1.2, 1.2).step()
+      this.waiting_animation_1.opacity(1).scale(1, 1).step()
+      this.setData({ waiting_animation_1: this.waiting_animation_1.export() })
+    },
+
+    // 设置动画循环的函数，将清除并重新启动动画循环
+    setWaitInterval: function() {
+      this.endWaitAnimation()
+
+      // 创建一个新的循环，每600毫秒启动一次动画
+      this.data.waiting_interval = setInterval( ()=>{
+        this.startWaitAnimation()
+      },600 )
+    },
+  }
+});
+
+```
+- **waiting-icon.json**
+```javascript
+{
+  "component": true,
+  "usingComponents": {
+  }
+}
+
+```
+- **waiting-icon.wxml**
+```css
+<view class="loading">
+  <view    class="loading-icon">.</view>
+  <view animation="{{waiting_animation}}" class="loading-icon">.</view>
+  <view animation="{{waiting_animation_1}}" class="loading-icon">.</view>
+</view>
+```
+- **waiting-icon.wxss**
+```css
+
+.loading {
+  position: relative;
+  display: inline;
+}
+
+.loading-icon {
+  display: inline;
+}
+
+```
 ### 4.1.3 imgs/
 
 包含微信小程序内部需要用到的静态图片。
 
 ### 4.1.4 pages/
 
+#### 4.1.4.1 pages/choose_language
+
+切换翻译语言的页面，该页面包含两个语言列表，分别代表源语言和目标语言，用户可以通过点击列表中的项来选择语言。选择的语言信息会被保存到本地存储和全局变量中，并在页面显示时更新。
+
+##### 1 choose_language.js
+```javascript
+// 获取全局应用实例
+const app = getApp()
+
+// 导入工具函数
+const util = require('../../utils/util.js')
+
+// 定义页面
+Page({
+  // 页面初始数据
+  data: {
+    // 语言列表，每一种语言包含一个图像、语言名称、音频等信息
+    list_aPbtoDn5: [
+      {
+        "image":"...", "text": "中文", 'chs': '中文', 'lang': 'zh', 'sound':'zh_CN'
+      },
+      {
+        "image":"...", "text": "英语", 'chs': '英文', 'lang': 'en', 'sound':'en_US'
+      },
+      {
+        "image":"...", "text": "德语", 'chs': '德语', 'lang': 'de'
+      },
+      {
+        "image":"...", "text": "韩语", 'chs': '韩语', 'lang': 'kor'
+      }
+    ],
+    selectedIndex1: null, // 记录第一次选择的语言的索引
+    selectedIndex2: null, // 记录第二次选择的语言的索引
+    isClicked1: false,    // 是否已经完成第一次点击
+    isClicked2: false,    // 是否已经完成第二次点击
+    langList: app.globalData.langList, // 全局语言列表
+    curLang: {},          // 当前语言
+    targetLang: {},       // 目标语言
+    currentsound:'',      // 当前语音
+  },
+
+  // 页面分享功能
+  onShareAppMessage() {
+    return {};
+  },
+
+  // 处理第一次点击
+  handleTap1: function() {
+    this.setData({
+      isClicked1: false,
+      isClicked2: false,
+    });
+  },
+
+  // 处理第二次点击
+  handleTap2: function() {
+    this.setData({
+      isClicked2: true,
+      isClicked1: true,
+    });
+  },
+
+  // 处理点击事件，获取点击的语言信息，并保存到对应的数据中
+  handleTap: function(e) {
+    let langObj = e.currentTarget.dataset
+    var index = langObj.index;
+    var sound =langObj.sound;
+    console.log("Clicked item index and sound : ", index,sound);
+    if (!this.data.isClicked1) {
+      this.setData({
+        selectedIndex1: index
+      });
+    }else{
+      this.setData({
+        selectedIndex2: index,
+        targetLang: langObj,
+        currentsound:sound
+      });
+      // 把当前的语言和音频信息保存到本地存储中
+      wx.setStorageSync('currentsound', this.data.currentsound);
+      wx.setStorageSync('language', langObj)
+
+      // 把当前的语言保存到全局变量中
+      this.setData({ 'curLang': langObj })
+      app.globalData.curLang = langObj
+    }
+    console.log("Selected item: ", this.data.curLang, this.data.targetLang);
+  },
+
+  // 当页面显示时，更新当前语言信息
+  onShow: function () {
+    this.setData({ curLang: app.globalData.curLang })
+  },
+});
+
+```
+##### 2 choose_language.json
+```javascript
+{
+  "usingComponents": {}
+}
+```
+##### 3 choose_language.wxml
+
+该段代码的主要功能是显示一个语言列表，用户可以通过点击来选择“翻译语言”和“目标语言”。选择的语言会以不同的样式显示，以区分当前
+
+```css
+<!-- 页面主体是一个垂直方向的 flex 布局 -->
+<view class="flex-col page space-y-44">
+  <!-- 头部区域是一个水平的 flex 布局 -->
+  <view class="flex-row items-center group space-x-8">
+    <!-- 点击图片，会导航到首页 -->
+    <navigator url="../../pages/index/index" open-type="redirect" style="display: inline-block">
+      <image class="image" src="..." />
+    </navigator>
+    <!-- 头部文字提示 -->
+    <text class="text">选择语言</text>
+  </view>
+  
+  <!-- 内容区域也是一个垂直方向的 flex 布局 -->
+  <view class="flex-col group_2 space-y-30">
+    <!-- 包含两个选项：翻译语言和目标语言 -->
+    <view class="flex-row space-x-15">
+      <view class="flex-row {{isClicked1 ? 'text-wrapper_2' : 'text-wrapper'}}" bindtap="handleTap1">
+        <text class="font_1 {{isClicked1 ? 'text_2' : 'text_3'}}">翻译语言</text>
+      </view>
+      <view class="flex-row {{isClicked2 ? 'text-wrapper' : 'text-wrapper_2'}}" bindtap="handleTap2">
+        <text class="font_1 {{isClicked1 ? 'text_3' : 'text_2'}}">目标语言</text>
+      </view>
+    </view>
+
+    <!-- 语言列表区域 -->
+    <view class="flex-col space-y-18">
+      <text class="self-start font_2 text_4">全部语言</text>
+      <!-- 遍历语言列表，生成每一项 -->
+      <view class="flex-col space-y-16">
+        <view
+          class="flex-row items-center {{selectedIndex1 == i && isClicked1 == false || selectedIndex2 == i && isClicked1 == true ? 'list-item' : 'list-item_2'}} space-x-24"
+          wx:for="{{list_aPbtoDn5}}"
+          wx:key="index"
+          wx:for-item="item"
+          wx:for-index="i"
+          data-chs="{{item.chs}}" 
+          data-lang="{{item.lang}}"
+          data-index="{{i}}"
+          data-src="{{item.image}}"
+          data-sound="{{item.sound ? item.sound : 'en_US'}}"
+          bindtap="handleTap"
+        >
+          <!-- 语言图标 -->
+          <image class="image_2" src="{{item.image}}"/>
+          <!-- 语言名称 -->
+          <text class="{{selectedIndex1 == i && isClicked1 == false || selectedIndex2 == i && isClicked1 == true ? 'text_5' : 'text_6'}} ">{{item.text}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+
+```
+##### 4 choose_language.wxss
+```css
+/* 页面样式，包含内边距，背景色，宽度，溢出处理等样式 */
+.page {
+  padding: 72rpx 0 264rpx;
+  background-color: #f8f8f9;
+  border-radius: 40rpx;
+  width: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  height: 100%;
+}
+
+/* 处理间距类 .space-y-44 的子元素之间的垂直间距 */
+.space-y-44 > view:not(:first-child),
+.space-y-44 > text:not(:first-child),
+.space-y-44 > image:not(:first-child) {
+  margin-top: 88rpx;
+}
+
+/* 处理类 .group 的内边距 */
+.group {
+  padding: 0 16rpx;
+}
+
+/* 处理间距类 .space-x-8 的子元素之间的水平间距 */
+.space-x-8 > view:not(:first-child),
+.space-x-8 > text:not(:first-child),
+.space-x-8 > image:not(:first-child) {
+  margin-left: 16rpx;
+}
+
+/* 图片样式，包括宽高设置 */
+.image {
+  width: 48rpx;
+  height: 48rpx;
+}
+
+/* 文本样式，包含字体，颜色，大小等 */
+.text {
+  color: #1e3163;
+  font-size: 36rpx;
+  font-family: Poppins;
+  font-weight: 700;
+  line-height: 34rpx;
+}
+
+/* 处理类 .group_2 的内边距 */
+.group_2 {
+  padding: 0 48rpx;
+}
+
+/* 处理间距类 .space-y-30 的子元素之间的垂直间距 */
+.space-y-30 > view:not(:first-child),
+.space-y-30 > text:not(:first-child),
+.space-y-30 > image:not(:first-child) {
+  margin-top: 60rpx;
+}
+
+/* 处理间距类 .space-x-15 的子元素之间的水平间距 */
+.space-x-15 > view:not(:first-child),
+.space-x-15 > text:not(:first-child),
+.space-x-15 > image:not(:first-child) {
+  margin-left: 80rpx;
+}
+
+/* 定义文本容器样式，包括内边距、背景颜色、圆角半径、阴影、高度、边框和宽度等 */
+.text-wrapper {
+  display: inline;
+  padding: 28rpx 85rpx 40rpx 85rpx;
+  background-color: #ffffff;
+  border-radius: 16rpx;
+  filter: drop-shadow(0px 0px 1rpx #0000000a, 0px 0px 2rpx #0000000f, 0px 8rpx 8rpx #0000000a);
+  height: 50rpx;
+  border: solid 2rpx #0064e1;
+  width :40%;
+}
+
+/* 定义文本容器2的样式，包括内边距、背景颜色、圆角半径、高度、边框和宽度等 */
+.text-wrapper_2 {
+  display: inline;
+  padding: 28rpx 85rpx 40rpx 85rpx;
+  flex: 1 1 310rpx;
+  border-radius: 16rpx;
+  height: 50rpx;
+  border: solid 2rpx #a7a7a7;
+  width: 40%;
+}
+
+/* 定义字体样式，包括字体大小、字体系列和行高 */
+.font_1 {
+  font-size: 28rpx;
+  font-family: Poppins;
+  line-height: 26rpx;
+}
+
+/* 定义文本样式，包括颜色、字体权重、背景图像 */
+.text_3 {
+  color: transparent;
+  font-weight: 700;
+  background-image: linear-gradient(180deg, #0064e1 0%, #0845c2 100%);
+  -webkit-background-clip: text;
+}
+
+/* 定义文本2的样式，颜色为灰色 */
+.text_2 {
+  color: #a8a8a8;
+}
+
+/* 设置间距类 .space-y-18 的子元素之间的垂直间距 */
+.space-y-18 > view:not(:first-child),
+.space-y-18 > text:not(:first-child),
+.space-y-18 > image:not(:first-child) {
+  margin-top: 36rpx;
+}
+
+/* 定义字体2的样式，包括字体大小、字体系列、行高和颜色 */
+.font_2 {
+  font-size: 32rpx;
+  font-family: Poppins;
+  line-height: 29rpx;
+  color: #1e3163;
+}
+
+/* 定义文本4的样式，字体权重为700，行高为30rpx */
+.text_4 {
+  font-weight: 700;
+  line-height: 30rpx;
+}
+
+/* 设置间距类 .space-y-16 的子元素之间的垂直间距 */
+.space-y-16 > view:not(:first-child),
+.space-y-16 > text:not(:first-child),
+.space-y-16 > image:not(:first-child) {
+  margin-top: 32rpx;
+}
+
+/* 定义图片2的样式，包括宽度和高度 */
+.image_2 {
+  width: 64rpx;
+  height: 64rpx;
+}
+
+/* 定义文本5的样式，包括颜色、字体大小、字体系列、字体权重和行高 */
+.text_5 {
+  color: #ffffff;
+  font-size: 35rpx;
+  font-family: Poppins;
+  font-weight: 700;
+  line-height: 30rpx;
+}
+
+/* 设置文本6的上边距 */
+.text_6 {
+  margin-top: 10rpx;
+}
+
+/* 设置间距类 .space-x-24 的子元素之间的水平间距 */
+.space-x-24 > view:not(:first-child),
+.space-x-24 > text:not(:first-child),
+.space-x-24 > image:not(:first-child) {
+  margin-left: 48rpx;
+}
+
+/* 定义列表项样式，包括内边距、背景颜色、圆角半径和阴影等 */
+.list-item {
+  padding: 32rpx;
+  background-color: #1392fb;
+  border-radius: 16rpx;
+  box-shadow: 0px 0px 2rpx #0000000a, 0px 0px 4rpx #0000000f, 0px 8rpx 16rpx #0000000a;
+}
+
+/* 定义列表项2的样式，包括内边距、背景颜色、圆角半径和阴影等 */
+.list-item_2 {
+  padding: 32rpx;
+  background-color: #ffffff;
+  border-radius: 16rpx;
+  box-shadow: 0px 0px 2rpx #0000000a, 0px 0px 4rpx #0000000f, 0px 8rpx 16rpx #0000000a;
+}
+```
+
+#### 4.1.4.2 pages/edit
+
+编辑文本的输入框页面，编辑文本的最大长度限制为200个字符，页面数据中的`edit_text`字段存储输入的文本，`remain_length`字段存储剩余可输入的字符数。
+
+当用户在输入框中输入或删除文本时，页面会更新剩余可输入的字符数并显示给用户。当用户提交输入文本时，如果文本长度超过0且与旧文本不相同，页面会将新文本保存到上一页面的对话列表中，并返回上一页面；否则，如果用户提交的文本为空，页面会提供相应的处理。
+
+##### 1 edit.js
+```javascript
+//初始化底部高度
+const initBottomHeight = 0
+
+var app = getApp()
+
+Page({
+  // 页面的初始数据
+  data: {
+    edit_text_max: 200,     //最大编辑文本长度
+    remain_length: 200,     //剩余可输入长度
+    edit_text: "",          //编辑文本内容
+    is_focus: false,        //是否聚焦
+    tips: "",               //提示信息
+    index: -1,              //索引
+    bottomHeight:  initBottomHeight  //底部高度
+  },
+
+  // 获取最大编辑文本长度
+  getEditTextMax: function () {
+    return this.data.edit_text_max
+  },
+
+  // 更新剩余可输入长度
+  updateRemainLength: function (now_content) {
+    this.data.remain_length = this.getEditTextMax() - now_content.length
+    this.data.tips = "还可以输入" + this.data.remain_length + "字..."
+    this.setData({ tips: this.data.tips })
+  },
+
+  // 设置编辑文本内容
+  setEditText: function (text) {
+    this.data.edit_text = text
+    this.setData({ edit_text: this.data.edit_text })
+    // 更新剩余长度显示
+    this.updateRemainLength(text)
+    this.setData({ is_focus: true })
+  },
+
+  // bindinput事件处理
+  editInput: function (event) {
+    console.log(event)
+    if (event.detail.value.length > this.getEditTextMax()) {
+      //处理输入内容超过最大长度的情况
+    } else {
+      this.data.edit_text = event.detail.value
+      this.updateRemainLength(this.data.edit_text)
+    }
+  },
+
+  // bindconfirm事件处理
+  editConfirm: function (event) {
+    if (this.data.edit_text.length > 0 && this.data.edit_text != this.data.oldText) {
+      // 获取页面栈
+      let pages = getCurrentPages();
+      let prevPage = pages[pages.length - 2];  //上一个页面
+      let dialogList = prevPage.data.dialogList.slice(0)
+      let editItem = dialogList[dialogList.length - 1]
+      editItem.text = this.data.edit_text
+
+      prevPage.setData({
+        dialogList: dialogList,
+        recordStatus: 2,
+      })
+      wx.navigateBack()
+    } else {
+      // 处理输入文本为空的情况
+    }
+  },
+
+  // 点击输入框时改变底部按钮的高度，使得提示和按钮始终在键盘上方
+  editFocus: function(e) {
+    let {value, height} = e.detail
+    console.log(value, height)
+
+    if(!isNaN(height)) {
+      this.setData({
+        bottomHeight: height + initBottomHeight
+      })
+    }
+  },
+
+  // 输入框失去焦点事件处理
+  editBlur: function() {
+    this.setData({
+      bottomHeight: initBottomHeight
+    })
+  },
+
+  // 清空内容事件处理
+  deleteContent: function () {
+    this.setEditText("")
+    this.setData({
+      is_focus: true
+    })
+  },
+
+  // 生命周期函数--监听页面加载
+  onLoad: function (options) {
+    this.setEditText(options.content)
+    let index = parseInt(options.index)
+    this.setData({
+        index: index,
+        oldText: options.content,
+    })
+  },
+})
+```
+##### 2 edit.json
+```javascript
+{}
+```
+##### 3 edit.wxml
+```css
+<!-- edit.wxml -->
+<!-- 定义了一个编辑文本的页面 -->
+<view class="container edit-container">
+
+  <!-- 编辑区域，使用textarea组件 -->
+  <textarea 
+    maxlength="{{edit_text_max}}"        <!-- 设置最大输入长度 -->
+    class="edit_textarea"                <!-- 指定样式 -->
+    auto-focus="{{true}}"                 
+    focus="{{is_focus}}"                  
+    bindinput="editInput"                <!-- 绑定输入事件 -->
+    bindconfirm="editConfirm"            <!-- 绑定确定事件 -->
+    value="{{edit_text}}"                <!-- 显示的文本 -->
+    adjust-position="{{true}}"           <!-- 自动调整输入框位置 -->
+    bindfocus="editFocus"                
+    bindblur="editBlur">                  
+  </textarea>
+
+  <!-- 底部区域，显示提示和删除按钮 -->
+  <view class="bottom-wrap" style="padding-bottom: {{bottomHeight}}px">
+    <view class="tips-wrapper">
+      <!-- 显示提示信息 -->
+      <text class="edit-tips">{{tips}}</text>
+      <!-- 删除按钮 -->
+      <view class="delete-content" capture-bind:tap="deleteContent">
+        <!-- 使用图片作为删除按钮的图标 -->
+        <image src="../../imgs/delete_all.png" class="img-delete-all"></image>
+      </view>
+    </view>
+  </view>
+</view>
+
+```
+##### 3 edit.wxss
+```css
+/* pages/edit/edit.wxss */
+
+/* 容器样式 */
+.edit-container {
+  position: relative;
+  padding: 20px 50rpx 20rpx;          /* 内边距设置 */
+  justify-content: flex-start;         /* 子元素沿主轴的对齐方式 */
+  -webkit-justify-content: flex-start; /* WebKit内核的浏览器兼容设置 */
+  background-color: #FAFAFA;           /* 背景色 */
+}
+
+/* 文本输入框样式 */
+.edit_textarea {
+  flex: 1;                             /* 弹性布局比例设置 */
+  width: 100%;                         /* 宽度100% */
+  box-sizing: border-box;              /* 设置盒模型 */
+  font-size: 36rpx;                    /* 字体大小 */
+  line-height: 60rpx;                  /* 行高 */
+}
+
+/* 底部提示和删除按钮容器样式 */
+.tips-wrapper {
+  width: 100%;                         /* 宽度100% */
+  display: flex;                       /* 使用弹性布局 */
+  display: -webkit-flex;               /* WebKit内核的浏览器兼容设置 */
+  justify-content: space-between;      /* 子元素之间的间距均匀分布 */
+  -webkit-justify-content: space-between; /* WebKit内核的浏览器兼容设置 */
+  padding: 0;                          /* 内边距设置 */
+  box-sizing: border-box;              /* 设置盒模型 */
+  align-items: center;                 /* 子元素沿交叉轴的对齐方式 */
+  -webkit-align-items: center;         /* WebKit内核的浏览器兼容设置 */
+}
+
+/* 提示文字样式 */
+.edit-tips {
+  font-size: 30rpx;                    /* 字体大小 */
+  color: #B2B2B2;                      /* 字体颜色 */
+  line-height: 50rpx;                  /* 行高 */
+}
+
+/* 删除按钮图标样式 */
+.img-delete-all {
+  height: 32rpx;                       /* 高度 */
+  width: 28rpx;                        /* 宽度 */
+}
+
+/* 删除按钮容器样式 */
+.delete-content {
+  position: relative;                  /* 定位方式 */
+  right: -20rpx;                       /* 向右偏移 */
+  padding: 20rpx 20rpx;                /* 内边距设置 */
+}
+```
+#### 4.1.4.3 pages/voice_translation
+
+
+
+##### 1 voice_translation.js
+```javascript
+```
+##### 2 voice_translation.json
+```javascript
+```
+##### 3 voice_translationt.wxml
+```css
+```
+##### 3 voice_translation.wxss
+```css
+```
 #### 4.1.4.3 pages/getPic
 
 ##### 1 getPic.js
