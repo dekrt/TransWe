@@ -35,42 +35,7 @@ let language = [
     access_network:"网络错误",
     login:"登录",
   }
-  //,
-  // {
-  //   id: 1,
-  //   lang_name: "EN",
-  //   lang_content: "en_US",
-  //   lang_to: [ "zh_CN", ],
-  //   max_length: 1800,
-  //   source_language: "Source Language",
-  //   target_language: "Target Language",
-  //   hold_talk: "Hold To Talk",
-  //   keyboard_input: "Keyboard",
-  //   type_here: "Type here...",
-  //   bg_content: "Please enter the content to be translated",
-  //   record_failed: "Audio recording failed",
-  //   recognize_nothing: "Nothing recognized",
-  //   time_left: "Recording time left",
-  //   text_left: "Inputing text left",
-  //   prompt_time: "Prompt time",
-  //   upload_failed: "Upload failed",
-  //   translating: "Translating",
-  //   text_limit: "Text length has reached the limit",
-  //   input_tip: "Please enter valid text",
-  //   request_failed: "Request failed",
-  //   delete_tip: "Delete this item",
-  //   cancel:"Cancel",
-  //   bubble_tip:"Please input English content",
-  //   bg_bubble:"Please speak English",
-  //   copy_source_text: "Copy Source",
-  //   copy_target_text: "Copy Target",
-  //   delete_item: "Delete",
-  //   exceed_network: "Network request failed",
-  //   retry_network: "Retry connect",
-  //   access_auth:"Please checkout authorization",
-  //   access_network:"Network error",
-  //   login:"Login",
-  // }
+
 ]
 
 module.exports = {
