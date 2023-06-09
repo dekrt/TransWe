@@ -5474,16 +5474,40 @@ mocha .\translate.test.js
 
 #### 4.2.2.3 getPic | 拍照界面
 
+<div align = "center">
+    <img src="../pics/SS_getPic.jpg" width="30%" />
+</div>
+
+#### 4.2.2.4 history | 翻译历史
+
+<div align = "center">
+    <img src="../pics/SS_history.jpg" width="30%" />
+</div>
 
 
-#### 4.2.2.4
 
-#### 4.2.2.5
+#### 4.2.2.5 index | 主页
 
-#### 4.2.2.6
+<div align = "center">
+    <img src="../pics/SS_index_1.jpg" width="30%" />
+    <img src="../pics/SS_index_2.jpg" width="30%" />
+    <img src="../pics/SS_index_3.jpg" width="30%" />
+</div>
+
+#### 4.2.2.6 OCR | 拍照翻译结果
+
+<div align = "center">
+    <img src="../pics/SS_OCR.jpg" width="30%" />
+</div>
+
+
 
 #### 4.2.2.7
 
 
 
-  
+# 5. 系统界面展示
+
+
+
+# 6. 总结
