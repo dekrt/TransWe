@@ -593,7 +593,11 @@ OCR拍照翻译页面是用户能够通过拍照进行翻译的地方。
 
 #### 4.1.1.1 assets/iconfont.wxss
 
+<<<<<<< Updated upstream
 这段代码在全局在全局引用了Iconfont的Icon。。
+=======
+这段代码在全局引用了Iconfont的Icon。
+>>>>>>> Stashed changes
 
 ```css
  @font-face {font-family: "iconfont";
