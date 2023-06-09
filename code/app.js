@@ -60,7 +60,7 @@ App({
       'chs': '英文',
       "lang": 'en',
       "index": 0,
-      "src":"https://codefun-proj-user-res-1256085488.cos.ap-guangzhou.myqcloud.com/644bb0005a7e3f03102917b5/644bb06fb98f5d0011665f39/e9fc70c625980d75443bf2ae1516d24f.png"
+      "src":"https://codefun-proj-user-res-1256085488.cos.ap-guangzhou.myqcloud.com/644bb0005a7e3f03102917b5/644bb06fb98f5d0011665f39/16863170756572789221.png"
     },
     {
       'chs': '中文',
