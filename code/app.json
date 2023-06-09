@@ -49,8 +49,8 @@
             {
                 "pagePath": "pages/history/history",
                 "text": "历史",
-                "iconPath": "imgs/icon-2.png",
-                "selectedIconPath": "imgs/sel-icon-2.png"
+                "iconPath": "imgs/lishixiao.png",
+                "selectedIconPath": "imgs/lishixiao_1.png"
             }
         ]
     }

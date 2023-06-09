@@ -5282,14 +5282,14 @@ App({
             {
                 "pagePath": "pages/getPic/getPic",
                 "text": "拍照翻译",
-                "iconPath": "imgs/icon-1.png",
-                "selectedIconPath": "imgs/sel-icon-1.png"
+                "iconPath": "imgs/paizhao-xianxing.png",
+                "selectedIconPath": "imgs/paizhao.png"
             },
             {
-                "pagePath": "pages/voice_translation/voice_translation",
-                "text": "语音翻译",
-                "iconPath": "imgs/icon-1.png",
-                "selectedIconPath": "imgs/sel-icon-1.png"
+              "pagePath": "pages/voice_translation/voice_translation",
+              "text": "语音翻译",
+              "iconPath": "imgs/maikefeng-xianxing.png",
+              "selectedIconPath": "imgs/maikefeng.png"
             },
             {
                 "pagePath": "pages/history/history",
@@ -5465,8 +5465,6 @@ mocha .\translate.test.js
 测试成功会显示下列截图：
 
 ![](./pics/Mocha_success.png)
-
-
 
 ### 4.2.2. 其他测试
 
