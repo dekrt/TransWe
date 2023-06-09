@@ -37,20 +37,20 @@
             {
                 "pagePath": "pages/getPic/getPic",
                 "text": "拍照翻译",
-                "iconPath": "imgs/icon-1.png",
-                "selectedIconPath": "imgs/sel-icon-1.png"
+                "iconPath": "imgs/paizhao-xianxing.png",
+                "selectedIconPath": "imgs/paizhao.png"
             },
             {
               "pagePath": "pages/voice_translation/voice_translation",
               "text": "语音翻译",
-              "iconPath": "imgs/icon-1.png",
-              "selectedIconPath": "imgs/sel-icon-1.png"
+              "iconPath": "imgs/maikefeng-xianxing.png",
+              "selectedIconPath": "imgs/maikefeng.png"
           },
             {
                 "pagePath": "pages/history/history",
                 "text": "历史",
-                "iconPath": "imgs/icon-2.png",
-                "selectedIconPath": "imgs/sel-icon-2.png"
+                "iconPath": "imgs/lishixiao.png",
+                "selectedIconPath": "imgs/lishixiao_1.png"
             }
         ]
     }
