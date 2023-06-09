@@ -132,8 +132,8 @@ TransWe是一款完全免费的小程序，我们的目标是为用户提供最�
 
 张骁凯将主要负责项目的后端开发工作，包括但不限于：
 
-1. 负责Github仓库管理：
-2. 将需求作为Issue录入：
+1. **负责Github仓库管理**：
+2. **将需求作为Issue录入**：
 3. 
 4. **机器翻译服务**：负责与后台机器翻译服务的接口开发和维护，确保翻译服务的准确性和效率。
 5. **数据库管理**：负责数据库的设计和管理，确保用户数据的安全和完整。
@@ -4702,54 +4702,73 @@ input {
 
 ### 4.1.5 TDD_test_cdt/
 
-#### 4.1.5.1 TDD_test_cdt/voice_translationt
-> 语音翻译测试
+```javascript
+ translateText: function(item, index) {
+    let lfrom =  item.lfrom || 'zh_CN'
+    let lto = item.lto || 'en_US'
+
+    plugin.translate({
+      lfrom: lfrom,
+      lto: lto,
+      content: item.text,
+      tts: true,
+      success: (resTrans)=>{
+
+        let passRetcode = [
+          0, // 翻译合成成功
+          -10006, // 翻译成功，合成失败
+          -10007, // 翻译成功，传入了不支持的语音合成语言
+          -10008, // 翻译成功，语音合成达到频率限制
+        ]
+
+        if(passRetcode.indexOf(resTrans.retcode) >= 0 ) {
+          let tmpDialogList = this.data.dialogList.slice(0)
+
+          if(!isNaN(index)) {
+
+            let tmpTranslate = Object.assign({}, item, {
+              autoPlay: true, // 自动播放背景音乐
+              translateText: resTrans.result,
+              translateVoicePath: resTrans.filename || "",
+              translateVoiceExpiredTime: resTrans.expired_time || 0
+            })
+
+            tmpDialogList[index] = tmpTranslate
 
 
-##### 1. 测试用例（中翻英）
+            this.setData({
+              dialogList: tmpDialogList,
+              bottomButtonDisabled: false,
+              recording: false,
+            })
 
-| 输入         | 期望输出 |
-| ------------ | -------- |
-| 华中科技大学 | Huazhong University of Science and Technology |
-| 我来自武汉   | I am from Wuhan |
-|如何进入校园| How to enter the campus |
-|用户的要求是绝对的| User requirements are absolute |
+            this.scrollToNew();
 
+          } else {
+            console.error("index error", resTrans, item)
+          }
+        } else {
+          console.warn("翻译失败", resTrans, item)
+        }
 
+      },
+      fail: function(resTrans) {
+        console.error("调用失败",resTrans, item)
+        this.setData({
+          bottomButtonDisabled: false,
+          recording: false,
+        })
+      },
+      complete: resTrans => {
+        this.setData({
+          recordStatus: 1,
+        })
+        wx.hideLoading()
+      }
+    })
 
-##### 2. 测试结果
-
-采用真机测试
-<div align = "center">
-    <img src="../pics/屏幕截图 2023-05-17 215325.png" width="80%" />
-</div>
-
-
-测试点1
-<div align = "center">
-    <img src="../pics/QQ图片20230517215940.png" width="80%" />
-</div>
-
-测试点2
-
-<div align = "center">
-    <img src="../pics/QQ图片20230517215816.png" width="80%" />
-</div>
-
-
-测试点3
-<div align = "center">
-    <img src="../pics/QQ图片20230517215855.png" width="80%" />
-</div>
-
-
-测试点4
-<div align = "center">
-    <img src="../pics/QQ图片20230517215920.png" width="80%" />
-</div>
-
-
-测试通过数（4/4）
+  },
+```
 
 ### 4.1.6 TDD_test_zxk/
 
@@ -5419,9 +5438,50 @@ App({
 
 ### 4.2.1 TDD测试
 
-#### 4.2.1.1 cdt
+#### 4.2.1.1 TDD_test_cdt/
 
-#### 4.2.1.2 zxk
+> 语音翻译测试
+
+1. 测试用例（中翻英）
+
+| 输入               | 期望输出                                      |
+| ------------------ | --------------------------------------------- |
+| 华中科技大学       | Huazhong University of Science and Technology |
+| 我来自武汉         | I am from Wuhan                               |
+| 如何进入校园       | How to enter the campus                       |
+| 用户的要求是绝对的 | User requirements are absolute                |
+
+2. 测试结果
+
+- 测试点1
+
+<div align = "center">
+    <img src="../pics/SS_TDD_VoiceTrans_1.png" width="50%" />
+</div>
+
+- 测试点2
+
+<div align = "center">
+    <img src="../pics/SS_TDD_VoiceTrans_2.png" width="50%" />
+</div>
+
+- 测试点3
+
+<div align = "center">
+    <img src="../pics/SS_TDD_VoiceTrans_3.png" width="50%" />
+</div>
+
+
+
+- 测试点4
+
+<div align = "center">
+    <img src="../pics/SS_TDD_VoiceTrans_4.png" width="50%" />
+</div>
+
+测试通过数（4/4）
+
+#### 4.2.1.2 TDD_test_zxk/
 
 基于Mocha框架编写的测试文本翻译Javascript的测试程序。
 
@@ -5466,74 +5526,65 @@ mocha .\translate.test.js
 
 ![](./pics/Mocha_success.png)
 
-### 4.2.2. 其他测试
+# 5. 系统界面展示
 
-#### 4.2.2.1 choose_language | 选择语言界面
+## 5.1 index | 主页
+
+在主页中：
+
+-  用户在输入框中输入待翻译的文本，**程序会自动检测输入语言**，用户在下拉菜单中选择相应的目标语言。
+-  用户也可以**手动选择输入语言**。输入完成后，程序将进行翻译并在输出框中显示翻译结果。
+-  用户可以点击小喇叭按钮，调用语音合成功能，听到翻译结果。
+-  用户可以点击剪贴板按钮，待翻译文本或翻译结果会自动复制到用户的剪贴板。
+-  用户可以点击下方的翻译历史板块，跳转到翻译历史页面。
+-  用户可以点击最下方的导航栏跳转到对应的界面。
+
+<div align = "center">
+    <img src="../pics/ScreenShots/SS_index_1.jpg" width="30%" />
+    <img src="../pics/ScreenShots/SS_index_2.jpg" width="30%" />
+    <img src="../pics/ScreenShots/SS_index_3.jpg" width="30%" />
+</div>
+
+## 5.2 choose_language | 选择语言界面
 
 ​		在选择语言界面选择翻译语言和目标语言
 
 <div align = "center">
-    <img src="../pics/cdt/SS_chooselanguage1.jpg" width="30%" />
-    <img src="../pics/cdt/SS_chooselanguage4.jpg" width="30%" />
-    <img src="../pics/cdt/SS_chooselanguage3.jpg" width="30%" />
+    <img src="../pics/ScreenShots/SS_chooselanguage1.jpg" width="30%" />
+    <img src="../pics/ScreenShots/SS_chooselanguage4.jpg" width="30%" />
+    <img src="../pics/ScreenShots/SS_chooselanguage3.jpg" width="30%" />
 </div>
+
 
 
 
 ​		可以看到，翻译页面根据语言选择进行了及时的更新
 
 <div align = "center">
-    <img src="../pics/cdt/SS_chooselanguage2.jpg" width="30%" />
-    <img src="../pics/cdt/SS_chooselanguage5.jpg" width="30%" />
-    <img src="../pics/cdt/SS_chooselanguage6.jpg" width="30%" />
+    <img src="../pics/ScreenShots/SS_chooselanguage2.jpg" width="30%" />
+    <img src="../pics/ScreenShots/SS_chooselanguage5.jpg" width="30%" />
+    <img src="../pics/ScreenShots/SS_chooselanguage6.jpg" width="30%" />
 </div>
 
-#### 4.2.2.2 edit | 文本编辑界面
+## 5.3 getPic | 拍照界面
 
-考虑到用户录音时可能会因为录音失误导致录入的文本有误，为避免用户重新录音的麻烦，允许编辑录音文本，为用户带来更好的体验。
+在这个界面，用户点击拍照按钮可以进行拍照，并进入拍照翻译的结果页面。
 
 <div align = "center">
-    <img src="../pics/cdt/SS_voice7.jpg" width="30%" />
-    <img src="../pics/cdt/SS_voice8.jpg" width="30%" />
+    <img src="../pics/ScreenShots/SS_getPic.jpg" width="30%" />
 </div>
 
-设置了最大输入文本限制，用户可以看到剩余可输入文字，点击清空按钮可以快速清除文字
+## 5.4 OCR | 拍照翻译结果
+
+在这个界面，点击翻译图片，小程序会进行OCR识别并进行翻译，将结果显示在屏幕上。
 
 <div align = "center">
-    <img src="../pics/cdt/SS_voice9.jpg" width="30%" />
-    <img src="../pics/cdt/SS_voice10.jpg" width="30%" />
-</div>
-
-#### 4.2.2.3 getPic | 拍照界面
-
-<div align = "center">
-    <img src="../pics/SS_getPic.jpg" width="30%" />
-</div>
-
-#### 4.2.2.4 history | 翻译历史
-
-<div align = "center">
-    <img src="../pics/SS_history.jpg" width="30%" />
+    <img src="../pics/ScreenShots/SS_OCR.jpg" width="30%" />
 </div>
 
 
 
-#### 4.2.2.5 index | 主页
-
-<div align = "center">
-    <img src="../pics/SS_index_1.jpg" width="30%" />
-    <img src="../pics/SS_index_2.jpg" width="30%" />
-    <img src="../pics/SS_index_3.jpg" width="30%" />
-</div>
-
-#### 4.2.2.6 OCR | 拍照翻译结果
-
-<div align = "center">
-    <img src="../pics/SS_OCR.jpg" width="30%" />
-</div>
-
-
-#### 4.2.2.7  voice_translation | 语音翻译页面
+## 5.5  voice_translation | 语音翻译页面
 
 语音翻译页面，点击切换按钮改变录音语言。
 
@@ -5545,30 +5596,64 @@ mocha .\translate.test.js
 长按录音按钮，按钮样式改变，出现文字提示正在录音，翻译的结果会以卡片的形式保存在本地。
 
 <div align = "center">
-    <img src="../pics/cdt/SS_voice3.jpg" width="30%" />
-    <img src="../pics/cdt/SS_voice4.jpg" width="30%" />
-     <img src="../pics/cdt/SS_voice5.jpg" width="30%" />
+    <img src="../pics/ScreenShots/SS_voice3.jpg" width="30%" />
+    <img src="../pics/ScreenShots/SS_voice4.jpg" width="30%" />
+    <img src="../pics/ScreenShots/SS_voice5.jpg" width="30%" />
 </div>
+
 
 
 
 在卡片右侧对应两个组件，分别代表编辑文本和语音合成。
 
 <div align = "center">
-    <img src="../pics/cdt/SS_voice6.png" width="30%" />
-    <img src="../pics/cdt/SS_voice11.jpg" width="30%" />
+    <img src="../pics/ScreenShots/SS_voice6.png" width="30%" />
+    <img src="../pics/ScreenShots/SS_voice11.jpg" width="30%" />
 </div>
+
 
 长按卡片出现弹窗，功能包括复制文本以及删除不用的卡片。
 
 <div align = "center">
-    <img src="../pics/cdt/SS_voice12.jpg" width="30%" />
-    <img src="../pics/cdt/SS_voice13.jpg" width="30%" />
-     <img src="../pics/cdt/SS_voice14.jpg" width="30%" />
+    <img src="../pics/ScreenShots/SS_voice12.jpg" width="30%" />
+    <img src="../pics/ScreenShots/SS_voice13.jpg" width="30%" />
+     <img src="../pics/ScreenShots/SS_voice14.jpg" width="30%" />
 </div>
 
-# 5. 系统界面展示
+## 5.6 edit | 文本编辑界面
+
+考虑到用户录音时可能会因为录音失误导致录入的文本有误，为避免用户重新录音的麻烦，允许编辑录音文本，为用户带来更好的体验。
+
+<div align = "center">
+    <img src="../pics/ScreenShots/SS_voice7.jpg" width="30%" />
+    <img src="../pics/ScreenShots/SS_voice8.jpg" width="30%" />
+</div>
 
 
+设置了最大输入文本限制，用户可以看到剩余可输入文字，点击清空按钮可以快速清除文字
+
+<div align = "center">
+    <img src="../pics/ScreenShots/SS_voice9.jpg" width="30%" />
+    <img src="../pics/ScreenShots/SS_voice10.jpg" width="30%" />
+</div>
+
+## 5.7 history | 翻译历史
+
+在这个界面，用户可以查看使用小程序的翻译历史，点击对应的翻译历史可以跳转到主页查看翻译结果。
+
+<div align = "center">
+    <img src="../pics/ScreenShots/SS_history.jpg" width="30%" />
+</div>
 
 # 6. 总结
+
+在这个课程设计项目中，我们的团队开发了一个名为TransWe的微信小程序。这是一个强大的机器翻译工具，它的核心功能是能够快速准确地翻译各种语言。但是，我们并没有止步于此，我们还集成了第三方OCR、语音识别和语音合成服务，这些功能的加入使得TransWe不仅仅是一个翻译工具，更是一个全方位的语言服务平台，为用户提供了更便捷、高效的翻译服务。
+
+在这个过程中，我们深入了解了微信小程序的开发流程和特性。微信小程序的特性如页面跳转、图片上传、音频播放等，都被我们充分利用，以实现TransWe的各项功能。同时，我们也学习了如何利用第三方服务来增强小程序的功能性和用户体验。例如，我们利用OCR服务实现了图片中文本的识别，利用语音识别和语音合成服务实现了语音翻译功能，这些都大大提高了TransWe的用户体验。
+
+在代码实现方面，我们遵循了良好的编程习惯。我们的代码结构清晰，每个函数、每个模块都有其明确的职责；我们的命名规范，变量名、函数名都能准确地反映其功能；我们的注释详细，每一段重要的代码都有相应的注释，方便后续的维护和修改。这些都是我们在软件工程课程中学到的重要知识，也是我们在实际开发过程中得到应用的地方。
+
+然而，这个项目的开发过程并非一帆风顺。我们遇到了一些挑战，如API调用的问题、图片大小限制的问题等。但是，我们并没有因此而退缩，我们通过查阅文档、搜索解决方案、反复测试等方式，最终都成功地解决了这些问题。这个过程不仅锻炼了我们的问题解决能力，也让我们更加深入地理解了软件开发的实际过程。
+
+总的来说，这个课程设计项目是一次非常宝贵的实践经验。它不仅提升了我们的编程技能，也锻炼了我们的问题解决能力。同时，看到自己的作品能够真正地帮助到用户，也是一种非常满足的感觉。我们深感，软件开发不仅仅是编写代码，更是解决问题，满足用户需求的过程。**我们将带着这次的经验和教训，继续在软件工程的道路上探索和前进。**
+
