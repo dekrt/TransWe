@@ -5423,6 +5423,51 @@ App({
 
 #### 4.2.1.2 zxk
 
+基于Mocha框架编写的测试文本翻译Javascript的测试程序。
+
+```javascript
+// 引入测试库
+const assert = require('assert');
+const translate = require('./translate');
+
+describe('translate function', function() {
+    it('should translate "software" to Chinese correctly', async function() {
+        const result = await translate('software', 'en', 'zh');
+        assert.strictEqual(result, '软件');
+    });
+
+    it('should translate "software@" to Chinese correctly', async function() {
+        const result = await translate('software', 'en', 'zh');
+        assert.strictEqual(result, '软件@');
+    });
+
+    it('should handle space correctly', async function() {
+        const result = await translate('hello world', 'en', 'zh');
+        assert.strictEqual(result, '你好世界');
+    });
+
+    it('should handle error correctly', async function() {
+        try {
+            await translate('', 'en', 'zh');
+        } catch (e) {
+            assert.strictEqual(e.message, 'Invalid input');
+        }
+    });
+});
+```
+
+若要进行测试，请在正确安装相关框架的情况下运行：
+
+```shell
+mocha .\translate.test.js
+```
+
+测试成功会显示下列截图：
+
+![](./pics/Mocha_success.png)
+
+
+
 ### 4.2.2. 其他测试
 
 #### 4.2.2.1 choose_language | 选择语言界面

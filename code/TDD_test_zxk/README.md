@@ -6,3 +6,6 @@
 mocha .\translate.test.js
 ```
 
+测试成功会显示下列截图：
+
+![](../../pics/Mocha_success.png)
