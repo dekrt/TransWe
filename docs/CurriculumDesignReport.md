@@ -626,7 +626,7 @@ OCR拍照翻译页面是用户能够通过拍照进行翻译的地方。
 
 ### 4.1.2 components/
 
-> 翻译组件介绍
+> 翻译组件介绍(语音翻译页面配置)
 
 #### 4.1.2.1 components/bottom-button
 > 录音按钮组
@@ -5470,7 +5470,39 @@ mocha .\translate.test.js
 
 #### 4.2.2.1 choose_language | 选择语言界面
 
-#### 4.2.2.2
+​		在选择语言界面选择翻译语言和目标语言
+
+<div align = "center">
+    <img src="../pics/cdt/SS_chooselanguage1.jpg" width="30%" />
+    <img src="../pics/cdt/SS_chooselanguage4.jpg" width="30%" />
+    <img src="../pics/cdt/SS_chooselanguage3.jpg" width="30%" />
+</div>
+
+
+
+​		可以看到，翻译页面根据语言选择进行了及时的更新
+
+<div align = "center">
+    <img src="../pics/cdt/SS_chooselanguage2.jpg" width="30%" />
+    <img src="../pics/cdt/SS_chooselanguage5.jpg" width="30%" />
+    <img src="../pics/cdt/SS_chooselanguage6.jpg" width="30%" />
+</div>
+
+#### 4.2.2.2 edit | 文本编辑界面
+
+考虑到用户录音时可能会因为录音失误导致录入的文本有误，为避免用户重新录音的麻烦，允许编辑录音文本，为用户带来更好的体验。
+
+<div align = "center">
+    <img src="../pics/cdt/SS_voice7.jpg" width="30%" />
+    <img src="../pics/cdt/SS_voice8.jpg" width="30%" />
+</div>
+
+设置了最大输入文本限制，用户可以看到剩余可输入文字，点击清空按钮可以快速清除文字
+
+<div align = "center">
+    <img src="../pics/cdt/SS_voice9.jpg" width="30%" />
+    <img src="../pics/cdt/SS_voice10.jpg" width="30%" />
+</div>
 
 #### 4.2.2.3 getPic | 拍照界面
 
@@ -5501,10 +5533,39 @@ mocha .\translate.test.js
 </div>
 
 
+#### 4.2.2.7  voice_translation | 语音翻译页面
 
-#### 4.2.2.7
+语音翻译页面，点击切换按钮改变录音语言。
+
+<div align = "center">
+    <img src="../pics/cdt/SS_voice1.jpg" width="30%" />
+    <img src="../pics/cdt/SS_voice2.jpg" width="30%" />
+</div>
+
+长按录音按钮，按钮样式改变，出现文字提示正在录音，翻译的结果会以卡片的形式保存在本地。
+
+<div align = "center">
+    <img src="../pics/cdt/SS_voice3.jpg" width="30%" />
+    <img src="../pics/cdt/SS_voice4.jpg" width="30%" />
+     <img src="../pics/cdt/SS_voice5.jpg" width="30%" />
+</div>
 
 
+
+在卡片右侧对应两个组件，分别代表编辑文本和语音合成。
+
+<div align = "center">
+    <img src="../pics/cdt/SS_voice6.png" width="30%" />
+    <img src="../pics/cdt/SS_voice11.jpg" width="30%" />
+</div>
+
+长按卡片出现弹窗，功能包括复制文本以及删除不用的卡片。
+
+<div align = "center">
+    <img src="../pics/cdt/SS_voice12.jpg" width="30%" />
+    <img src="../pics/cdt/SS_voice13.jpg" width="30%" />
+     <img src="../pics/cdt/SS_voice14.jpg" width="30%" />
+</div>
 
 # 5. 系统界面展示
 
