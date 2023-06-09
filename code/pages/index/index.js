@@ -9,6 +9,7 @@ Page({
     hideClearIcon: false, // 控制清除图标的显示与隐藏
     result: [], // 翻译结果
     curLang: {}, // 当前选择的语言
+    fromLang:{},  //存储当前源语言
     currentTranslateVoice: '', // 当前播放的语音路径
     currentsound: '', // 当前语音合成语言
     history: [] // 翻译历史记录
@@ -35,6 +36,12 @@ Page({
       })
       this.onConfirm() // 执行翻译
     }
+    if (this.data.fromLang.lang !== app.globalData.fromLang.lang){
+      this.setData({
+        fromLang: app.globalData.fromLang
+      })
+      this.onConfirm() // 执行翻译
+    }
   },
 
   // 处理用户输入的函数
@@ -58,7 +65,7 @@ Page({
   onConfirm: function () {
     if (!this.data.query) return // 如果查询文本为空，则不执行翻译
     translate(this.data.query, {
-      from: 'auto',
+      from: this.data.fromLang.lang || 'auto',
       to: this.data.curLang.lang
     }).then(res => {
       this.setData({

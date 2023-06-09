@@ -10,8 +10,8 @@
   <view class="change">
     <navigator url="/pages/choose_language/choose_language" hover-class="navigator-hover">
       <view class="switch_language_from">
-        <image class="switch_language_pic" src="{{curLang.src}}" />
-        <text class="switch_language_from_text" decode="true">&nbsp;&nbsp;{{curLang.chs}}</text>
+        <image class="switch_language_pic" src="{{fromLang.src}}" />
+        <text class="switch_language_from_text" decode="true">&nbsp;&nbsp;{{fromLang.chs}}</text>
         <text class="iconfont icon-down"></text>
       </view>
       <image class="switch" src="../../imgs/switch.png"></image>
@@ -28,8 +28,8 @@
     <view class="textarea-wrap">
       <textarea placeholder='请输入要翻译的文本' placeholder-style=' color: #1e3163;line-height: 34rpx;font-size: 36rpx;font-family: Poppins;' bindinput='onInput' bindconfirm='onConfirm' bindblur='onConfirm' value="{{query}}"></textarea>
       <view class="language_from">
-        <image class="language_pic" src="../../imgs/Chinese.png" />
-        <text class="language_from_text">中文</text>
+        <image class="language_pic" src="{{fromLang.src}}" />
+        <text class="language_from_text">{{fromLang.chs}}</text>
         <view data-id="src" catchtap="playTranslateVoice" catchtouchstart="playTranslateVoice">
           <image class="voice" src="../../imgs/voice.png" mode="widthFix" />
         </view>

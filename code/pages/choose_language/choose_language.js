@@ -36,7 +36,8 @@ Page({
     isClicked1: false,
     isClicked2: false,
     langList: app.globalData.langList,
-    curLang: {},  //存储当前语言
+    curLang: {},  //存储当前翻译语言
+    fromLang:{},  //存储当前源语言
     targetLang: {},
     currentsound:'',
   },
@@ -63,8 +64,10 @@ Page({
     console.log("Clicked item index and sound : ", index,sound);
     if (!this.data.isClicked1) {
       this.setData({
-        selectedIndex1: index
+        selectedIndex1: index,
+        fromLang : langObj
       });
+      app.globalData.fromLang = langObj
     }else{
       this.setData({
         selectedIndex2: index,

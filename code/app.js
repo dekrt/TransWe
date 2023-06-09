@@ -6,6 +6,7 @@ App({
   onLaunch: function () {
     // 展示本地存储能力
     this.globalData.curLang = wx.getStorageSync('curLang') || this.globalData.langList[0];
+    this.globalData.fromLang = wx.getStorageSync('fromLang') || this.globalData.langList[1];
     wx.getStorage({
       key: 'history',
       success: (res) => {
@@ -53,6 +54,7 @@ App({
   globalData: {
     history: [],
     curLang: {},
+    fromLang:{},
     buttons:[],
     picBase64: "",
     word: [],
