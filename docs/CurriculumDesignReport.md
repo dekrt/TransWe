@@ -2382,857 +2382,7 @@ Page({
   padding: 20rpx 20rpx;                /* 内边距设置 */
 }
 ```
-#### 4.1.4.3 pages/voice_translation
 
-语音翻译页面，主要功能是通过微信的语音插件实现语音的录制、识别和翻译。
-
-以下代码的主要功能：
-
-1. 语音录制：用户按下按钮时，开始进行语音录制，录制过程中会实时显示识别结果。当用户松开按钮时，结束录制，并进行语音识别。
-2. 语音识别：语音识别的结果会添加到对话列表中，显示在页面上。如果识别结果为空，则会显示提示信息。
-3. 语音翻译：识别后的文字会被发送到插件进行翻译，翻译的结果会被更新到对话列表中的相应位置。
-4. 语音播放：当翻译完成后，页面会自动播放翻译后的语音。如果语音文件过期，会重新进行语音合成。
-5. 语言切换：用户可以点击按钮切换输入语言，支持中英文切换。
-6. 历史记录：用户的历史录音和翻译记录会被保存，在用户再次进入页面时可以查看。
-7. 滚动显示：当识别或翻译的内容添加到对话列表时，页面会自动滚动到最新的内容。
-
-##### 1 voice_translation.js
-页面数据的配置
-```javascript
-// 获取应用实例
-const app = getApp()
-
-// 引入工具库
-const util = require('../../utils/util.js')
-
-// 引入微信语音插件
-const plugin = requirePlugin("WechatSI")
-
-// 引入语言配置文件
-import { language } from '../../utils/conf.js'
-
-// 获取全局唯一的语音识别管理器
-const manager = plugin.getRecordRecognitionManager()
-
-Page({
-  // 页面的初始数据
-  data: {
-    dialogList: [],  // 对话列表，初始为空
-    lan_type: true,  // 语言类型
-    scroll_top: 10000,  // 竖向滚动条位置
-    bottomButtonDisabled: false,  // 底部按钮是否禁用
-    tips_language: language[0],  // 提示语言，初始为中文
-    // 初始时的翻译卡片
-    initTranslate: {
-      create: '04/27 15:37',
-      text: '等待说话',
-    },
-    // 当前的翻译卡片
-    currentTranslate: {
-      create: '04/27 15:37',
-      text: '等待说话',
-    },
-    recording: false,  // 是否正在录音
-    recordStatus: 0,   // 录音状态： 0 - 录音中 1- 翻译中 2 - 翻译完成/二次翻译
-    toView: 'fake',  // 滚动位置
-    lastId: -1,    // dialogList 最后一个item的 id
-    currentTranslateVoice: '', // 当前播放语音路径
-    // 图片路径
-    image_c:'https://codefun-proj-user-res-1256085488.cos.ap-guangzhou.myqcloud.com/644bb0005a7e3f03102917b5/644bb06fb98f5d0011665f39/153cd789341a2b9a6a2d1ac163978ba0.png',
-    image_e:'https://codefun-proj-user-res-1256085488.cos.ap-guangzhou.myqcloud.com/644bb0005a7e3f03102917b5/644bb06fb98f5d0011665f39/e9fc70c625980d75443bf2ae1516d24f.png'
-  },
-```
-​		录音按钮函数streamRecord，streamRecordEnd，当用户松开按钮后，结束语音识别。函数首先检查是否已经在录音，如果没有，或者已经在录音但录音状态不为0（这可能意味着录音已经被停止），则返回。否则，它会停止录音，并禁用底部按钮以防止重复停止。
-
-​		接着是一个函数changelanguage，该函数用于切换语音识别的语言。它首先切换lan_type的值（这可能是一个布尔值，表示使用的是哪种语言）。然后，根据新的lan_type的值，设置适当的初始化翻译文本。
-```javascript
-  // 按住按钮开始语音识别
-  streamRecord: function(e) {
-    // 开始语音识别
-    manager.start({
-      lang: e.detail.buttonItem.lang,
-    })
-
-    // 根据语言类型设置翻译卡片内容
-    let lan_type = this.data.lan_type
-    this.setData({
-      recordStatus: 0,
-      recording: true,
-      currentTranslate: {
-        create: util.recordTime(new Date()),
-        text:  lan_type ?'正在聆听中':'listening',
-        lfrom: lan_type ? e.detail.buttonItem.lang : e.detail.buttonItem.lto,
-        lto: lan_type ? e.detail.buttonItem.lto : e.detail.buttonItem.lang,
-      },
-    })
-       this.scrollToNew();
-
-  },
-
-   /**
-   * 松开按钮结束语音识别
-   */
-  streamRecordEnd: function(e) {
-    let detail = e.detail || {}  // 自定义组件触发事件时提供的detail对象
-    let buttonItem = detail.buttonItem || {}
-
-    // 防止重复触发stop函数
-    if(!this.data.recording || this.data.recordStatus != 0) {
-      console.warn("has finished!")
-      return
-    }
-
-    // 停止录音识别
-    manager.stop()
-
-    // 禁用底部按钮
-    this.setData({
-      bottomButtonDisabled: true,
-    })
-  },
-
-  // 切换语言
-  changelanguage: function(){
-    this.setData({
-      lan_type:!this.data.lan_type,
-    })
-
-    if(this.data.lan_type) {
-      this.setData({
-        initTranslate: {
-          create: util.recordTime(new Date()),
-          text: '等待说话',
-        },
-      })
-    } else {
-      this.setData({
-        initTranslate: {
-          create: util.recordTime(new Date()),
-          text: 'Please Speaking',
-        },
-      })
-    }
-  },
-```
-​		以下代码定义了函数 translateText ，该函数用于翻译文本。它接受两个参数：一个是要翻译的文本项，另一个是该项在对话列表中的索引。
-​		这个函数首先确定源语言和目标语言，默认为从中文到英文。然后，它调用翻译插件，传入要翻译的文本，并启用文本到语音功能。
-​		如果翻译失败， fail 回调函数会被调用，并记录一个错误。无论成功或失败， complete 回调函数都会被调用，用来更新录音状态，并隐藏加载提示。
-
-```javascript
-  /**
-   * 翻译
-   */
-  translateText: function(item, index) {
-    let lfrom =  item.lfrom || 'zh_CN'  // 原语言，默认为中文
-    let lto = item.lto || 'en_US'  // 目标语言，默认为英文
-
-    // 调用翻译插件
-    plugin.translate({
-      lfrom: lfrom,
-      lto: lto,
-      content: item.text,  // 要翻译的文本
-      tts: true,  // 启用文本到语音
-      success: (resTrans)=>{  // 翻译成功的回调函数
-
-        let passRetcode = [
-          0,  // 翻译合成成功
-          -10006,  // 翻译成功，合成失败
-          -10007,  // 翻译成功，传入了不支持的语音合成语言
-          -10008  // 翻译成功，语音合成达到频率限制
-        ]
-
-        // 如果返回的结果是可接受的
-        if(passRetcode.indexOf(resTrans.retcode) >= 0 ) {
-          let tmpDialogList = this.data.dialogList.slice(0)
-
-          // 如果索引有效
-          if(!isNaN(index)) {
-            // 更新当前条目的翻译结果
-            let tmpTranslate = Object.assign({}, item, {
-              autoPlay: true,  // 自动播放背景音乐
-              translateText: resTrans.result,  // 翻译结果
-              translateVoicePath: resTrans.filename || "",  // 语音文件路径
-              translateVoiceExpiredTime: resTrans.expired_time || 0  // 语音文件过期时间
-            })
-
-            tmpDialogList[index] = tmpTranslate
-
-            // 更新对话列表和底部按钮状态
-            this.setData({
-              dialogList: tmpDialogList,
-              bottomButtonDisabled: false,
-              recording: false,
-            })
-
-            // 滚动到新的位置
-            this.scrollToNew();
-
-          } else {
-            console.error("index error", resTrans, item)
-          }
-        } else {
-          console.warn("翻译失败", resTrans, item)
-        }
-
-      },
-      fail: function(resTrans) {  // 翻译失败的回调函数
-        console.error("调用失败",resTrans, item)
-        this.setData({
-          bottomButtonDisabled: false,
-          recording: false,
-        })
-      },
-      complete: resTrans => {  // 翻译完成的回调函数，无论成功或失败
-        this.setData({
-          recordStatus: 1,
-        })
-        wx.hideLoading()  // 隐藏加载提示
-      }
-    })
-
-  },
-
-```
-​		在下面的代码段中，定义了函数translateTextAction，这个函数会在修改文本信息后触发，它调用translateText函数进行翻译。
-​		定义了expiredAction函数，这个函数用于处理语音文件过期的情况，它会调用插件的文本到语音功能重新生成语音文件。
-
-```javascript
-    /**
-   * 修改文本信息后触发翻译操作
-   */
-  translateTextAction: function(e) {
-    // 获取由自定义组件触发事件提供的detail对象
-    let detail = e.detail
-    let item = detail.item
-    let index = detail.index
-
-    // 调用翻译函数
-    this.translateText(item, index)
-  },
-
-  /**
-   * 语音文件过期，重新合成语音文件
-   */
-  expiredAction: function(e) {
-    // 获取由自定义组件触发事件提供的detail对象
-    let detail = e.detail || {}
-    let item = detail.item || {}
-    let index = detail.index
-
-    // 检查索引是否有效
-    if(isNaN(index) || index < 0) {
-      return
-    }
-
-    // 设定目标语言，默认为英语
-    let lto = item.lto || 'en_US'
-
-    // 调用插件的文本到语音功能
-    plugin.textToSpeech({
-      lang: lto,
-      content: item.translateText,
-      success: resTrans => {
-        if(resTrans.retcode == 0) {
-          let tmpDialogList = this.data.dialogList.slice(0)
-
-          // 用新的属性更新对应的条目
-          let tmpTranslate = Object.assign({}, item, {
-            autoPlay: true,  // 自动播放背景音乐
-            translateVoicePath: resTrans.filename,  // 语音文件路径
-            translateVoiceExpiredTime: resTrans.expired_time || 0  // 语音文件过期时间
-          })
-
-          tmpDialogList[index] = tmpTranslate
-
-          // 更新对话列表
-          this.setData({
-            dialogList: tmpDialogList,
-          })
-
-        } else {
-          console.warn("语音合成失败", resTrans, item)
-        }
-      },
-      fail: function(resTrans) {
-        console.warn("语音合成失败", resTrans, item)
-      }
-  })
-  },
-```
-​		定义了initCard函数，这个函数用于初始化一张空白的卡片。
-​		然后定义了deleteItem函数，用于删除某一条目。
-​		当列表为空时，deleteItem函数将会调用initCard函数创建一张空白的卡片。
-
-```javascript
-    /**
-   * 初始化为空时的卡片
-   */
-  initCard: function () {
-    // 创建新的初始化翻译对象，并添加当前时间
-    let initTranslateNew = Object.assign({}, this.data.initTranslate, {
-      create: util.recordTime(new Date()),
-    })
-
-    // 更新数据
-    this.setData({
-      initTranslate: initTranslateNew
-    })
-  },
-
-  /**
-   * 删除卡片
-   */
-  deleteItem: function(e) {
-    // 获取由自定义组件触发事件提供的detail对象
-    let detail = e.detail
-    let item = detail.item
-
-    // 创建一个新的对话列表副本
-    let tmpDialogList = this.data.dialogList.slice(0)
-    let arrIndex = detail.index
-
-    // 删除对应索引的元素
-    tmpDialogList.splice(arrIndex, 1)
-
-    // 使用setTimeout来避免可能的错误：Expect END descriptor with depth 0 but get another
-    setTimeout( ()=>{
-      this.setData({
-        dialogList: tmpDialogList
-      })
-      // 如果列表为空，则初始化卡片
-      if(tmpDialogList.length == 0) {
-        this.initCard()
-      }
-    }, 0)
-  },
-
-  /**
-   * 识别内容为空时的反馈
-   */
-  showRecordEmptyTip: function() {
-    // 更新数据
-    this.setData({
-      recording: false,
-      bottomButtonDisabled: false,
-    })
-
-    // 显示提示
-    wx.showToast({
-      title: this.data.tips_language.recognize_nothing,
-      icon: 'success',
-      image: '/image/no_voice.png',
-      duration: 1000,
-      success: function (res) {
-
-      },
-      fail: function (res) {
-        console.log(res);
-      }
-    });
-  },
-  
-  
-    /**
-   * 初始化语音识别回调
-   * 绑定语音播放开始事件
-   */
-  initRecord: function() {
-    // 有新的识别内容返回，则会调用此事件
-    manager.onRecognize = (res) => {
-      let currentData = Object.assign({}, this.data.currentTranslate, {
-                        text: res.result,
-                      })
-      // 更新当前翻译内容
-      this.setData({
-        currentTranslate: currentData,
-      })
-      // 滚动到新的内容
-      this.scrollToNew();
-    }
-
-    // 识别结束事件
-    manager.onStop = (res) => {
-      let text = res.result
-
-      // 如果结果为空，显示提示信息
-      if(text == '') {
-        this.showRecordEmptyTip()
-        return
-      }
-
-      let lastId = this.data.lastId + 1
-
-      let currentData = Object.assign({}, this.data.currentTranslate, {
-                        text: res.result,
-                        translateText: '正在翻译中',
-                        id: lastId,
-                        voicePath: res.tempFilePath
-                      })
-
-      // 更新当前翻译和记录状态
-      this.setData({
-        currentTranslate: currentData,
-        recordStatus: 1,
-        lastId: lastId,
-      })
-
-      // 滚动到新的内容
-      this.scrollToNew();
-
-      // 开始翻译
-      this.translateText(currentData, this.data.dialogList.length)
-    }
-
-    // 识别错误事件
-    manager.onError = (res) => {
-      // 如果发生错误，停止录音并启用底部按钮
-      this.setData({
-        recording: false,
-        bottomButtonDisabled: false,
-      })
-    }
-
-    // 语音播放开始事件
-    wx.getBackgroundAudioManager (res=>{
-      const backgroundAudioManager = wx.getBackgroundAudioManager()
-      let src = backgroundAudioManager.src
-
-      // 更新当前播放的音频源
-      this.setData({
-        currentTranslateVoice: src
-      })
-    })
-  },
-
-```
-​		以下代码包含了对历史记录的获取和设置。
-```javascript
-    /**
-   * 设置语音识别历史记录
-   */
-  setHistory: function() {
-    try {
-      let dialogList = this.data.dialogList
-      dialogList.forEach(item => {
-        item.autoPlay = false
-      })
-      // 尝试将对话列表存储在本地
-      wx.setStorageSync('history',dialogList)
-    } catch (e) {
-      console.error("setStorageSync setHistory failed")
-    }
-  },
-
-  /**
-   * 得到历史记录
-   */
-  getHistory: function() {
-    try {
-      // 尝试从本地获取历史记录
-      let history = wx.getStorageSync('history')
-      if (history) {
-          let len = history.length;
-          let lastId = this.data.lastId
-          if(len > 0) {
-            lastId = history[len-1].id || -1;
-          }
-          // 如果历史记录存在，将其设置到dialogList中
-          this.setData({
-            dialogList: history,
-            toView: this.data.toView,
-            lastId: lastId,
-          })
-      }
-    } catch (e) {
-      // 如果出现错误，将dialogList设置为空列表
-      this.setData({
-        dialogList: []
-      })
-    }
-  },
-
-  /**
-   * 重新滚动到底部
-   */
-  scrollToNew: function() {
-    // 更新视图到最新的位置
-    this.setData({
-      toView: this.data.toView
-    })
-  },
-
-  onShow: function() {
-    // 当页面显示时，滚动到最新的位置，并初始化卡片
-    this.scrollToNew();
-    this.initCard()
-
-    if(this.data.recordStatus == 2) {
-      wx.showLoading({
-        // title: '',
-        mask: true,
-      })
-    }
-  },
-
-  onLoad: function () {
-    // 页面加载时，获取历史记录并初始化语音识别
-    this.getHistory()
-    this.initRecord()
-    this.setData({toView: this.data.toView})
-    app.getRecordAuth()
-  },
-
-  onHide: function() {
-    // 页面隐藏时，设置历史记录
-    this.setHistory()
-  },
-
-  /**
-   * 定义一个点击事件处理函数
-   */
-  onBackIconTap: function() {
-    // 返回上一页
-    wx.navigateBack({
-      delta: 1, // 返回的页面层数
-    });
-  },
-
-})
-
-
-  
-```
-##### 2 voice_translation.json
-```javascript
-{
-  "usingComponents": {
-    "bottom-button": "/components/bottom-button/index",
-    "result-bubble": "/components/result-bubble/index"
-  }
-}
-
-```
-##### 3 voice_translationt.wxml
-```css
-<!--index.wxml-->
-
-<!-- 页面背景部分 -->
-<view class="page-background">
-  <image class="image self-center" src="../../imgs/voice_background.png"></image>
-</view>
-
-<!-- 主体部分，包含对话框和底部按钮 -->
-<view class="container">
-  
-  <!-- 对话框部分 -->
-  <scroll-view id="scroll-content"
-    scroll-top="{{scroll_top}}"
-    scroll-y="true"
-    class="dialog-part"
-    scroll-into-view="translate-{{toView}}"
-    enable-back-to-top="true"
-    scroll-with-animation="true">
-    
-    <!-- 空白间隔部分 -->
-    <view class="spacer"></view> 
-    
-    <!-- 返回图标，点击触发 onBackIconTap 函数 -->
-    <view id="back-icon" class="back-icon" bindtap="onBackIconTap" >
-      <image src="../../imgs/arrow-left.png" class="arrow-icon"></image>
-    </view>
-
-    <!-- 语言切换部分 -->
-    <view class="flex-row justify-between items-center relative group_2">
-      <view class="flex-row items-center self-stretch group_3 space-x-8">
-        <!-- 根据 lan_type 的值，显示不同的图片和文本 -->
-        <image wx:if="{{lan_type}}" class="shrink-0 image_1" src="{{image_c}}" />
-        <image wx:else class="shrink-0 image_1" src="{{image_e}}" />
-        <text class="text" wx:if="{{lan_type}}">中文</text>
-        <text class="text" wx:else>英文</text>
-
-        <!-- 语言切换按钮，点击触发 changelanguage 函数 -->
-        <view bindtap="changelanguage" style="display: inline-block">
-          <image class="image_1 image_2" src="../../imgs/Vector.png"/>
-        </view>
-      </view>
-    </view>
-
-    <!-- 列表部分 -->
-    <!-- 列表为空时显示的部分 -->
-    <view class="dialog-wrap" id="translate-empty" wx:if="{{!recording && dialogList.length == 0}}">
-      <result-bubble item="{{initTranslate}}" record-status="0"></result-bubble>
-    </view>
-
-    <!-- 列表部分 -->
-    <view wx:for="{{dialogList}}" wx:key="id" class="dialog-wrap" data-index="{{index}}" catchmodaldelete="deleteItem">
-      <result-bubble item="{{item}}"
-        edit-show="{{index==dialogList.length-1}}"
-        index="{{index}}"
-        current-translate-voice="{{currentTranslateVoice}}"
-        bindtranslate="translateTextAction"
-        bindexpired="expiredAction"></result-bubble>
-    </view>
-
-    <!-- 正在录音时显示的部分 -->
-    <view class="dialog-wrap" id="translate-recording" wx:if="{{recording}}">
-      <result-bubble item="{{currentTranslate}}" record-status="{{recordStatus}}"></result-bubble>
-    </view>
-
-    <view id="translate-fake"></view>
-
-  </scroll-view>
-
-  <!-- 底部按钮部分 -->
-  <view class="foot-group" catchlongpress="catchTapEvent">
-    <bottom-button button-disabled="{{bottomButtonDisabled}}"
-      bindrecordstart="streamRecord"
-      bindrecordend="streamRecordEnd"></bottom-button>
-  </view>
-</view>
-
-```
-##### 3 voice_translation.wxss
-```css
-/* 主容器样式 */
-.container {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  box-sizing: border-box;
-  position: relative;
-  font-family: "PingFang-SC-Regular", "SimSun", "Microsoft Yahei";
-  background-color: #1494fc;
-}
-
-/* 页面样式 */
-page {
-  height: 100%;
-  width: 100%;
-  background: #FAFAFA;
-}
-
-/* 输入框样式 */
-input {
-  font-family: "PingFang-SC-Regular", "SimSun", "Microsoft Yahei";
-}
-
-/* flex布局，列方向 */
-.flex-column {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-}
-
-/* spacer元素样式 */
-.spacer {
-  height: 246rpx;
-}
-
-/* 页面背景样式 */
-.page-background {
-  position: fixed;
-  top: 345px;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-position: center;
-  background-size: cover;
-  z-index: 1;
-}
-
-/* 图片样式 */
-.image {
-  width: 750rpx;
-  height: 348rpx;
-}
-
-/* 设置元素相对于其父元素的位置为中心 */
-.self-center {
-  align-self: center;
-}
-
-/* 对话框包裹样式 */
-.dialog-wrap {
-  position: relative;
-  padding: 20rpx 40rpx 50rpx 40rpx;
-  box-sizing: border-box;
-  display: flex;
-  width: 100%;
-  flex-direction: column;
-}
-
-/* 消息详情文字样式 */
-.send-message .text-detail {
-  color: #9B9B9B;
-}
-
-/* 对话部分样式 */
-.dialog-part {
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 257rpx;
-  right: 0;
-  z-index:1;
-}
-
-/* 用户输入样式 */
-.user-input {
-  flex: 1;
-  height: 60rpx;
-  box-sizing: border-box;
-  margin: 0 10px;
-  border-radius: 10rpx;
-}
-
-/* 文本内容样式 */
-.text-content {
-  margin: 0 48px 0 0;
-  box-sizing: border-box;
-}
-
-/* 编辑图标样式 */
-.edit-icon {
-  position: absolute;
-  right: 10rpx;
-  bottom: 0;
-  padding: 0 8rpx;
-}
-
-/* 播放图标样式 */
-.play-icon {
-  position: absolute;
-  right: 10rpx;
-  bottom: 14rpx;
-  padding: 0 8rpx;
-  display: flex;
-  align-items: center;
-}
-
-/* 声音图标样式 */
-.play-loud-icon {
-  position: absolute;
-  right: 0;
-  bottom: 14rpx;
-  padding: 0 8rpx;
-  display: flex;
-  align-items: center;
-}
-
-/* 文字详情样式 */
-.text-detail {
-  font-size: 18px;
-  line-height: 24px;
-  font-family: "PingFang-SC-Regular", "SimSun", "Microsoft Yahei";
-}
-
-/* 返回图标样式 */
-.back-icon {
-  position: absolute;
-  top: 50px;
-  left: 20px;
-  z-index:1;
-}
-
-/* 箭头图标样式 */
-.arrow-icon {
-  width: 30px;
-  height: 30px;
-}
-
-/* 翻译消息样式 */
-.translate-message {
-  position: relative;
-}
-
-/* 发送消息样式 */
-.send-message {
-  position: relative;
-}
-
-/* 创建时间样式 */
-.create-time {
-  font-size: 14px;
-  color: #B2B2B2;
-  margin-bottom: 5px;
-  display: flex;
-  justify-content: center;
-}
-
-/* 模糊滤镜样式 */
-.filter-blur {
-  filter: blur(5px);
-}
-
-/* 空提示样式 */
-.empty-tip {
-  position: absolute;
-  margin: auto;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  height: 24px;
-  width: 100px;
-  font-size: 24px;
-  color: #000000;
-  opacity: 0.1
-}
-
-/* 伪翻译样式 */
-.translate-fake {
-  width:100%;
-  height:1px;
-}
-
-/* 底部分组样式 */
-.foot-group {
-  position: fixed;
-  left: 0;
-  bottom: 0;
-  z-index: 40;
-  width: 100%;
-}
-
-/* 分组样式 */
-.group_2 {
-  margin-top: -76rpx;
-}
-
-.group_3 {
-  margin-left: 220rpx;
-}
-
-/* 空间间隔样式 */
-.space-x-8 > view:not(:first-child),
-.space-x-8 > text:not(:first-child),
-.space-x-8 > image:not(:first-child) {
-  margin-left: 16rpx;
-}
-
-/* 图片样式 */
-.image_1 {
-  width: 32rpx;
-  height: 32rpx;
-}
-
-/* 文本样式 */
-.text {
-  color: #ffffff;
-  font-size: 32rpx;
-  font-family: Poppins;
-  line-height: 29rpx;
-  margin-right: 50rpx;
-}
-
-/* 第二张图片样式 */
-.image_2 {
-  margin-right: 230rpx;
-}
-
-```
 #### 4.1.4.3 pages/getPic
 
 ##### 1 getPic.js
@@ -4694,9 +3844,861 @@ image {
 
 ```
 
+#### 4.1.4.7 pages/voice_translation
+
+语音翻译页面，主要功能是通过微信的语音插件实现语音的录制、识别和翻译。
+
+以下代码的主要功能：
+
+1. 语音录制：用户按下按钮时，开始进行语音录制，录制过程中会实时显示识别结果。当用户松开按钮时，结束录制，并进行语音识别。
+2. 语音识别：语音识别的结果会添加到对话列表中，显示在页面上。如果识别结果为空，则会显示提示信息。
+3. 语音翻译：识别后的文字会被发送到插件进行翻译，翻译的结果会被更新到对话列表中的相应位置。
+4. 语音播放：当翻译完成后，页面会自动播放翻译后的语音。如果语音文件过期，会重新进行语音合成。
+5. 语言切换：用户可以点击按钮切换输入语言，支持中英文切换。
+6. 历史记录：用户的历史录音和翻译记录会被保存，在用户再次进入页面时可以查看。
+7. 滚动显示：当识别或翻译的内容添加到对话列表时，页面会自动滚动到最新的内容。
+
+##### 1 voice_translation.js
+页面数据的配置
+```javascript
+// 获取应用实例
+const app = getApp()
+
+// 引入工具库
+const util = require('../../utils/util.js')
+
+// 引入微信语音插件
+const plugin = requirePlugin("WechatSI")
+
+// 引入语言配置文件
+import { language } from '../../utils/conf.js'
+
+// 获取全局唯一的语音识别管理器
+const manager = plugin.getRecordRecognitionManager()
+
+Page({
+  // 页面的初始数据
+  data: {
+    dialogList: [],  // 对话列表，初始为空
+    lan_type: true,  // 语言类型
+    scroll_top: 10000,  // 竖向滚动条位置
+    bottomButtonDisabled: false,  // 底部按钮是否禁用
+    tips_language: language[0],  // 提示语言，初始为中文
+    // 初始时的翻译卡片
+    initTranslate: {
+      create: '04/27 15:37',
+      text: '等待说话',
+    },
+    // 当前的翻译卡片
+    currentTranslate: {
+      create: '04/27 15:37',
+      text: '等待说话',
+    },
+    recording: false,  // 是否正在录音
+    recordStatus: 0,   // 录音状态： 0 - 录音中 1- 翻译中 2 - 翻译完成/二次翻译
+    toView: 'fake',  // 滚动位置
+    lastId: -1,    // dialogList 最后一个item的 id
+    currentTranslateVoice: '', // 当前播放语音路径
+    // 图片路径
+    image_c:'https://codefun-proj-user-res-1256085488.cos.ap-guangzhou.myqcloud.com/644bb0005a7e3f03102917b5/644bb06fb98f5d0011665f39/153cd789341a2b9a6a2d1ac163978ba0.png',
+    image_e:'https://codefun-proj-user-res-1256085488.cos.ap-guangzhou.myqcloud.com/644bb0005a7e3f03102917b5/644bb06fb98f5d0011665f39/e9fc70c625980d75443bf2ae1516d24f.png'
+  },
+```
+​		录音按钮函数streamRecord，streamRecordEnd，当用户松开按钮后，结束语音识别。函数首先检查是否已经在录音，如果没有，或者已经在录音但录音状态不为0（这可能意味着录音已经被停止），则返回。否则，它会停止录音，并禁用底部按钮以防止重复停止。
+
+​		接着是一个函数changelanguage，该函数用于切换语音识别的语言。它首先切换lan_type的值（这可能是一个布尔值，表示使用的是哪种语言）。然后，根据新的lan_type的值，设置适当的初始化翻译文本。
+```javascript
+  // 按住按钮开始语音识别
+  streamRecord: function(e) {
+    // 开始语音识别
+    manager.start({
+      lang: e.detail.buttonItem.lang,
+    })
+
+    // 根据语言类型设置翻译卡片内容
+    let lan_type = this.data.lan_type
+    this.setData({
+      recordStatus: 0,
+      recording: true,
+      currentTranslate: {
+        create: util.recordTime(new Date()),
+        text:  lan_type ?'正在聆听中':'listening',
+        lfrom: lan_type ? e.detail.buttonItem.lang : e.detail.buttonItem.lto,
+        lto: lan_type ? e.detail.buttonItem.lto : e.detail.buttonItem.lang,
+      },
+    })
+       this.scrollToNew();
+
+  },
+
+   /**
+   * 松开按钮结束语音识别
+   */
+  streamRecordEnd: function(e) {
+    let detail = e.detail || {}  // 自定义组件触发事件时提供的detail对象
+    let buttonItem = detail.buttonItem || {}
+
+    // 防止重复触发stop函数
+    if(!this.data.recording || this.data.recordStatus != 0) {
+      console.warn("has finished!")
+      return
+    }
+
+    // 停止录音识别
+    manager.stop()
+
+    // 禁用底部按钮
+    this.setData({
+      bottomButtonDisabled: true,
+    })
+  },
+
+  // 切换语言
+  changelanguage: function(){
+    this.setData({
+      lan_type:!this.data.lan_type,
+    })
+
+    if(this.data.lan_type) {
+      this.setData({
+        initTranslate: {
+          create: util.recordTime(new Date()),
+          text: '等待说话',
+        },
+      })
+    } else {
+      this.setData({
+        initTranslate: {
+          create: util.recordTime(new Date()),
+          text: 'Please Speaking',
+        },
+      })
+    }
+  },
+```
+​		以下代码定义了函数 translateText ，该函数用于翻译文本。它接受两个参数：一个是要翻译的文本项，另一个是该项在对话列表中的索引。
+​		这个函数首先确定源语言和目标语言，默认为从中文到英文。然后，它调用翻译插件，传入要翻译的文本，并启用文本到语音功能。
+​		如果翻译失败， fail 回调函数会被调用，并记录一个错误。无论成功或失败， complete 回调函数都会被调用，用来更新录音状态，并隐藏加载提示。
+
+```javascript
+  /**
+   * 翻译
+   */
+  translateText: function(item, index) {
+    let lfrom =  item.lfrom || 'zh_CN'  // 原语言，默认为中文
+    let lto = item.lto || 'en_US'  // 目标语言，默认为英文
+
+    // 调用翻译插件
+    plugin.translate({
+      lfrom: lfrom,
+      lto: lto,
+      content: item.text,  // 要翻译的文本
+      tts: true,  // 启用文本到语音
+      success: (resTrans)=>{  // 翻译成功的回调函数
+
+        let passRetcode = [
+          0,  // 翻译合成成功
+          -10006,  // 翻译成功，合成失败
+          -10007,  // 翻译成功，传入了不支持的语音合成语言
+          -10008  // 翻译成功，语音合成达到频率限制
+        ]
+
+        // 如果返回的结果是可接受的
+        if(passRetcode.indexOf(resTrans.retcode) >= 0 ) {
+          let tmpDialogList = this.data.dialogList.slice(0)
+
+          // 如果索引有效
+          if(!isNaN(index)) {
+            // 更新当前条目的翻译结果
+            let tmpTranslate = Object.assign({}, item, {
+              autoPlay: true,  // 自动播放背景音乐
+              translateText: resTrans.result,  // 翻译结果
+              translateVoicePath: resTrans.filename || "",  // 语音文件路径
+              translateVoiceExpiredTime: resTrans.expired_time || 0  // 语音文件过期时间
+            })
+
+            tmpDialogList[index] = tmpTranslate
+
+            // 更新对话列表和底部按钮状态
+            this.setData({
+              dialogList: tmpDialogList,
+              bottomButtonDisabled: false,
+              recording: false,
+            })
+
+            // 滚动到新的位置
+            this.scrollToNew();
+
+          } else {
+            console.error("index error", resTrans, item)
+          }
+        } else {
+          console.warn("翻译失败", resTrans, item)
+        }
+
+      },
+      fail: function(resTrans) {  // 翻译失败的回调函数
+        console.error("调用失败",resTrans, item)
+        this.setData({
+          bottomButtonDisabled: false,
+          recording: false,
+        })
+      },
+      complete: resTrans => {  // 翻译完成的回调函数，无论成功或失败
+        this.setData({
+          recordStatus: 1,
+        })
+        wx.hideLoading()  // 隐藏加载提示
+      }
+    })
+
+  },
+
+```
+​		在下面的代码段中，定义了函数translateTextAction，这个函数会在修改文本信息后触发，它调用translateText函数进行翻译。
+​		定义了expiredAction函数，这个函数用于处理语音文件过期的情况，它会调用插件的文本到语音功能重新生成语音文件。
+
+```javascript
+    /**
+   * 修改文本信息后触发翻译操作
+   */
+  translateTextAction: function(e) {
+    // 获取由自定义组件触发事件提供的detail对象
+    let detail = e.detail
+    let item = detail.item
+    let index = detail.index
+
+    // 调用翻译函数
+    this.translateText(item, index)
+  },
+
+  /**
+   * 语音文件过期，重新合成语音文件
+   */
+  expiredAction: function(e) {
+    // 获取由自定义组件触发事件提供的detail对象
+    let detail = e.detail || {}
+    let item = detail.item || {}
+    let index = detail.index
+
+    // 检查索引是否有效
+    if(isNaN(index) || index < 0) {
+      return
+    }
+
+    // 设定目标语言，默认为英语
+    let lto = item.lto || 'en_US'
+
+    // 调用插件的文本到语音功能
+    plugin.textToSpeech({
+      lang: lto,
+      content: item.translateText,
+      success: resTrans => {
+        if(resTrans.retcode == 0) {
+          let tmpDialogList = this.data.dialogList.slice(0)
+
+          // 用新的属性更新对应的条目
+          let tmpTranslate = Object.assign({}, item, {
+            autoPlay: true,  // 自动播放背景音乐
+            translateVoicePath: resTrans.filename,  // 语音文件路径
+            translateVoiceExpiredTime: resTrans.expired_time || 0  // 语音文件过期时间
+          })
+
+          tmpDialogList[index] = tmpTranslate
+
+          // 更新对话列表
+          this.setData({
+            dialogList: tmpDialogList,
+          })
+
+        } else {
+          console.warn("语音合成失败", resTrans, item)
+        }
+      },
+      fail: function(resTrans) {
+        console.warn("语音合成失败", resTrans, item)
+      }
+  })
+  },
+```
+​		定义了initCard函数，这个函数用于初始化一张空白的卡片。
+​		然后定义了deleteItem函数，用于删除某一条目。
+​		当列表为空时，deleteItem函数将会调用initCard函数创建一张空白的卡片。
+
+```javascript
+    /**
+   * 初始化为空时的卡片
+   */
+  initCard: function () {
+    // 创建新的初始化翻译对象，并添加当前时间
+    let initTranslateNew = Object.assign({}, this.data.initTranslate, {
+      create: util.recordTime(new Date()),
+    })
+
+    // 更新数据
+    this.setData({
+      initTranslate: initTranslateNew
+    })
+  },
+
+  /**
+   * 删除卡片
+   */
+  deleteItem: function(e) {
+    // 获取由自定义组件触发事件提供的detail对象
+    let detail = e.detail
+    let item = detail.item
+
+    // 创建一个新的对话列表副本
+    let tmpDialogList = this.data.dialogList.slice(0)
+    let arrIndex = detail.index
+
+    // 删除对应索引的元素
+    tmpDialogList.splice(arrIndex, 1)
+
+    // 使用setTimeout来避免可能的错误：Expect END descriptor with depth 0 but get another
+    setTimeout( ()=>{
+      this.setData({
+        dialogList: tmpDialogList
+      })
+      // 如果列表为空，则初始化卡片
+      if(tmpDialogList.length == 0) {
+        this.initCard()
+      }
+    }, 0)
+  },
+
+  /**
+   * 识别内容为空时的反馈
+   */
+  showRecordEmptyTip: function() {
+    // 更新数据
+    this.setData({
+      recording: false,
+      bottomButtonDisabled: false,
+    })
+
+    // 显示提示
+    wx.showToast({
+      title: this.data.tips_language.recognize_nothing,
+      icon: 'success',
+      image: '/image/no_voice.png',
+      duration: 1000,
+      success: function (res) {
+
+      },
+      fail: function (res) {
+        console.log(res);
+      }
+    });
+  },
+  
+  
+    /**
+   * 初始化语音识别回调
+   * 绑定语音播放开始事件
+   */
+  initRecord: function() {
+    // 有新的识别内容返回，则会调用此事件
+    manager.onRecognize = (res) => {
+      let currentData = Object.assign({}, this.data.currentTranslate, {
+                        text: res.result,
+                      })
+      // 更新当前翻译内容
+      this.setData({
+        currentTranslate: currentData,
+      })
+      // 滚动到新的内容
+      this.scrollToNew();
+    }
+
+    // 识别结束事件
+    manager.onStop = (res) => {
+      let text = res.result
+
+      // 如果结果为空，显示提示信息
+      if(text == '') {
+        this.showRecordEmptyTip()
+        return
+      }
+
+      let lastId = this.data.lastId + 1
+
+      let currentData = Object.assign({}, this.data.currentTranslate, {
+                        text: res.result,
+                        translateText: '正在翻译中',
+                        id: lastId,
+                        voicePath: res.tempFilePath
+                      })
+
+      // 更新当前翻译和记录状态
+      this.setData({
+        currentTranslate: currentData,
+        recordStatus: 1,
+        lastId: lastId,
+      })
+
+      // 滚动到新的内容
+      this.scrollToNew();
+
+      // 开始翻译
+      this.translateText(currentData, this.data.dialogList.length)
+    }
+
+    // 识别错误事件
+    manager.onError = (res) => {
+      // 如果发生错误，停止录音并启用底部按钮
+      this.setData({
+        recording: false,
+        bottomButtonDisabled: false,
+      })
+    }
+
+    // 语音播放开始事件
+    wx.getBackgroundAudioManager (res=>{
+      const backgroundAudioManager = wx.getBackgroundAudioManager()
+      let src = backgroundAudioManager.src
+
+      // 更新当前播放的音频源
+      this.setData({
+        currentTranslateVoice: src
+      })
+    })
+  },
+
+```
+​		以下代码包含了对历史记录的获取和设置。
+```javascript
+    /**
+   * 设置语音识别历史记录
+   */
+  setHistory: function() {
+    try {
+      let dialogList = this.data.dialogList
+      dialogList.forEach(item => {
+        item.autoPlay = false
+      })
+      // 尝试将对话列表存储在本地
+      wx.setStorageSync('history',dialogList)
+    } catch (e) {
+      console.error("setStorageSync setHistory failed")
+    }
+  },
+
+  /**
+   * 得到历史记录
+   */
+  getHistory: function() {
+    try {
+      // 尝试从本地获取历史记录
+      let history = wx.getStorageSync('history')
+      if (history) {
+          let len = history.length;
+          let lastId = this.data.lastId
+          if(len > 0) {
+            lastId = history[len-1].id || -1;
+          }
+          // 如果历史记录存在，将其设置到dialogList中
+          this.setData({
+            dialogList: history,
+            toView: this.data.toView,
+            lastId: lastId,
+          })
+      }
+    } catch (e) {
+      // 如果出现错误，将dialogList设置为空列表
+      this.setData({
+        dialogList: []
+      })
+    }
+  },
+
+  /**
+   * 重新滚动到底部
+   */
+  scrollToNew: function() {
+    // 更新视图到最新的位置
+    this.setData({
+      toView: this.data.toView
+    })
+  },
+
+  onShow: function() {
+    // 当页面显示时，滚动到最新的位置，并初始化卡片
+    this.scrollToNew();
+    this.initCard()
+
+    if(this.data.recordStatus == 2) {
+      wx.showLoading({
+        // title: '',
+        mask: true,
+      })
+    }
+  },
+
+  onLoad: function () {
+    // 页面加载时，获取历史记录并初始化语音识别
+    this.getHistory()
+    this.initRecord()
+    this.setData({toView: this.data.toView})
+    app.getRecordAuth()
+  },
+
+  onHide: function() {
+    // 页面隐藏时，设置历史记录
+    this.setHistory()
+  },
+
+  /**
+   * 定义一个点击事件处理函数
+   */
+  onBackIconTap: function() {
+    // 返回上一页
+    wx.navigateBack({
+      delta: 1, // 返回的页面层数
+    });
+  },
+
+})
+
+
+  
+```
+##### 2 voice_translation.json
+```javascript
+{
+  "usingComponents": {
+    "bottom-button": "/components/bottom-button/index",
+    "result-bubble": "/components/result-bubble/index"
+  }
+}
+
+```
+##### 3 voice_translationt.wxml
+```css
+<!--index.wxml-->
+
+<!-- 页面背景部分 -->
+<view class="page-background">
+  <image class="image self-center" src="../../imgs/voice_background.png"></image>
+</view>
+
+<!-- 主体部分，包含对话框和底部按钮 -->
+<view class="container">
+  
+  <!-- 对话框部分 -->
+  <scroll-view id="scroll-content"
+    scroll-top="{{scroll_top}}"
+    scroll-y="true"
+    class="dialog-part"
+    scroll-into-view="translate-{{toView}}"
+    enable-back-to-top="true"
+    scroll-with-animation="true">
+    
+    <!-- 空白间隔部分 -->
+    <view class="spacer"></view> 
+    
+    <!-- 返回图标，点击触发 onBackIconTap 函数 -->
+    <view id="back-icon" class="back-icon" bindtap="onBackIconTap" >
+      <image src="../../imgs/arrow-left.png" class="arrow-icon"></image>
+    </view>
+
+    <!-- 语言切换部分 -->
+    <view class="flex-row justify-between items-center relative group_2">
+      <view class="flex-row items-center self-stretch group_3 space-x-8">
+        <!-- 根据 lan_type 的值，显示不同的图片和文本 -->
+        <image wx:if="{{lan_type}}" class="shrink-0 image_1" src="{{image_c}}" />
+        <image wx:else class="shrink-0 image_1" src="{{image_e}}" />
+        <text class="text" wx:if="{{lan_type}}">中文</text>
+        <text class="text" wx:else>英文</text>
+
+        <!-- 语言切换按钮，点击触发 changelanguage 函数 -->
+        <view bindtap="changelanguage" style="display: inline-block">
+          <image class="image_1 image_2" src="../../imgs/Vector.png"/>
+        </view>
+      </view>
+    </view>
+
+    <!-- 列表部分 -->
+    <!-- 列表为空时显示的部分 -->
+    <view class="dialog-wrap" id="translate-empty" wx:if="{{!recording && dialogList.length == 0}}">
+      <result-bubble item="{{initTranslate}}" record-status="0"></result-bubble>
+    </view>
+
+    <!-- 列表部分 -->
+    <view wx:for="{{dialogList}}" wx:key="id" class="dialog-wrap" data-index="{{index}}" catchmodaldelete="deleteItem">
+      <result-bubble item="{{item}}"
+        edit-show="{{index==dialogList.length-1}}"
+        index="{{index}}"
+        current-translate-voice="{{currentTranslateVoice}}"
+        bindtranslate="translateTextAction"
+        bindexpired="expiredAction"></result-bubble>
+    </view>
+
+    <!-- 正在录音时显示的部分 -->
+    <view class="dialog-wrap" id="translate-recording" wx:if="{{recording}}">
+      <result-bubble item="{{currentTranslate}}" record-status="{{recordStatus}}"></result-bubble>
+    </view>
+
+    <view id="translate-fake"></view>
+
+  </scroll-view>
+
+  <!-- 底部按钮部分 -->
+  <view class="foot-group" catchlongpress="catchTapEvent">
+    <bottom-button button-disabled="{{bottomButtonDisabled}}"
+      bindrecordstart="streamRecord"
+      bindrecordend="streamRecordEnd"></bottom-button>
+  </view>
+</view>
+
+```
+##### 3 voice_translation.wxss
+```css
+/* 主容器样式 */
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-sizing: border-box;
+  position: relative;
+  font-family: "PingFang-SC-Regular", "SimSun", "Microsoft Yahei";
+  background-color: #1494fc;
+}
+
+/* 页面样式 */
+page {
+  height: 100%;
+  width: 100%;
+  background: #FAFAFA;
+}
+
+/* 输入框样式 */
+input {
+  font-family: "PingFang-SC-Regular", "SimSun", "Microsoft Yahei";
+}
+
+/* flex布局，列方向 */
+.flex-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* spacer元素样式 */
+.spacer {
+  height: 246rpx;
+}
+
+/* 页面背景样式 */
+.page-background {
+  position: fixed;
+  top: 345px;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-position: center;
+  background-size: cover;
+  z-index: 1;
+}
+
+/* 图片样式 */
+.image {
+  width: 750rpx;
+  height: 348rpx;
+}
+
+/* 设置元素相对于其父元素的位置为中心 */
+.self-center {
+  align-self: center;
+}
+
+/* 对话框包裹样式 */
+.dialog-wrap {
+  position: relative;
+  padding: 20rpx 40rpx 50rpx 40rpx;
+  box-sizing: border-box;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+}
+
+/* 消息详情文字样式 */
+.send-message .text-detail {
+  color: #9B9B9B;
+}
+
+/* 对话部分样式 */
+.dialog-part {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 257rpx;
+  right: 0;
+  z-index:1;
+}
+
+/* 用户输入样式 */
+.user-input {
+  flex: 1;
+  height: 60rpx;
+  box-sizing: border-box;
+  margin: 0 10px;
+  border-radius: 10rpx;
+}
+
+/* 文本内容样式 */
+.text-content {
+  margin: 0 48px 0 0;
+  box-sizing: border-box;
+}
+
+/* 编辑图标样式 */
+.edit-icon {
+  position: absolute;
+  right: 10rpx;
+  bottom: 0;
+  padding: 0 8rpx;
+}
+
+/* 播放图标样式 */
+.play-icon {
+  position: absolute;
+  right: 10rpx;
+  bottom: 14rpx;
+  padding: 0 8rpx;
+  display: flex;
+  align-items: center;
+}
+
+/* 声音图标样式 */
+.play-loud-icon {
+  position: absolute;
+  right: 0;
+  bottom: 14rpx;
+  padding: 0 8rpx;
+  display: flex;
+  align-items: center;
+}
+
+/* 文字详情样式 */
+.text-detail {
+  font-size: 18px;
+  line-height: 24px;
+  font-family: "PingFang-SC-Regular", "SimSun", "Microsoft Yahei";
+}
+
+/* 返回图标样式 */
+.back-icon {
+  position: absolute;
+  top: 50px;
+  left: 20px;
+  z-index:1;
+}
+
+/* 箭头图标样式 */
+.arrow-icon {
+  width: 30px;
+  height: 30px;
+}
+
+/* 翻译消息样式 */
+.translate-message {
+  position: relative;
+}
+
+/* 发送消息样式 */
+.send-message {
+  position: relative;
+}
+
+/* 创建时间样式 */
+.create-time {
+  font-size: 14px;
+  color: #B2B2B2;
+  margin-bottom: 5px;
+  display: flex;
+  justify-content: center;
+}
+
+/* 模糊滤镜样式 */
+.filter-blur {
+  filter: blur(5px);
+}
+
+/* 空提示样式 */
+.empty-tip {
+  position: absolute;
+  margin: auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  height: 24px;
+  width: 100px;
+  font-size: 24px;
+  color: #000000;
+  opacity: 0.1
+}
+
+/* 伪翻译样式 */
+.translate-fake {
+  width:100%;
+  height:1px;
+}
+
+/* 底部分组样式 */
+.foot-group {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  z-index: 40;
+  width: 100%;
+}
+
+/* 分组样式 */
+.group_2 {
+  margin-top: -76rpx;
+}
+
+.group_3 {
+  margin-left: 220rpx;
+}
+
+/* 空间间隔样式 */
+.space-x-8 > view:not(:first-child),
+.space-x-8 > text:not(:first-child),
+.space-x-8 > image:not(:first-child) {
+  margin-left: 16rpx;
+}
+
+/* 图片样式 */
+.image_1 {
+  width: 32rpx;
+  height: 32rpx;
+}
+
+/* 文本样式 */
+.text {
+  color: #ffffff;
+  font-size: 32rpx;
+  font-family: Poppins;
+  line-height: 29rpx;
+  margin-right: 50rpx;
+}
+
+/* 第二张图片样式 */
+.image_2 {
+  margin-right: 230rpx;
+}
+
+```
+
 ### 4.1.5 TDD_test_cdt/
 
-#### 4.1.6.1 TDD_test_cdt/voice_translationt
+#### 4.1.5.1 TDD_test_cdt/voice_translationt
 > 语音翻译测试
 
 
@@ -4920,8 +4922,55 @@ module.exports = {
     getPicToWord: getPicToWord
 }
 ```
+#### 4.1.7.2 utils/conf.js
 
+语音翻译的语言配置
 
+```json
+let language = [
+    {
+        id: 0,
+        lang_name: "中文",
+        lang_content: "zh_CN",
+        lang_to: ["en_US"],
+        max_length: 300,
+        source_language: "输入文字",
+        target_language: "输出文字",
+        hold_talk: "长按说话",
+        keyboard_input: "键盘输入",
+        type_here: "输入文字",
+        bg_content: "请输入翻译内容",
+        record_failed: "录制失败",
+        recognize_nothing: "请说话",
+        time_left: "录音输入倒数",
+        text_left: "剩余文本长度",
+        prompt_time: "提示秒数",
+        upload_failed: "上传失败",
+        translating: "翻译中",
+        text_limit: "限制长度",
+        input_tip: "请输入有效文字",
+        request_failed: "请求失败",
+        delete_tip: "删除该项",
+        cancel: "取消",
+        bubble_tip: "请输入文本",
+        bg_bubble: "正在听你说话",
+        copy_source_text: "复制原文",
+        copy_target_text: "复制译文",
+        delete_item: "删除",
+        exceed_network: "网络请求失败",
+        retry_network: "尝试重新连接",
+        wait_last_record: "请等待翻译结束",
+        access_auth: "请检查权限",
+        access_network: "网络错误",
+        login: "登录",
+    },
+];
+
+module.exports = {
+    language: language,
+};
+
+```
 
 #### 4.1.7.3 md5.min.js
 
@@ -4991,7 +5040,45 @@ module.exports = {
 }(this);
 ```
 
+#### 4.1.7.2 utils/util.js
+​		这段代码中定义了三个函数：formatTime，recordTime，和formatNumber。
+​		formatTime函数接收一个date对象作为参数，获取date对象的年、月、日、时、分、秒，并将它们格式化为字符串。
+​		recordTime只获取date对象的月、日、时、分，并将它们格式化为字符串。
+​		formatNumber函数接收一个数值n作为参数，将其转化为字符串并检查是否需要在前面补0。
+​		通过module.exports将formatTime和recordTime两个函数导出，使得它们可以在其他文件中被引用。
 
+```javascript
+const formatTime = date => {
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    const hour = date.getHours();
+    const minute = date.getMinutes();
+    const second = date.getSeconds();
+
+    return [year, month, day].map(formatNumber).join('/') + ' ' + [hour, minute, second].map(formatNumber).join(':');
+}
+
+function recordTime(date) {
+    var month = date.getMonth() + 1;
+    var day = date.getDate();
+    var hour = date.getHours();
+    var minute = date.getMinutes();
+
+    return [month, day].map(formatNumber).join('/') + ' ' + [hour, minute].map(formatNumber).join(':');
+}
+
+const formatNumber = n => {
+    n = n.toString();
+    return n[1] ? n : '0' + n;
+}
+
+module.exports = {
+    formatTime: formatTime,
+    recordTime: recordTime
+}
+
+```
 
 ### 4.1.8 ./
 
