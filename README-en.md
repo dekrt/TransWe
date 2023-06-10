@@ -1,4 +1,4 @@
->  **If you borrow from the documentation of this warehouse, please help me to click star (upper right corner) and follow (follow me), thank you! **
+>  If you borrow from the documentation of this warehouse, please help me to click star (upper right corner) and follow (follow me), thank you! 
 
 <div align="center">
     <img src="./pics/icon.jpg" align="center" width="40%">
@@ -17,6 +17,8 @@
      <a href = "https://github.com/dekrt/TransWe/issues"><img src="https://img.shields.io/ithub/issues/dekrt/TransWe?color=blue&logoColor=blue" alt ="Issues" /></a>
      <a href = "https://github.com/dekrt/TransWe/blob/main/LICENSE"><img src="https://img.shields.io/github/license/dekrt/TransWe"/></a>
  </div>
+
+
 ## 📷 Probation
 
 <div align = "center"><image src = "./pics/TransWe.jpg" width = "30%"/ ></div>
