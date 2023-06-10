@@ -17,7 +17,9 @@
     <img src="https://img.shields.io/badge/Author-cdt-blue" alt="Author" />
     <a href = "https://github.com/dekrt/TransWe"><img src="https://img.shields.io/github/stars/dekrt/TransWe?style=social" alt="Stars" /></a>
     <a href = "https://github.com/dekrt/TransWe/issues"><img src="https://img.shields.io/github/issues/dekrt/TransWe?color=blue&logoColor=blue" alt="Issues" /></a>
+    <a href = "https://github.com/dekrt/TransWe/blob/main/LICENSE"><img src="https://img.shields.io/github/license/dekrt/TransWe"/></a>
 </div>
+
 
 ### 📱 UI界面
 
@@ -114,7 +116,7 @@ TransWe是一款完全免费的小程序，我们的目标是为用户提供最�
 
 ### 📃 协议
 
- [![GitHub](https://img.shields.io/github/license/dekrt/TransWe?style=for-the-badge)](https://github.com/dekrt/TransWe/blob/main/LICENSE)
+ [![GitHub](https://img.shields.io/github/license/dekrt/TransWe)](https://github.com/dekrt/TransWe/blob/main/LICENSE)
 
 >**警告**
 >
