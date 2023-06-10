@@ -1,0 +1,57 @@
+{
+    "pages": [
+        "pages/index/index",
+        "pages/history/history",
+        "pages/OCR/OCR",
+        "pages/getPic/getPic",
+        "pages/voice_translation/voice_translation",
+        "pages/edit/edit",
+        "pages/choose_language/choose_language"
+    ],
+    "window": {
+        "backgroundTextStyle": "light",
+        "navigationBarBackgroundColor": "#1493FC",
+        "navigationBarTitleText": "TransWe",
+        "navigationBarTextStyle": "black",
+        "backgroundColor": "#4b3c96",
+        "navigationStyle": "custom"
+    },
+    "plugins": {
+        "WechatSI": {
+            "version": "0.3.3",
+            "provider": "wx069ba97219f66d99"
+        }
+    },
+    "sitemapLocation": "sitemap.json",
+    "tabBar": {
+        "borderStyle": "white",
+        "position": "bottom",
+        "color": "#bfbfbf",
+        "selectedColor": "#1c1b21",
+        "list": [{
+                "pagePath": "pages/index/index",
+                "text": "翻译",
+                "iconPath": "imgs/icon-1.png",
+                "selectedIconPath": "imgs/sel-icon-1.png"
+            },
+            {
+                "pagePath": "pages/getPic/getPic",
+                "text": "拍照翻译",
+                "iconPath": "imgs/paizhao-xianxing.png",
+                "selectedIconPath": "imgs/paizhao.png"
+            },
+            {
+              "pagePath": "pages/voice_translation/voice_translation",
+              "text": "语音翻译",
+              "iconPath": "imgs/maikefeng-xianxing.png",
+              "selectedIconPath": "imgs/maikefeng.png"
+          },
+            {
+                "pagePath": "pages/history/history",
+                "text": "历史",
+                "iconPath": "imgs/lishixiao.png",
+                "selectedIconPath": "imgs/lishixiao_1.png"
+            }
+        ]
+    }
+}

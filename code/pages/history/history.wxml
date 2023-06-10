@@ -1,0 +1,40 @@
+<!-- 可滚动视图，设置为纵向滚动 -->
+<scroll-view scroll-y class="container">
+  <!-- 历史记录列表视图 -->
+  <view class="history-list">
+    <!-- 头部视图 -->
+    <view class="header">
+      <!-- 标题文本 -->
+      <text class="title">翻译历史</text>
+      <!-- 清除历史记录文本，点击时触发onClearHistory事件 -->
+      <text bindtap='onClearHistory' class="iconfont icon-close">清除历史记录</text>
+    </view>
+    <!-- 历史记录项视图，遍历历史记录数组，点击时触发onTapItem事件，传递查询参数和语言索引 -->
+    <view class="item" wx:for="{{history}}" wx:key="index" bindtap='onTapItem' data-query="{{item.query}}" data-langId="{{item.langIndex}}">
+      <!-- 查询视图 -->
+      <view class="query">
+        <!-- 语言视图 -->
+        <view class="language">
+          <!-- 语言图标 -->
+          <image src="../../imgs/Chinese.png" />
+          <!-- 语言文本 -->
+          中文
+        </view>
+        <!-- 查询文本 -->
+        {{item.query}}
+      </view>
+      <!-- 结果视图 -->
+      <view class="result">
+        <!-- 语言视图 -->
+        <view class="language">
+          <!-- 语言图标 -->
+          <image src="../../imgs/English.png" />
+          <!-- 语言文本 -->
+          英语
+        </view>
+        <!-- 结果文本 -->
+        {{item.result}}
+      </view>
+    </view>
+  </view>
+</scroll-view>

@@ -1,0 +1,87 @@
+<!--index.wxml-->
+<view class="container">
+  <!-- 背景图片和logo -->
+  <view class="background">
+    <image class="logo" src="../../imgs/logo.png"></image>
+    <image class="background" src="../../imgs/background.png"></image>
+  </view>
+
+  <!-- 语言切换部分 -->
+  <view class="change">
+    <navigator url="/pages/choose_language/choose_language" hover-class="navigator-hover">
+      <view class="switch_language_from">
+        <image class="switch_language_pic" src="{{fromLang.src}}" />
+        <text class="switch_language_from_text" decode="true">&nbsp;&nbsp;{{fromLang.chs}}</text>
+        <text class="iconfont icon-down"></text>
+      </view>
+      <image class="switch" src="../../imgs/switch.png"></image>
+      <view class="switch_language_to">
+        <image class="switch_language_pic" src="{{curLang.src}}" />
+        <text class="switch_language_to_text" decode="true">&nbsp;&nbsp;{{curLang.chs}}</text>
+        <text class="iconfont icon-down"></text>
+      </view>
+    </navigator>
+  </view>
+
+  <!-- 输入区域 -->
+  <view class="input-area">
+    <view class="textarea-wrap">
+      <textarea placeholder='请输入要翻译的文本' placeholder-style=' color: #1e3163;line-height: 34rpx;font-size: 36rpx;font-family: Poppins;' bindinput='onInput' bindconfirm='onConfirm' bindblur='onConfirm' value="{{query}}"></textarea>
+      <view class="language_from">
+        <image class="language_pic" src="{{fromLang.src}}" />
+        <text class="language_from_text">{{fromLang.chs}}</text>
+        <view data-id="src" catchtap="playTranslateVoice" catchtouchstart="playTranslateVoice">
+          <image class="voice" src="../../imgs/voice.png" mode="widthFix" />
+        </view>
+        <view class="copy" bindtap="copyTextIN">
+          <image src="../../imgs/copy.png" mode="widthFix" />
+        </view>
+      </view>
+    </view>
+
+    <!-- 输出区域 -->
+    <view class="output-area">
+      <view class="result">
+        <view class="text-result" wx:for="{{result}}" wx:key="index">
+          <text selectable="true" decode="true">{{item.dst}}</text>
+        </view>
+      </view>
+      <view class="language_to">
+        <image class="language_pic" src="{{curLang.src}}" />
+        <text class="language_to_text">{{curLang.chs}}</text>
+        <view data-id="tar" catchtap="playTranslateVoice" catchtouchstart="playTranslateVoice">
+          <image class="voice" src="../../imgs/voice_white.png" mode="widthFix" />
+        </view>
+        <view class="copy" bindtap="copyTextOUT">
+          <image src="../../imgs/copy_white.png" mode="widthFix" />
+        </view>
+      </view>
+    </view>
+
+        <!-- 翻译历史模块 -->
+    <view class="trans_history_area">
+      <view class="trans_history_title">
+        <view class="trans_history_title_chi">翻译历史</view>
+        <view class="trans_history_title_eng">Translation History</view>
+      </view>
+      <view class="trans_history_list">
+        <view class="item" wx:for="{{history}}" wx:key="index" bindtap='onTapItem' data-query="{{item.query}}" data-langId="{{item.langIndex}}">
+          <view class="query">
+            <view class="language">
+              <image src="../../imgs/Chinese.png" />
+              中文
+            </view>
+            {{item.query}}
+          </view>
+          <view class="result">
+            <view class="language">
+              <image src="../../imgs/English.png" />
+              英语
+            </view>
+            {{item.result}}
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

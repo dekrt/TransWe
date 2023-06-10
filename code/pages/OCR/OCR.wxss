@@ -1,0 +1,132 @@
+/* 容器样式 */
+.container {
+  /* 居中对齐 */
+  text-align: center;
+}
+
+/* 头部样式 */
+.head {
+  /* 相对定位 */
+  position: relative;
+  /* 顶部和左侧边距为0，宽度为100%，高度为200rpx */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 200rpx;
+  /* 背景颜色为#1493FC */
+  background-color: #1493FC;
+}
+
+/* 返回图标样式 */
+.back-icon {
+  /* 绝对定位，位于头部视图的左上角 */
+  position: absolute;
+  top: 50px;
+  left: 20px;
+  /* z-index用于控制元素的层叠顺序 */
+  z-index: 1;
+  /* 背景颜色为#1493FC */
+  background-color: #1493fc;
+}
+
+/* 箭头图标样式 */
+.arrow-icon {
+  width: 30px;
+  height: 30px;
+}
+
+/* 按钮样式 */
+.btn {
+  /* 背景颜色为#1493FC */
+  background-color: #1493fc;
+  /* 上下内边距为15rpx，左右内边距为20rpx */
+  padding: 15rpx 20rpx;
+  /* 文本颜色为白色 */
+  color: #fff;
+  /* 圆角半径为20rpx */
+  border-radius: 20rpx;
+  /* 外边距为40rpx */
+  margin: 40rpx;
+}
+
+/* 项目样式 */
+.item {
+  /* 上外边距为40rpx，左右内边距为10rpx */
+  margin-top: 40rpx;
+  padding: 0 10rpx;
+  /* 背景颜色为白色 */
+  background-color: #ffffff;
+  /* 圆角半径为16rpx */
+  border-radius: 16rpx;
+  /* 阴影效果 */
+  box-shadow: 0px 0px 2rpx #0000000a, 0px 0px 4rpx #0000000f, 0px 8rpx 16rpx #0000000a;
+}
+
+/* 查询样式 */
+.item .query {
+  /* 内边距为20rpx */
+  padding: 20rpx;
+  /* 底部边框为实线，宽度为2rpx，颜色为#e7e7e7 */
+  border-bottom: solid 2rpx #e7e7e7;
+  /* 字体大小为32rpx */
+  font-size: 32rpx;
+  /* 字体家族为Poppins */
+  font-family: Poppins;
+  /* 行高为50rpx */
+  line-height: 50rpx;
+  /* 字体颜色为#1e3163 */
+  color: #1e3163;
+}
+
+/* 查询语言样式 */
+.item .query .language {
+  /* 字体大小为28rpx */
+  font-size: 28rpx;
+  /* 字体家族为Poppins */
+  font-family: Poppins;
+  /* 行高为26rpx */
+  line-height: 26rpx;
+  /* 字体颜色为#a8abb0 */
+  color: #a8abb0;
+  /* 上外边距为10rpx，下外边距为10rpx */
+  margin-top: 10rpx;
+  margin-bottom: 10rpx;
+}
+
+/* 结果样式 */
+.item .result {
+  /* 上外边距为16rpx */
+  margin-top: 16rpx;
+  /* 内边距为20rpx */
+  padding: 20rpx;
+  /* 字体大小为32rpx */
+  font-size: 32rpx;
+  /* 字体家族为Poppins */
+  font-family: Poppins;
+  /* 行高为50rpx */
+  line-height: 50rpx;
+  /* 字体颜色为#1e3163 */
+  color: #1e3163;
+}
+
+/* 结果语言样式 */
+.item .result .language {
+  /* 字体大小为28rpx */
+  font-size: 28rpx;
+  /* 字体家族为Poppins */
+  font-family: Poppins;
+  /* 行高为26rpx */
+  line-height: 26rpx;
+  /* 字体颜色为#909dbd */
+  color: #909dbd;
+  /* 下外边距为10rpx */
+  margin-bottom: 10rpx;
+}
+
+/* 图片样式 */
+image {
+  width: 30rpx;
+  height: 30rpx;
+  /* 垂直对齐方式为底部对齐 */
+  vertical-align: bottom;
+}

@@ -1,0 +1,25 @@
+<!-- 头部视图 -->
+<view class="head">
+  <!-- 语言切换视图，点击时触发onTap事件 -->
+  <view class="language" bindtap="onTap">
+    <!-- 中文图标，点击时触发onTap事件 -->
+    <image bindtap="onTap" class="language_pic" src="../../imgs/Chinese.png" />
+    <!-- 中文文字，点击时触发onTap事件 -->
+    <text bindtap="onTap" class="language_text" decode>&nbsp;中文</text>
+    <!-- 切换图标，点击时触发onTap事件 -->
+    <image bindtap="onTap" class="switch" src="../../imgs/switch.png"></image>
+    <!-- 英文图标，点击时触发onTap事件 -->
+    <image bindtap="onTap" class="language_pic" src="../../imgs/English.png" />
+    <!-- 英文文字，点击时触发onTap事件 -->
+    <text bindtap="onTap" class="language_text" decode>&nbsp;英语</text>
+  </view>
+</view>
+
+<!-- 摄像头视图 -->
+<camera style="margin-top:0rpx;width:100%;height:1100rpx"></camera>
+
+<!-- 工具栏视图 -->
+<view class="toolbar">
+  <!-- 拍照图标，点击时触发takeShot事件 -->
+  <image class="shot" src="../../imgs/takeshot.png" bindtap="takeShot"></image>
+</view>
