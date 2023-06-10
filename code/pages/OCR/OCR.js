@@ -45,7 +45,7 @@ Page({
         var that = this;
         wx.request({
             //OCR的api接口请自行申请或替换！
-            url: 'https://api.jisuapi.com/generalrecognition/recognize?appkey=',
+            url: '',
             data: {
                 pic: this.data.src,
                 type: "cnen"

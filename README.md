@@ -17,7 +17,9 @@
     <a href = "https://github.com/dekrt/TransWe/issues"><img src="https://img.shields.io/github/issues/dekrt/TransWe?color=blue&logoColor=blue" alt="Issues" /></a>
     <a href = "https://github.com/dekrt/TransWe/blob/main/LICENSE"><img src="https://img.shields.io/github/license/dekrt/TransWe"/></a>
 </div>
+### 📷 扫码体验
 
+<div align = "center"><image src = "./pics/TransWe.jpg" width = "30%"/ ></div>
 
 
 ## 📱 UI界面
