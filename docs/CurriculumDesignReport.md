@@ -1880,6 +1880,7 @@ Page({
     isClicked2: false,    // 是否已经完成第二次点击
     langList: app.globalData.langList, // 全局语言列表
     curLang: {},          // 当前语言
+    fromLang: {},
     targetLang: {},       // 目标语言
     currentsound:'',      // 当前语音
   },
@@ -1913,8 +1914,10 @@ Page({
     console.log("Clicked item index and sound : ", index,sound);
     if (!this.data.isClicked1) {
       this.setData({
-        selectedIndex1: index
+        selectedIndex1: index,
+        fromLang: langObj 
       });
+      app.globalData.fromLang = langObj
     }else{
       this.setData({
         selectedIndex2: index,
@@ -2870,6 +2873,7 @@ Page({
     hideClearIcon: false, // 控制清除图标的显示与隐藏
     result: [], // 翻译结果
     curLang: {}, // 当前选择的语言
+    fromLang:{},
     currentTranslateVoice: '', // 当前播放的语音路径
     currentsound: '', // 当前语音合成语言
     history: [] // 翻译历史记录
@@ -2893,6 +2897,10 @@ Page({
     if (this.data.curLang.lang !== app.globalData.curLang.lang) {
       this.setData({
         curLang: app.globalData.curLang
+      })
+     if (this.data.fromLang.lang !== app.globalData.fromLang.lang) {
+      this.setData({
+        fromLang: app.globalData.fromLang
       })
       this.onConfirm() // 执行翻译
     }
@@ -2919,7 +2927,7 @@ Page({
   onConfirm: function () {
     if (!this.data.query) return // 如果查询文本为空，则不执行翻译
     translate(this.data.query, {
-      from: 'auto',
+      from: this.data.fromLang.lang || 'auto',
       to: this.data.curLang.lang
     }).then(res => {
       this.setData({
@@ -3101,8 +3109,8 @@ graph TB
   <view class="change">
     <navigator url="/pages/choose_language/choose_language" hover-class="navigator-hover">
       <view class="switch_language_from">
-        <image class="switch_language_pic" src="{{curLang.src}}" />
-        <text class="switch_language_from_text" decode="true">&nbsp;&nbsp;{{curLang.chs}}</text>
+        <image class="switch_language_pic" src="{{fromLang.src}}" />
+        <text class="switch_language_from_text" decode="true">&nbsp;&nbsp;{{from.chs}}</text>
         <text class="iconfont icon-down"></text>
       </view>
       <image class="switch" src="../../imgs/switch.png"></image>
@@ -3119,8 +3127,8 @@ graph TB
     <view class="textarea-wrap">
       <textarea placeholder='请输入要翻译的文本' placeholder-style=' color: #1e3163;line-height: 34rpx;font-size: 36rpx;font-family: Poppins;' bindinput='onInput' bindconfirm='onConfirm' bindblur='onConfirm' value="{{query}}"></textarea>
       <view class="language_from">
-        <image class="language_pic" src="../../imgs/Chinese.png" />
-        <text class="language_from_text">中文</text>
+        <image class="language_pic" src="{{fromLang.src}}" />
+        <text class="language_from_text">{{from.chs}}</text>
         <view data-id="src" catchtap="playTranslateVoice" catchtouchstart="playTranslateVoice">
           <image class="voice" src="../../imgs/voice.png" mode="widthFix" />
         </view>
@@ -5128,6 +5136,7 @@ App({
     // 展示本地存储能力
     // 在全局数据中设置当前语言，如果本地没有存储过当前语言，那么就使用语言列表的第一个语言
     this.globalData.curLang = wx.getStorageSync('curLang') || this.globalData.langList[0];
+    this.globalData.fromLang = wx.getStorageSync('fromLang') || this.globalData.langList[1];
     
     // 从本地获取历史记录，如果获取失败，则将全局的历史记录设置为空数组
     wx.getStorage({
@@ -5180,6 +5189,7 @@ App({
   globalData: {
     history: [],
     curLang: {},
+    formLang:{},
     buttons:[],
     picBase64: "",
     word: [],   
