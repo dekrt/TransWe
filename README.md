@@ -48,6 +48,8 @@ TransWe使用简单，功能强大，只需选择需要翻译的语言，输入�
     <a href="https://github.com/dekrt"><img src="./pics/dekrt.jpg" width="70px" alt="dekrt" border-radius: "50%"/></a>
     <a href="https://github.com/chendeting88"><img src="./pics/chendeting88.jpg" width="70px" alt="chendeting88" radius: "50%"/></a>
 </p>
+
+
 `TransWe`由**张骁凯**和**陈德霆**共同开发完成。
 
 ## 🚀 功能特性
