@@ -55,7 +55,7 @@ TransWe is easy to use and has powerful functions. Just select the language to b
 </p>
 
 
- `TransWe` was jointly developed by **Zhang Xiaokai** and **Chen Deting**.
+ `TransWe` was jointly developed by **dekrt** and **cdt**.
 
 ## 🚀 Features
 
