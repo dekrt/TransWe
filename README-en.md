@@ -13,9 +13,9 @@
     <br>
      <a href = "https://dekrt.cn/"><img src="https://img.shields.io/badge/uthor-dekrt-blue" alt="Author" /></a>
      <img src="https://img.shields.io/badge/Author-cdt-blue" alt="Author" />
-     <a href = "https://github.com/dekrt/TransWe"><img src="https://img.shields.io/github/tars/dekrt/TransWe?style=social" alt="Stars" /></a>
-     <a href = "https://github.com/dekrt/TransWe/issues"><img src="https://img.shields.io/ithub/issues/dekrt/TransWe?color=blue&logoColor=blue" alt ="Issues" /></a>
-     <a href = "https://github.com/dekrt/TransWe/blob/main/LICENSE"><img src="https://img.shields.io/github/license/dekrt/TransWe"/></a>
+     <a href = "https://github.com/dekrt/TransWe"><img src="https://img.shields.io/github/tars/dekrt/TransWe?style=social" alt="Stars"></a>
+     <a href = "https://github.com/dekrt/TransWe/issues"><img src="https://img.shields.io/ithub/issues/dekrt/TransWe?color=blue&logoColor=blue" alt ="Issues"></a>
+     <a href = "https://github.com/dekrt/TransWe/blob/main/LICENSE"><img src="https://img.shields.io/github/license/dekrt/TransWe"></a>
  </div>
 
 
