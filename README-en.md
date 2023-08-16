@@ -72,44 +72,45 @@ TransWe is a completely free small program, our goal is to provide users with th
 
 ## 🧱 Directory structure description
 
-```.
+```
 .
-├─code //code folder
-│ ├─assets //external tools
-│ │ └─iconfont //vector library
-│ ├─components //component folder
-│ │ ├─bottom-button //Record button
-│ │ ├─modal //Copy button
-│ │ ├─play-icon //Component animation
-│ │ ├─result-bubble //translation bubble
-│ │ └─waiting-icon //waiting icon
-│ ├─imgs //Mini program internal image folder
-│ ├─pages //All pages
-│ │ ├─choose_language //choose language
-│ │ ├─edit //text editing page
-│ │ ├─getPic //Get picture
-│ │ ├─history //Translation history
-│ │ ├─history_test //Translation history front-end test
-│ │ ├─index //home page
-│ │ ├─index_test //Home page front-end test
-│ │ ├─OCR //Photo page turning interface
-│ │ └─voice_translation //Voice translation interface
-│ ├─TDD_test_cdt //TDD development voice translation
-│ ├─TDD_test_zxk //TDD development text translation
-│ └─utils //Plugins
-│ api.js //translation api interface
-│ conf.js //Translation configuration
-│ md5.min.js //Get MD5 encryption
-│ util.js //Get time configuration
-├─docs //All documents
-│ API.md //API interface document
-│ CurriculumDesignReport.md //Curriculum Design Report Document
-│ SystemArchitecture.md //system architecture document
-│ SystemDesign.md //system design document
-│ SystemRequirement.md //System Requirement Document
-│ UI_Design.md //UI design document
-│ UserRequirement.md //User requirement document
-└─pics //pictures
+├─code                    // code folder
+│ ├─assets                // external tools
+│ │ └─iconfont            // vector library
+│ ├─components            // component folder
+│ │ ├─bottom-button       // Record button
+│ │ ├─modal               // Copy button
+│ │ ├─play-icon           // Component animation
+│ │ ├─result-bubble       // translation bubble
+│ │ └─waiting-icon        // waiting icon
+│ ├─imgs                  // Mini program internal image folder
+│ ├─pages                 // All pages
+│ │ ├─choose_language     // choose language
+│ │ ├─edit                // text editing page
+│ │ ├─getPic              // Get picture
+│ │ ├─history             // Translation history
+│ │ ├─history_test        // Translation history front-end test
+│ │ ├─index               // home page
+│ │ ├─index_test          // Home page front-end test
+│ │ ├─OCR                 // Photo page turning interface
+│ │ └─voice_translation   // Voice translation interface
+│ ├─TDD_test_cdt          // TDD development voice translation
+│ ├─TDD_test_zxk          // TDD development text translation
+│ └─utils                 // Plugins
+│ api.js                  // translation api interface
+│ conf.js                 // Translation configuration
+│ md5.min.js              // Get MD5 encryption
+│ util.js                 // Get time configuration
+├─docs                    // All documents
+│ API.md                  // API interface document
+│ CurriculumDesignReport.md // Curriculum Design Report Document
+│ SystemArchitecture.md   // system architecture document
+│ SystemDesign.md         // system design document
+│ SystemRequirement.md    // System Requirement Document
+│ UI_Design.md            // UI design document
+│ UserRequirement.md      // User requirement document
+└─pics                    // pictures
+
 ```
 
 ## ⭐️ Version content update
